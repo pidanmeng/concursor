@@ -225,6 +225,7 @@ export interface User {
         type: string;
       }[]
     | null;
+  password?: string | null;
   updatedAt: string;
   createdAt: string;
   enableAPIKey?: boolean | null;
@@ -236,7 +237,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -870,6 +870,7 @@ export interface UsersSelect<T extends boolean = true> {
         providerAccountId?: T;
         type?: T;
       };
+  password?: T;
   updatedAt?: T;
   createdAt?: T;
   enableAPIKey?: T;

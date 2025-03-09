@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { SocialAuthButtons } from '@/components/auth/social-auth-buttons'
 import { redirect } from '@/i18n/routing'
 import { getPayload } from 'payload'
 import config from '@/payload.config'

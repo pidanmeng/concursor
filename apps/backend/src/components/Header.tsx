@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/ModeToggle'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { Link } from '@/i18n/routing'

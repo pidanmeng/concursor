@@ -20,6 +20,16 @@ export const authFixPlugin = (): Plugin => {
           },
         },
       })
+      usersCollection.fields.push({
+        name: 'password',
+        type: 'text',
+        required: false,
+        access: {
+          read: ({ req, data }) => {
+            return req.user?.id === data?.id
+          },
+        },
+      })
     }
     return config
   }
