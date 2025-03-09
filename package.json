@@ -1,0 +1,21 @@
+{
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:extension": "bun --filter \"concursor\" dev",
+    "dev:backend": "bun --filter \"backend\" dev",
+    "build:backend": "bun --filter \"backend\" build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {}
+}

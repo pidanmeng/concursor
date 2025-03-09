@@ -1,0 +1,17 @@
+{
+  "name": "@concursor/utils",
+  "version": "0.0.1",
+  "module": "index.ts",
+  "type": "module",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tailwind-merge": "^3.0.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

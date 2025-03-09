@@ -1,0 +1,104 @@
+{
+  // Auto generate metadata
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "apps/extension/package.json",
+        "isAsync": true,
+        "cmd": "npm run update"
+      }
+    ]
+  },
+  // Disable the default formatter, use eslint instead
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    {
+      "rule": "style/*",
+      "severity": "off"
+    },
+    {
+      "rule": "*-indent",
+      "severity": "off"
+    },
+    {
+      "rule": "*-spacing",
+      "severity": "off"
+    },
+    {
+      "rule": "*-spaces",
+      "severity": "off"
+    },
+    {
+      "rule": "*-order",
+      "severity": "off"
+    },
+    {
+      "rule": "*-dangle",
+      "severity": "off"
+    },
+    {
+      "rule": "*-newline",
+      "severity": "off"
+    },
+    {
+      "rule": "*quotes",
+      "severity": "off"
+    },
+    {
+      "rule": "*semi",
+      "severity": "off"
+    }
+  ],
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml"
+  ],
+  "cSpell.words": [
+    "concursor"
+  ],
+  "i18n-ally.localesPaths": [
+    "apps/**/messages",
+    "apps/**/l10n"
+  ],
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.sortCompare": "binary",
+  "i18n-ally.keepFulfilled": true,
+  "i18n-ally.translate.promptSource": true,
+  "i18n-ally.pathMatcher": "{locale}.json",
+  "i18n-ally.translate.saveAsCandidates": true,
+  "i18n-ally.keysInUse": [
+    "view.progress_submenu.translated_keys",
+    "view.progress_submenu.missing_keys",
+    "view.progress_submenu.empty_keys"
+  ],
+  "i18n-ally.usage.scanningIgnore": [
+    "apps",
+  ],
+  "i18n-ally.regex.usageMatchAppend": [
+    "/\\*\\s*i18n\\s*\\*/\\s*['\"`]({key})['\"`]"
+  ],
+  "i18n-ally.enabledFrameworks": [
+    "vscode",
+    "next-intl",
+    "react",
+    "general"
+  ],
+}

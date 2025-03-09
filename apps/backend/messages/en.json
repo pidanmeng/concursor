@@ -1,0 +1,54 @@
+{
+  "auth": {
+    "confirmPassword": "Confirm password",
+    "continueWithGithub": "Continue with GitHub",
+    "continueWithGoogle": "Continue with Google",
+    "createAccount": "Create an account",
+    "forgotPassword": "Forgot password?",
+    "haveAccount": "Already have an account?",
+    "login": "Sign in",
+    "loginWithSocial": "Sign in with your email or social account",
+    "noAccount": "Don't have an account?",
+    "orContinueWith": "or continue with",
+    "password": "Password",
+    "signOut": "Sign Out",
+    "signup": "Sign up",
+    "signupWithSocial": "Create an account with your email or social account",
+    "welcomeBack": "Welcome back"
+  },
+  "hello": "Hello",
+  "metadata": {
+    "global": {
+      "description": "ConCursor is your assistant for Cursor Rules. It helps you write better code faster.",
+      "title": "ConCursor - Your Assistant for Cursor Rules"
+    },
+    "signin": {
+      "description": "Login with your email or social account",
+      "title": "Welcome back"
+    }
+  },
+  "nav": {
+    "extension": "Extension",
+    "generate": "Generate",
+    "home": "Home",
+    "mcp": "MCPs",
+    "pricing": "Pricing",
+    "rules": "Rules",
+    "signin": "Sign in",
+    "signup": "Sign up"
+  },
+  "signin": {
+    "canCloseWindow": "All set! ",
+    "connect": "Yes, Sign in",
+    "connectToExtension": "Sign in to ConCursor Extension ?",
+    "connecting": "Connecting ...",
+    "connectionError": "Connection failed",
+    "connectionSuccess": "Connection successful",
+    "youAreLoggedInWith": "You're currently logged in with:",
+    "cancel": "Cancel",
+    "thingsToDoAfterSignIn": "Now you can:",
+    "returnToCursor": "Return to Cursor",
+    "goExploreRules": "Go explore rules"
+  },
+  "switchLanguage": "Switch Language"
+}

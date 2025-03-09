@@ -1,0 +1,54 @@
+{
+  "auth": {
+    "confirmPassword": "确认密码",
+    "continueWithGithub": "使用 GitHub 账号继续",
+    "continueWithGoogle": "使用 Google 账号继续",
+    "createAccount": "创建账号",
+    "forgotPassword": "忘记密码？",
+    "haveAccount": "已有账号？",
+    "login": "登录",
+    "loginWithSocial": "使用邮箱或社交账号登录",
+    "noAccount": "还没有账号？",
+    "orContinueWith": "或继续使用",
+    "password": "密码",
+    "signOut": "退出",
+    "signup": "注册",
+    "signupWithSocial": "使用邮箱或社交账号注册",
+    "welcomeBack": "欢迎回来"
+  },
+  "hello": "你好",
+  "metadata": {
+    "global": {
+      "description": "ConCursor 是你的 Cursor 规则助手。它帮助你更快地编写更好的代码。",
+      "title": "ConCursor - 你的 Cursor 规则助手"
+    },
+    "signin": {
+      "description": "使用邮箱或社交账号登录",
+      "title": "欢迎回来"
+    }
+  },
+  "nav": {
+    "extension": "扩展",
+    "generate": "在线生成",
+    "home": "首页",
+    "mcp": "MCP服务",
+    "pricing": "购买",
+    "rules": "规则",
+    "signin": "登录",
+    "signup": "注册"
+  },
+  "signin": {
+    "canCloseWindow": "一切就绪！",
+    "connect": "登录",
+    "connectToExtension": "确认登录 ConCursor 扩展？",
+    "connecting": "连接中",
+    "connectionSuccess": "连接成功",
+    "connectionError": "连接失败",
+    "youAreLoggedInWith": "你当前已登录：",
+    "cancel": "取消",
+    "thingsToDoAfterSignIn": "你现在可以:",
+    "returnToCursor": "返回 Cursor",
+    "goExploreRules": "去探索规则"
+  },
+  "switchLanguage": "切换语言"
+}

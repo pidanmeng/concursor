@@ -1,0 +1,84 @@
+{
+  "publisher": "koiism",
+  "name": "concursor",
+  "displayName": "concursor",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "bun@1.2.4",
+  "description": "",
+  "license": "MIT",
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "icon": "res/icon.png",
+  "l10n": "./l10n",
+  "bundle.l10n": {
+    "en": "./l10n/bundle.l10n.en.json",
+    "zh-CN": "./l10n/bundle.l10n.zh-CN.json"
+  },
+  "files": [
+    "LICENSE.md",
+    "dist/*",
+    "res/*"
+  ],
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "concursor.login",
+        "title": "%concursor.login.title%"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "concursor",
+      "properties": {}
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --external vscode",
+    "dev": "nr build --watch --sourcemap",
+    "prepare": "nr update",
+    "update": "vscode-ext-gen --output src/generated/meta.ts",
+    "lint": "eslint .",
+    "vscode:prepublish": "nr build",
+    "publish": "vsce publish --no-dependencies",
+    "pack": "vsce package --no-dependencies",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && nr publish"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.8",
+    "hono": "^4.7.4"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.6.0",
+    "@antfu/ni": "^23.3.1",
+    "@types/node": "^22.13.9",
+    "@types/vscode": "^1.98.0",
+    "@vscode/vsce": "^3.2.2",
+    "bumpp": "^10.0.3",
+    "eslint": "^9.21.0",
+    "esno": "^4.8.0",
+    "pnpm": "^10.6.1",
+    "reactive-vscode": "^0.2.13",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1",
+    "vitest": "^3.0.8",
+    "vscode-ext-gen": "^1.0.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

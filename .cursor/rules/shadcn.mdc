@@ -1,0 +1,62 @@
+---
+description: Rules for working with shadcn UI components
+globs: *.tsx,*.ts,*.css
+alwaysApply: false
+---
+
+<coding_guidelines>
+Prefer composition over inheritance when extending shadcn components
+Always use shadcn's provided CSS variables for theme customization
+Keep component props interface extensions minimal and focused
+Use cn() utility for conditional class merging 
+</coding_guidelines>
+
+<component_organization>
+Store base shadcn components in /components/ui
+Create business components in /features/* using shadcn primitives
+Prefix extended components with original name (e.g. ExtendedDialog)
+Maintain 1:1 ratio between components and their documentation files 
+</component_organization>
+
+<performance_rules>
+Lazy load complex components using dynamic imports
+Memoize frequently used component variants with React.memo
+Avoid inline object props in render functions
+Prefer CSS hover states over JavaScript mouse event handlers 
+</performance_rules>
+
+<theme_customization>
+Modify theme through tailwind.config.ts variables only
+Keep custom CSS variables in :root selector
+Use @layer directives for component-scoped overrides
+Maintain contrast ratios matching shadcn's accessibility standards 
+</theme_customization>
+
+<anti_patterns>
+Avoid wrapping shadcn components in unnecessary divs
+Never modify shadcn's source components directly
+Don't use !important in component style overrides
+Refrain from deep-nesting shadcn compound components 
+</anti_patterns>
+
+<good_examples> 
+// Component extension 
+
+```typescript
+export const EnhancedCard = (
+  { urgency, ...props }: CardProps
+) => ( 
+  <Card className={cn('border-2', urgency ? 'border-red-500' : 'border-transparent')} {...props} /> 
+)
+```
+
+// Theme customization 
+
+```css
+:root {
+  --radius: 0.75rem;
+  --background: 255 255 255;
+  --foreground: 15 23 42; 
+} 
+```
+</good_examples>

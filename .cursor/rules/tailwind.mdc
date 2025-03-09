@@ -1,0 +1,55 @@
+---
+description: Tailwind CSS coding guidelines and best practices
+globs: *.html, *.jsx, *.tsx, *.css
+alwaysApply: false
+---
+
+<coding_guidelines>
+
+- Prefer Tailwind classes for 80% of styling needs when matching design system presets
+- Convert to CSS when:
+  - Class combinations exceed 4 utilities
+  - Repeating complex patterns more than 3 times
+  - Needing precise numerical values (e.g. top: 13px)
+- Always use mobile-first responsive ordering:
+  - Good: text-sm md:text-base lg:text-lg
+</coding_guidelines>
+
+<code_organization>
+- Abstract recurring patterns using either:
+  1. Component encapsulation (React/Vue components)
+  2. @apply directives for CSS classes
+- Maintain design tokens in tailwind.config.js:
+// GOOD: Centralized configuration
+theme: {  
+  extend: {  
+    colors: {  
+      brand: { primary: '#3b82f6' }  
+    }  
+  }  
+}
+</code_organization>
+
+<readability_rules>
+
+- Group class names with comments for complex elements:
+  <!-- Layout --><div class="flex items-center 
+  <!-- Spacing -->p-4 gap-2 
+  <!-- Colors -->bg-white dark:bg-gray-800">  
+- Use Prettier with prettier-plugin-tailwindcss for automatic class sorting
+</readability_rules>
+
+<performance>
+- Enable JIT mode in development: ```js // tailwind.config.js mode: 'jit' ``` 
+- Purge unused styles in production builds 
+- Limit variant usage to essential states (hover/focus/active) 
+</performance>
+
+<anti_patterns>
+Avoid inline custom values:
+Bad: top-[13px] → Use theme.extend configuration
+Never chain more than 3 responsive prefixes:
+Bad: sm:md:lg:text-xl
+Prohibit arbitrary value concatenation:
+Bad: text-[${varName}]
+</anti_patterns>

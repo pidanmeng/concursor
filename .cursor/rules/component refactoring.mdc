@@ -1,0 +1,44 @@
+---
+description: React component refactoring best practices focusing on maintainability and performance
+globs: *.tsx, *.jsx
+alwaysApply: false
+---
+
+React Component Refactoring Rules
+
+<component_design>
+Keep components under 300 lines; split larger components into subcomponents
+Use function components with React Hooks (useState/useEffect/useMemo) instead of class components
+Follow single-responsibility principle for component logic separation
+Destructure props selectively using object pattern matching
+</component_design>
+
+<code_quality>
+Add PropTypes or TypeScript interfaces for all component props
+Use React.memo() for pure component memoization
+Wrap callback functions in useCallback to prevent unnecessary re-renders
+Avoid inline arrow functions in JSX props to maintain referential equality
+</code_quality>
+
+<performance_optimization>
+Memoize expensive calculations with useMemo
+Implement code splitting using React.lazy() for route-level components
+Use conditional rendering guards for expensive component trees
+Prefer controlled components for form state management
+</performance_optimization>
+
+<structure_conventions>
+Use named exports instead of default exports
+Keep 1 component per file; exceptions require clear justification
+Separate presentational and container components
+Group related hooks at top of component function
+</structure_conventions>
+
+<anti_patterns>
+Avoid:
+- Component files exceeding 500 lines
+- Prop drilling beyond 3 levels (use context instead)
+- Large inline objects in JSX
+- Unnecessary state lifting
+- useEffect overuse (chain reactions)
+</anti_patterns>
