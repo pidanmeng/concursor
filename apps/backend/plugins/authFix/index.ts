@@ -8,22 +8,12 @@ export const authFixPlugin = (): Plugin => {
       const originalAuth = typeof usersCollection.auth === 'object' ? usersCollection.auth : {}
       usersCollection.auth = {
         ...originalAuth,
-        disableLocalStrategy: undefined,
+        disableLocalStrategy: true,
         useAPIKey: true,
       }
       usersCollection.fields.push({
         name: 'apiKey',
         type: 'text',
-        access: {
-          read: ({ req, data }) => {
-            return req.user?.id === data?.id
-          },
-        },
-      })
-      usersCollection.fields.push({
-        name: 'password',
-        type: 'text',
-        required: false,
         access: {
           read: ({ req, data }) => {
             return req.user?.id === data?.id
