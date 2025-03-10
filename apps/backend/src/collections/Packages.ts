@@ -1,5 +1,6 @@
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
+import { isCreator } from '@/access/isCreator'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
 import type { CollectionConfig } from 'payload'
@@ -9,8 +10,8 @@ export const Packages: CollectionConfig = {
   access: {
     read: anyone,
     create: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    update: isCreator,
+    delete: isCreator,
   },
   labels: {
     singular: '集合',

@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { UserProvider } from '@/providers/userProvider'
 import { headers } from 'next/headers'
 import { getPayload } from 'payload'
-import config from '@/payload.config'
+import configPromise from '@/payload.config'
 import { getThemeServer } from '@/utils/getThemeServer'
 import { AuthProvider } from '@/providers/auth-provider'
 import { Metadata } from 'next'
@@ -45,7 +45,7 @@ export default async function RootLayout({
   // 获取用户信息
   const headersList = await headers()
   const theme = await getThemeServer()
-  const payloadConfig = await config
+  const payloadConfig = await configPromise
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers: headersList })
   const t = await getTranslations()
@@ -64,8 +64,7 @@ export default async function RootLayout({
           <UserProvider user={user}>
             <NextIntlClientProvider messages={messages} locale={locale}>
               <AuthProvider>
-                <Header />
-                <main className="container mx-auto flex-1 h-full">{children}</main>
+                {children}
               </AuthProvider>
             </NextIntlClientProvider>
           </UserProvider>

@@ -57,8 +57,13 @@ export const plugins: Plugin[] = [
   payloadCloudPlugin(),
   searchPlugin({
     collections: [COLLECTION_SLUGS.RULES],
+    beforeSync: async ({ searchDoc }) => {
+      return {
+        ...searchDoc,
+      }
+    },
     searchOverrides: {
-      slug: 'rule-search',
+      slug: COLLECTION_SLUGS.RULES_SEARCH,
       admin: {
         group: '搜索结果',
       },
@@ -66,8 +71,23 @@ export const plugins: Plugin[] = [
         singular: 'Rules搜索',
         plural: 'Rules搜索',
       },
-      fields: ({ defaultFields }) => {
-        return [...defaultFields]
+    },
+  }),
+  searchPlugin({
+    collections: [COLLECTION_SLUGS.FAVORITES],
+    beforeSync: async ({ searchDoc }) => {
+      return {
+        ...searchDoc,
+      }
+    },
+    searchOverrides: {
+      slug: COLLECTION_SLUGS.FAVORITES_SEARCH,
+      admin: {
+        group: '搜索结果',
+      },
+      labels: {
+        singular: '收藏搜索',
+        plural: '收藏搜索',
       },
     },
   }),

@@ -14,7 +14,8 @@
     "signOut": "Sign Out",
     "signup": "Sign up",
     "signupWithSocial": "Create an account with your email or social account",
-    "welcomeBack": "Welcome back"
+    "welcomeBack": "Welcome back",
+    "dashboard": "Dashboard"
   },
   "hello": "Hello",
   "metadata": {
@@ -25,7 +26,17 @@
     "signin": {
       "description": "Login with your email or social account",
       "title": "Welcome back"
+    },
+    "dashboard": {
+      "description": "Manage your cursor rules and projects.",
+      "title": "ConCursor - Dashboard"
     }
+  },
+  "sidebar": {
+    "dashboard": "Home",
+    "rules": "My Rules",
+    "projects": "Projects",
+    "favorites": "Favorites"
   },
   "nav": {
     "extension": "Extension",
@@ -49,6 +60,38 @@
     "thingsToDoAfterSignIn": "Now you can:",
     "returnToCursor": "Return to Cursor",
     "goExploreRules": "Go explore rules"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "stats": {
+      "rules": {
+        "title": "Total Rules",
+        "description": "All created Cursor rules"
+      },
+      "favorites": {
+        "title": "Favorites",
+        "description": "Your favorite Cursor rules"
+      },
+      "projects": {
+        "title": "Projects",
+        "description": "Your created projects"
+      }
+    },
+    "recentRules": {
+      "title": "Recent Rules",
+      "empty": "No rules yet, click \"New Rule\" to create one",
+      "addNew": "New Rule",
+      "viewAll": "View All Rules",
+      "updatedAt": "Updated"
+    },
+    "recentProjects": {
+      "title": "Recent Projects",
+      "empty": "No projects yet, click \"New Project\" to create one",
+      "addNew": "New Project",
+      "viewAll": "View All Projects",
+      "updatedAt": "Updated"
+    },
+    "noDescription": "No description"
   },
   "switchLanguage": "Switch Language"
 }

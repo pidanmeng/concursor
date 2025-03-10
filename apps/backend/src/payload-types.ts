@@ -74,9 +74,11 @@ export interface Config {
     media: Media;
     users: User;
     'admin-users': AdminUser;
+    projects: Project;
     forms: Form;
     'form-submissions': FormSubmission;
-    'rule-search': RuleSearch;
+    'rules-search': RulesSearch;
+    'favorites-search': FavoritesSearch;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -103,9 +105,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'admin-users': AdminUsersSelect<false> | AdminUsersSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
-    'rule-search': RuleSearchSelect<false> | RuleSearchSelect<true>;
+    'rules-search': RulesSearchSelect<false> | RulesSearchSelect<true>;
+    'favorites-search': FavoritesSearchSelect<false> | FavoritesSearchSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -314,17 +318,6 @@ export interface Media {
  */
 export interface Favorite {
   id: string;
-  user: string | User;
-  rule: string | Rule;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "packages".
- */
-export interface Package {
-  id: string;
   creator:
     | {
         relationTo: 'users';
@@ -334,11 +327,7 @@ export interface Package {
         relationTo: 'admin-users';
         value: string | AdminUser;
       };
-  name: string;
-  description?: string | null;
-  rules?: (string | Rule)[] | null;
-  private?: boolean | null;
-  tags?: (string | Tag)[] | null;
+  rule: string | Rule;
   updatedAt: string;
   createdAt: string;
 }
@@ -372,6 +361,29 @@ export interface AdminUser {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "packages".
+ */
+export interface Package {
+  id: string;
+  creator:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'admin-users';
+        value: string | AdminUser;
+      };
+  name: string;
+  description?: string | null;
+  rules?: (string | Rule)[] | null;
+  private?: boolean | null;
+  tags?: (string | Tag)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tags".
  */
 export interface Tag {
@@ -387,6 +399,34 @@ export interface Tag {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  creator:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'admin-users';
+        value: string | AdminUser;
+      };
+  title: string;
+  description?: string | null;
+  tags?: (string | Tag)[] | null;
+  rules?:
+    | {
+        rule?: (string | null) | Rule;
+        alias?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -584,15 +624,32 @@ export interface FormSubmission {
  * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "rule-search".
+ * via the `definition` "rules-search".
  */
-export interface RuleSearch {
+export interface RulesSearch {
   id: string;
   title?: string | null;
   priority?: number | null;
   doc: {
     relationTo: 'rules';
     value: string | Rule;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorites-search".
+ */
+export interface FavoritesSearch {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc: {
+    relationTo: 'favorites';
+    value: string | Favorite;
   };
   updatedAt: string;
   createdAt: string;
@@ -633,6 +690,10 @@ export interface PayloadLockedDocument {
         value: string | AdminUser;
       } | null)
     | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
         relationTo: 'forms';
         value: string | Form;
       } | null)
@@ -641,8 +702,12 @@ export interface PayloadLockedDocument {
         value: string | FormSubmission;
       } | null)
     | ({
-        relationTo: 'rule-search';
-        value: string | RuleSearch;
+        relationTo: 'rules-search';
+        value: string | RulesSearch;
+      } | null)
+    | ({
+        relationTo: 'favorites-search';
+        value: string | FavoritesSearch;
       } | null);
   globalSlug?: string | null;
   user:
@@ -743,7 +808,7 @@ export interface PackagesSelect<T extends boolean = true> {
  * via the `definition` "favorites_select".
  */
 export interface FavoritesSelect<T extends boolean = true> {
-  user?: T;
+  creator?: T;
   rule?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -890,6 +955,25 @@ export interface AdminUsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  creator?: T;
+  title?: T;
+  description?: T;
+  tags?: T;
+  rules?:
+    | T
+    | {
+        rule?: T;
+        alias?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1041,9 +1125,20 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "rule-search_select".
+ * via the `definition` "rules-search_select".
  */
-export interface RuleSearchSelect<T extends boolean = true> {
+export interface RulesSearchSelect<T extends boolean = true> {
+  title?: T;
+  priority?: T;
+  doc?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorites-search_select".
+ */
+export interface FavoritesSearchSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;

@@ -1,0 +1,79 @@
+---
+description: 项目介绍
+globs: 
+alwaysApply: true
+---
+<project_background>
+Cursor是一款基于VSCode和AI的IDE编码工具，它与VSCode共享插件生态，而Cursor有一项功能：在项目的 `\.cursor\rules` 下管理提示词；这个目录下可以存储若干个提示词文件，每个提示词文件包含了标题、简介和生效范围，在 Cursor 的 Agent 模式下，Cursor 的 Ai 会根据本次任务的内容自动索引目录下相关的提示词
+Cursor 官方对于这个功能的说明如下：
+
+Project rules offer a powerful and flexible system with path specific configurations. Project rules are stored in the .cursor/rules directory and provide granular control over AI behavior in different parts of your project.
+
+Here’s how they work
+
+Semantic Descriptions: Each rule can include a description of when it should be applied
+File Pattern Matching: Use glob patterns to specify which files/folders the rule applies to
+Automatic Attachment: Rules can be automatically included when matching files are referenced
+Reference files: Use @file in your project rules to include them as context when the rule is applied.
+You can reference rule files using @file, allowing you to chain multiple rules together
+
+You can create a new rule using the command palette with Cmd + Shift + P > New Cursor Rule. By using project rules you also get the benefit of version control since it’s just a file
+
+Example use cases:
+
+Framework-specific rules for certain file types (e.g., SolidJS preferences for .tsx files)
+Special handling for auto-generated files (e.g., .proto files)
+Custom UI development patterns
+Code style and architecture preferences for specific folders
+
+这个提示词管理的功能非常好用，但也带来了以下痛点
+由于是本地管理或git管理的提示词，一个用户的多个项目中，需要手动同步提示词
+自己维护提示词的工作会为用户带来一定的心智负担，需要订阅社区共同维护的提示词
+基于以上痛点我打算在Cursor的基础之上做一款VSCode插件，专门用来帮助用户管理自己的.cursor/rules
+
+</project_background>
+
+<project_detail>
+下面，我将对我现有的设计进行罗列和解释，首先我需要有一个用于存储用户数据和rules数据的服务端，我计划使用PayloadCMS实现服务端接口
+
+<backend>
+数据模型：
+
+- User - 用户
+- Rule - Cursor Rule
+- Favorite - 用于记录哪些用户收藏了哪些rules
+- Tag - 用于给 rules 和 packages 打标记，方便用户搜索
+- Project - 用于用户管理项目,每个项目收集了一个Rules的集合
+- SearchResult(Rule)
+- SearchResult(Project)
+
+详见 [payload-types.ts](mdc:apps/backend/src/payload-types.ts)
+</backend>
+
+<web>
+## Features
+
+- I18n
+- Sign in / Sign out
+	- OAuth
+		- Google
+		- Github
+	- Link to Extension
+- Landing Page
+	- Download Extention
+- Dashboard - 数据看板
+	- Edit Profile
+	- My Rules - 管理(创建/编辑/修改/删除)用户自己创建的Cursor Rules
+	- Favorite Rules - 管理用户收藏的Cursor Rules
+	- Projects - 管理用户的Projects,允许给每个Project设置别名,订阅Rules,取消订阅等等
+- Browse Rules
+	- All Rules
+	- by Tag
+- Search
+	- Tag
+	- Rule
+	- Package
+
+</web>
+
+</project_detail>

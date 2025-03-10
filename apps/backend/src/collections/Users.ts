@@ -58,7 +58,7 @@ export const Users: CollectionConfig = {
       name: 'favoriteRules',
       type: 'join',
       collection: COLLECTION_SLUGS.FAVORITES,
-      on: 'user',
+      on: 'creator',
       hasMany: true,
       label: '收藏的规则',
     },

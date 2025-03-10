@@ -9,6 +9,7 @@ import type { BulkOperationResult, Config as ConfigType, PaginatedDocs, Where } 
 export type PayloadApiClientOptions = {
   apiURL: string;
   fetcher?: typeof fetch;
+  apiKey?: string;
 };
 
 type CreateData<T> = Omit<T, 'id' | 'updatedAt' | 'createdAt'> & {
@@ -18,11 +19,33 @@ type CreateData<T> = Omit<T, 'id' | 'updatedAt' | 'createdAt'> & {
 
 export class PayloadApiClient<C extends ConfigType> {
   private apiURL: string;
-  private fetcher: typeof fetch;
+  private baseFetcher: typeof fetch;
+  private apiKey: string;
 
-  constructor({ apiURL, fetcher = typeof window !== 'undefined' ? window.fetch.bind(window) : fetch }: PayloadApiClientOptions) {
-    this.fetcher = fetcher;
+  constructor({
+    apiURL,
+    fetcher = typeof window !== 'undefined' ? window.fetch.bind(window) : fetch,
+    apiKey = '',
+  }: PayloadApiClientOptions) {
+    this.apiKey = apiKey;
+    this.baseFetcher = fetcher;
     this.apiURL = apiURL;
+  }
+
+  private fetcher(url: RequestInfo | URL, options?: RequestInit) {
+    if (this.apiKey) {
+      return this.baseFetcher(
+        url,
+        {
+          ...options,
+          headers: {
+            ...options?.headers,
+            'Authorization': `users API-Key ${this.apiKey}`,
+          },
+        },
+      );
+    }
+    return this.baseFetcher(url, options);
   }
 
   async auth<T extends keyof C['collections']>({
@@ -52,7 +75,7 @@ export class PayloadApiClient<C extends ConfigType> {
     fallbackLocale?: C['locale'];
     file?: File;
     locale?: C['locale'];
-  }): Promise<{doc: C['collections'][T]; message: string}> {
+  }): Promise<{ doc: C['collections'][T]; message: string }> {
     const qs = buildQueryString(toQs);
 
     const requestInit: RequestInit = { method: 'POST' };
@@ -231,7 +254,7 @@ export class PayloadApiClient<C extends ConfigType> {
     file?: File;
     id: C['collections'][T]['id'];
     locale?: C['locale'];
-  }): Promise<{doc: C['collections'][T]; message: string}> {
+  }): Promise<{ doc: C['collections'][T]; message: string }> {
     const qs = buildQueryString(toQs);
 
     const requestInit: RequestInit = { method: 'PATCH' };

@@ -6,6 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { signOut } from 'next-auth/react'
 import { useUser } from '@/providers/userProvider'
@@ -36,6 +37,10 @@ export function AuthButton() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard">{t('auth.dashboard')}</Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/signin' })}>
           {t('auth.signOut')}
         </DropdownMenuItem>

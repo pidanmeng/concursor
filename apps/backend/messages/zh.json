@@ -14,7 +14,8 @@
     "signOut": "退出",
     "signup": "注册",
     "signupWithSocial": "使用邮箱或社交账号注册",
-    "welcomeBack": "欢迎回来"
+    "welcomeBack": "欢迎回来",
+    "dashboard": "仪表盘"
   },
   "hello": "你好",
   "metadata": {
@@ -25,7 +26,17 @@
     "signin": {
       "description": "使用邮箱或社交账号登录",
       "title": "欢迎回来"
+    },
+    "dashboard": {
+      "description": "管理你的 Cursor Rules 和项目。",
+      "title": "ConCursor - 仪表盘"
     }
+  },
+  "sidebar": {
+    "dashboard": "首页",
+    "rules": "Cursor Rules",
+    "projects": "项目",
+    "favorites": "收藏"
   },
   "nav": {
     "extension": "扩展",
@@ -49,6 +60,38 @@
     "thingsToDoAfterSignIn": "你现在可以:",
     "returnToCursor": "返回 Cursor",
     "goExploreRules": "去探索规则"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "stats": {
+      "rules": {
+        "title": "总规则数",
+        "description": "所有创建的Cursor规则"
+      },
+      "favorites": {
+        "title": "收藏夹",
+        "description": "已收藏的Cursor规则"
+      },
+      "projects": {
+        "title": "项目",
+        "description": "已创建的项目"
+      }
+    },
+    "recentRules": {
+      "title": "最近规则",
+      "empty": "暂无规则，点击\"新规则\"创建",
+      "addNew": "新规则",
+      "viewAll": "查看所有规则",
+      "updatedAt": "更新于"
+    },
+    "recentProjects": {
+      "title": "最近项目",
+      "empty": "暂无项目，点击\"新项目\"创建",
+      "addNew": "新项目",
+      "viewAll": "查看所有项目",
+      "updatedAt": "更新于"
+    },
+    "noDescription": "无描述"
   },
   "switchLanguage": "切换语言"
 }

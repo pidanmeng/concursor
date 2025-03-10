@@ -6,6 +6,9 @@ export const COLLECTION_SLUGS = {
   TAGS: 'tags',
   PACKAGES: 'packages',
   FAVORITES: 'favorites',
+  PROJECTS: 'projects',
+  RULES_SEARCH: 'rules-search',
+  FAVORITES_SEARCH: 'favorites-search',
 } as const
 
 export type CollectionSlug = typeof COLLECTION_SLUGS[keyof typeof COLLECTION_SLUGS]

@@ -17,7 +17,7 @@ import { plugins } from '../plugins'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const config = buildConfig({
+const configPromise = buildConfig({
   i18n: {
     fallbackLanguage: 'zh',
     supportedLanguages: {
@@ -76,4 +76,4 @@ const config = buildConfig({
   }),
 })
 
-export default config
+export default configPromise

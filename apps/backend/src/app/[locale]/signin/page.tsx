@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
 import { redirect } from '@/i18n/routing'
 import { getPayload } from 'payload'
-import config from '@/payload.config'
+import configPromise from '@/payload.config'
 import { headers } from 'next/headers'
 import { getTranslations } from 'next-intl/server'
 import SignInPageClient from './page.client'
+import { Header } from '@/components/Header'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations()
@@ -23,7 +24,7 @@ export default async function SignInPage({
   params: Promise<{ locale: string }>
 }) {
   const headersList = await headers()
-  const payloadConfig = await config
+  const payloadConfig = await configPromise
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers: headersList })
   const searchParams = await searchParamsPromise
@@ -36,5 +37,12 @@ export default async function SignInPage({
     })
   }
 
-  return <SignInPageClient />
+  return (
+    <>
+      <Header />
+      <main className="container mx-auto flex-1 h-full">
+        <SignInPageClient />
+      </main>
+    </>
+  )
 }
