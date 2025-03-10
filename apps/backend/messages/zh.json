@@ -66,15 +66,55 @@
     "stats": {
       "rules": {
         "title": "总规则数",
-        "description": "所有创建的Cursor规则"
+        "description": "所有创建的Cursor Rule"
       },
       "favorites": {
         "title": "收藏夹",
-        "description": "已收藏的Cursor规则"
+        "description": "已收藏的Cursor Rule"
       },
       "projects": {
         "title": "项目",
         "description": "已创建的项目"
+      }
+    },
+    "addRule": {
+      "btn": "新规则",
+      "title": "添加规则",
+      "description": "添加一个新的Cursor Rule",
+      "confirm": "确认",
+      "formLabels": {
+        "title": "标题",
+        "description": "描述",
+        "globs": "Globs",
+        "content": "  内容",
+        "private": "私密"
+      },
+      "placeholders": {
+        "title": "输入规则的标题",
+        "description": "这个规则是做什么的...",
+        "globs": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
+        "content": "输入提示词"
+      },
+      "formDescriptions": {
+        "description": "Cursor 代理可以看到这个描述，并根据你的提示词决定是否阅读完整的规则",
+        "globs": "在这里指定文件模式（例如 *.py 或 client/**/*.tsx），这个规则将自动包含在匹配这些模式的文件的 AI 响应中"
+      }
+    },
+    "addProject": {
+      "btn": "新项目",
+      "title": "添加项目",
+      "description": "添加一个新的项目",
+      "confirm": "确认",
+      "formLabels": {
+        "title": "标题",
+        "description": "描述"
+      },
+      "placeholders": {
+        "title": "输入项目的标题",
+        "description": "这个项目是做什么的..."
+      },
+      "formDescriptions": {
+        "description": "项目的简短描述，帮助你区分不同的项目"
       }
     },
     "recentRules": {

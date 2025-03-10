@@ -1,39 +1,34 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Plus } from 'lucide-react'
 
 interface ItemCardProps {
   title: string
   emptyText: string
-  addButtonText: string
   viewAllText: string
-  onAddClick?: () => void
   onViewAllClick?: () => void
   children?: React.ReactNode
   isEmpty?: boolean
+  addButton?: React.ReactNode
 }
 
 export function ItemCard({
   title,
   emptyText,
-  addButtonText,
   viewAllText,
-  onAddClick,
   onViewAllClick,
   children,
   isEmpty = false,
+  addButton,
 }: ItemCardProps) {
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">{title}</h2>
-          <Button onClick={onAddClick}>
-            <Plus /> {addButtonText}
-          </Button>
+          {addButton}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1">
         {!isEmpty ? (
           <div className="space-y-4">{children}</div>
         ) : (

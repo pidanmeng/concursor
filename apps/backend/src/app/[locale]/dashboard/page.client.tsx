@@ -1,8 +1,8 @@
 'use client'
 
 import { StatsCard } from '@/components/dashboard/stats-card'
-import { RecentRulesCard } from '@/components/dashboard/recent-rules-card'
-import { RecentProjectsCard } from '@/components/dashboard/recent-projects-card'
+import { RecentRulesCard } from './components/recent-rules-card'
+import { RecentProjectsCard } from './components/recent-projects-card'
 import { useTranslations } from 'next-intl'
 import type { Rule, Project } from '@/payload-types'
 import { Settings, Folder, Star } from 'lucide-react'
@@ -10,12 +10,12 @@ import { atom, useAtomValue } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
 import { DashboardData } from '@/actions/dashboard'
 
-const recentRulesAtom = atom<Rule[]>([])
-const recentProjectsAtom = atom<Project[]>([])
-const statsAtom = atom<DashboardData['stats']>({
-  rules: { value: 0, change: 0 },
-  favorites: { value: 0, change: 0 },
-  projects: { value: 0, change: 0 },
+export const recentRulesAtom = atom<Rule[]>([])
+export const recentProjectsAtom = atom<Project[]>([])
+export const statsAtom = atom<DashboardData['stats']>({
+  rules: { value: 0 },
+  favorites: { value: 0 },
+  projects: { value: 0 },
 })
 
 
@@ -25,19 +25,18 @@ interface DashboardContentProps {
   recentProjects: Project[]
 }
 
-export function DashboardContent({ stats, recentRules, recentProjects }: DashboardContentProps) {
+export function DashboardContent({ stats: statsFromServer, recentRules: recentRulesFromServer, recentProjects: recentProjectsFromServer }: DashboardContentProps) {
   const t = useTranslations('dashboard')
 
   useHydrateAtoms([
-    [recentRulesAtom, recentRules],
-    [recentProjectsAtom, recentProjects],
-    [statsAtom, stats],
+    [recentRulesAtom, recentRulesFromServer],
+    [recentProjectsAtom, recentProjectsFromServer],
+    [statsAtom, statsFromServer],
   ])
 
-  const a = useAtomValue(recentRulesAtom)
-  const b = useAtomValue(recentProjectsAtom)
-  const c = useAtomValue(statsAtom)
-  console.log('123', a, b, c)
+  const stats = useAtomValue(statsAtom)
+  const recentRules = useAtomValue(recentRulesAtom)
+  const recentProjects = useAtomValue(recentProjectsAtom)
 
   return (
     <>

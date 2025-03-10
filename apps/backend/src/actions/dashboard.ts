@@ -4,10 +4,11 @@ import { headers } from 'next/headers'
 import payloadConfig from '@/payload.config'
 import { getPayload } from 'payload'
 import type { Rule, Project } from '@/payload-types'
+import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
+import { RECENT_LIMIT } from '@/app/[locale]/dashboard/constants/dashboard'
 
 interface StatsData {
   value: number
-  change: number
 }
 
 export interface DashboardData {
@@ -25,14 +26,14 @@ export async function getDashboardOverview(): Promise<DashboardData> {
 
   const headersList = await headers()
   const { user } = await payload.auth({ headers: headersList })
-  
+
   if (!user) {
     throw new Error('User not authenticated')
   }
-  
+
   const rules = await payload.find({
     collection: 'rules',
-    limit: 5,
+    limit: RECENT_LIMIT,
     sort: '-updatedAt',
     where: {
       'creator.value': {
@@ -41,7 +42,7 @@ export async function getDashboardOverview(): Promise<DashboardData> {
     },
   })
 
-  const favorites = await payload.find({
+  const favorites = await payload.count({
     collection: 'favorites',
     where: {
       'creator.value': {
@@ -52,7 +53,7 @@ export async function getDashboardOverview(): Promise<DashboardData> {
 
   const projects = await payload.find({
     collection: 'projects',
-    limit: 5,
+    limit: RECENT_LIMIT,
     sort: '-updatedAt',
     where: {
       'creator.value': {
@@ -61,27 +62,57 @@ export async function getDashboardOverview(): Promise<DashboardData> {
     },
   })
 
-  // 模拟月度变化数据
-  const rulesChange = rules.totalDocs > 0 ? Math.floor(rules.totalDocs * 0.2) : 0
-  const favoritesChange = favorites.totalDocs > 0 ? Math.floor(favorites.totalDocs * 0.3) : 0
-  const projectsChange = projects.totalDocs > 0 ? Math.floor(projects.totalDocs * 0.1) : 0
-
   return {
     stats: {
       rules: {
         value: rules.totalDocs,
-        change: rulesChange,
       },
       favorites: {
         value: favorites.totalDocs,
-        change: favoritesChange,
       },
       projects: {
         value: projects.totalDocs,
-        change: projectsChange,
       },
     },
     recentRules: rules.docs as Rule[],
     recentProjects: projects.docs as Project[],
   }
+}
+
+export async function createRule(
+  data: Pick<Rule, 'title' | 'content' | 'description' | 'globs' | 'private'> & { id?: string },
+) {
+  const payload = await getPayload({ config: payloadConfig })
+  const headersList = await headers()
+  const { user } = await payload.auth({ headers: headersList })
+  if (!user) {
+    throw new Error('User not authenticated')
+  }
+  const rule = await payload.create({
+    collection: 'rules',
+    data: {
+      ...data,
+      creator: { value: user.id, relationTo: COLLECTION_SLUGS.USERS },
+    },
+  })
+  return rule
+}
+
+export async function createProject(
+  data: Pick<Project, 'title' | 'description'> & { id?: string },
+): Promise<Project> {
+  const payload = await getPayload({ config: payloadConfig })
+  const headersList = await headers()
+  const { user } = await payload.auth({ headers: headersList })
+  if (!user) {
+    throw new Error('User not authenticated')
+  }
+  const project = await payload.create({
+    collection: 'projects',
+    data: {
+      ...data,
+      creator: { value: user.id, relationTo: COLLECTION_SLUGS.USERS },
+    },
+  })
+  return project
 }

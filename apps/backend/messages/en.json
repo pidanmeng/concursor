@@ -77,6 +77,46 @@
         "description": "Your created projects"
       }
     },
+    "addRule": {
+      "btn": "New Rule",
+      "title": "Add Rule",
+      "description": "Add a new Cursor rule",
+      "confirm": "Confirm",
+      "formLabels": {
+        "title": "Title",
+        "description": "Description",
+        "globs": "Globs",
+        "content": "Content",
+        "private": "Private"
+      },
+      "placeholders": {
+        "title": "Enter the title of the rule",
+        "description": "Description of the task this rule is helpful for...",
+        "globs": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
+        "content": "Enter the prompt of the rule"
+      },
+      "formDescriptions": {
+        "description": "The Cursor agent can see this description and decide to read the full rule if it wants it.",
+        "globs": "When you specify file patterns here (e.g. *.py or client/**/*.tsx), this rule will automatically be included in AI responses for files matching those patterns"
+      }
+    },
+    "addProject": {
+      "btn": "New Project",
+      "title": "Add Project",
+      "description": "Add a new project",
+      "confirm": "Confirm",
+      "formLabels": {
+        "title": "Title",
+        "description": "Description"
+      },
+      "placeholders": {
+        "title": "Enter the title of the project",
+        "description": "What is this project about..."
+      },
+      "formDescriptions": {
+        "description": "A brief description to help you identify your projects"
+      }
+    },
     "recentRules": {
       "title": "Recent Rules",
       "empty": "No rules yet, click \"New Rule\" to create one",
