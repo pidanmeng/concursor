@@ -74,7 +74,8 @@
   ],
   "i18n-ally.localesPaths": [
     "apps/**/messages",
-    "apps/**/l10n"
+    "apps/**/l10n",
+    "apps/**"
   ],
   "i18n-ally.sourceLanguage": "en",
   "i18n-ally.keystyle": "nested",
@@ -82,7 +83,7 @@
   "i18n-ally.sortCompare": "binary",
   "i18n-ally.keepFulfilled": true,
   "i18n-ally.translate.promptSource": true,
-  "i18n-ally.pathMatcher": "{locale}.json",
+  "i18n-ally.pathMatcher": "package.nls.{locale}.json",
   "i18n-ally.translate.saveAsCandidates": true,
   "i18n-ally.keysInUse": [
     "view.progress_submenu.translated_keys",

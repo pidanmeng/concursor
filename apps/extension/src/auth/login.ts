@@ -2,7 +2,7 @@ import { getPayload } from '@concursor/api'
 import { env, l10n, Uri, window, workspace } from 'vscode'
 import { port } from '../server'
 import { logger } from '../utils'
-import { getBaseUrl } from '../utils/getBaseUrl'
+import { getApiBaseUrl, getBaseUrl } from '../utils/getBaseUrl'
 import { currentUser } from './currentUser'
 import { getUserInfo } from './getUserInfo'
 import { getApiKeyFromSecretStorage, saveApiKey } from './storage'
@@ -24,7 +24,7 @@ export async function login(options: LoginOptions = {}) {
   const apiKey = newApiKey ?? (await getApiKeyFromSecretStorage())
   if (apiKey) {
     const payload = getPayload()
-    payload.setBaseUrl(getBaseUrl())
+    payload.setBaseUrl(getApiBaseUrl())
     payload.setApiKey(apiKey ?? '')
 
     if (apiKey) {

@@ -15,9 +15,10 @@
 
 <!-- commands -->
 
-| Command           | Title           |
-| ----------------- | --------------- |
-| `concursor.login` | Login Concursor |
+| Command           | Title                   |
+| ----------------- | ----------------------- |
+| `concursor.login` | %concursor.login.title% |
+| `concursor.init`  | %concursor.init.title%  |
 
 <!-- commands -->
 
