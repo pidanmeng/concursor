@@ -5,6 +5,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { logger } from "../utils";
+import { currentUser } from "../auth/currentUser";
 
 type setting = { projectId?: string, disableConcursor?: boolean }
 export async function initConcursor() {
@@ -21,7 +22,9 @@ export async function initConcursor() {
     try {
         if (fs.existsSync(settingsPath)) {
             const settingsContent = fs.readFileSync(settingsPath, 'utf8');
-            settings = JSON.parse(settingsContent);
+            if (settingsContent) {
+                settings = JSON.parse(settingsContent);
+            }
         }
     } catch (error) {
         console.error('读取设置文件失败:', error);
@@ -52,6 +55,11 @@ export async function initConcursor() {
     const payload = getPayload();
     const project = await payload.find({
         collection: 'projects',
+        where: {
+            'creator.value': {
+                equals: currentUser.value?.id
+            }
+        }
     });
 
     let newProjectId: string | undefined;
@@ -83,7 +91,7 @@ export async function initConcursor() {
     } else {
         newProjectId = selected.id;
     }
-
+    logger.info('newProjectId', newProjectId)
     if (newProjectId) {
         // 写 ProjectId 到设置
         updateSettings(settingsPath, settings, { projectId: newProjectId });
@@ -97,7 +105,6 @@ async function createNewProject(payload: any): Promise<string | undefined> {
         placeHolder: '请输入项目名称',
         prompt: '创建新项目'
     });
-
     if (!projectName) {
         return undefined;
     }
@@ -110,8 +117,7 @@ async function createNewProject(payload: any): Promise<string | undefined> {
                 // 可以添加其他项目属性
             }
         });
-
-        return newProject.id;
+        return newProject.doc?.id;
     } catch (error) {
         vscode.window.showErrorMessage(`创建项目失败: ${error}`);
         return undefined;
