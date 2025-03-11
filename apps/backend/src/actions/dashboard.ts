@@ -32,7 +32,7 @@ export async function getDashboardOverview(): Promise<DashboardData> {
   }
 
   const rules = await payload.find({
-    collection: 'rules',
+    collection: COLLECTION_SLUGS.RULES,
     limit: RECENT_LIMIT,
     sort: '-updatedAt',
     where: {
@@ -43,7 +43,7 @@ export async function getDashboardOverview(): Promise<DashboardData> {
   })
 
   const favorites = await payload.count({
-    collection: 'favorites',
+    collection: COLLECTION_SLUGS.FAVORITES,
     where: {
       'creator.value': {
         equals: user.id,
@@ -52,7 +52,7 @@ export async function getDashboardOverview(): Promise<DashboardData> {
   })
 
   const projects = await payload.find({
-    collection: 'projects',
+    collection: COLLECTION_SLUGS.PROJECTS,
     limit: RECENT_LIMIT,
     sort: '-updatedAt',
     where: {

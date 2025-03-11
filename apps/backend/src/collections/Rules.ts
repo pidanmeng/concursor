@@ -3,7 +3,45 @@ import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
-import type { CollectionConfig } from 'payload'
+import { BeforeSync } from '@payloadcms/plugin-search/types'
+import type { CollectionConfig, Field } from 'payload'
+
+export const baseRuleFields: Field[] = [
+  creator(),
+
+  {
+    name: 'description',
+    type: 'text',
+    index: true,
+  },
+  {
+    name: 'downloadCount',
+    type: 'number',
+    defaultValue: 0,
+  },
+  {
+    name: 'tags',
+    type: 'relationship',
+    relationTo: COLLECTION_SLUGS.TAGS,
+    hasMany: true,
+  },
+  {
+    name: 'private',
+    type: 'checkbox',
+    defaultValue: false,
+  },
+]
+
+export const ruleBeforeSync: BeforeSync = function ({ searchDoc, originalDoc }) {
+  return {
+    ...searchDoc,
+    creator: originalDoc.creator,
+    tags: originalDoc.tags,
+    private: originalDoc.private,
+    description: originalDoc.description,
+    downloadCount: originalDoc.downloadCount,
+  }
+}
 
 export const Rules: CollectionConfig = {
   slug: COLLECTION_SLUGS.RULES,
@@ -30,18 +68,13 @@ export const Rules: CollectionConfig = {
     group: 'Cursor Rules',
   },
   fields: [
-    creator(),
     {
       name: 'title',
       type: 'text',
       required: true,
       index: true,
     },
-    {
-      name: 'description',
-      type: 'text',
-      index: true,
-    },
+    ...baseRuleFields,
     {
       name: 'globs',
       type: 'text',
@@ -53,25 +86,9 @@ export const Rules: CollectionConfig = {
       index: true,
     },
     {
-      name: 'tags',
-      type: 'relationship',
-      relationTo: COLLECTION_SLUGS.TAGS,
-      hasMany: true,
-    },
-    {
-      name: 'private',
-      type: 'checkbox',
-      defaultValue: false,
-    },
-    {
       name: 'forkedFrom',
       type: 'relationship',
       relationTo: COLLECTION_SLUGS.RULES,
-    },
-    {
-      name: 'downloadCount',
-      type: 'number',
-      defaultValue: 0,
     },
   ],
 }

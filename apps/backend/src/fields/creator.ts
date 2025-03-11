@@ -9,6 +9,7 @@ export function creator({ override }: { override?: Partial<Field> } = {}): Field
       readOnly: true,
     },
     name: 'creator',
+    index: true,
     required: true,
     type: 'relationship',
     relationTo: [COLLECTION_SLUGS.USERS, COLLECTION_SLUGS.ADMIN_USERS],

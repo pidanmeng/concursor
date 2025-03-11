@@ -79,6 +79,7 @@ export interface Config {
     'form-submissions': FormSubmission;
     'rules-search': RulesSearch;
     'favorites-search': FavoritesSearch;
+    'tags-search': TagsSearch;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -110,6 +111,7 @@ export interface Config {
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'rules-search': RulesSearchSelect<false> | RulesSearchSelect<true>;
     'favorites-search': FavoritesSearchSelect<false> | FavoritesSearchSelect<true>;
+    'tags-search': TagsSearchSelect<false> | TagsSearchSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -174,6 +176,7 @@ export interface AdminUserAuthOperations {
  */
 export interface Rule {
   id: string;
+  title: string;
   creator:
     | {
         relationTo: 'users';
@@ -183,14 +186,13 @@ export interface Rule {
         relationTo: 'admin-users';
         value: string | AdminUser;
       };
-  title: string;
   description?: string | null;
-  globs?: string | null;
-  content: string;
+  downloadCount?: number | null;
   tags?: (string | Tag)[] | null;
   private?: boolean | null;
+  globs?: string | null;
+  content: string;
   forkedFrom?: (string | null) | Rule;
-  downloadCount?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -634,6 +636,19 @@ export interface RulesSearch {
     relationTo: 'rules';
     value: string | Rule;
   };
+  creator:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'admin-users';
+        value: string | AdminUser;
+      };
+  description?: string | null;
+  downloadCount?: number | null;
+  tags?: (string | Tag)[] | null;
+  private?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -651,6 +666,34 @@ export interface FavoritesSearch {
     relationTo: 'favorites';
     value: string | Favorite;
   };
+  creator:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'admin-users';
+        value: string | AdminUser;
+      };
+  rule: string | Rule;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags-search".
+ */
+export interface TagsSearch {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc: {
+    relationTo: 'tags';
+    value: string | Tag;
+  };
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -708,6 +751,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'favorites-search';
         value: string | FavoritesSearch;
+      } | null)
+    | ({
+        relationTo: 'tags-search';
+        value: string | TagsSearch;
       } | null);
   globalSlug?: string | null;
   user:
@@ -766,15 +813,15 @@ export interface PayloadMigration {
  * via the `definition` "rules_select".
  */
 export interface RulesSelect<T extends boolean = true> {
-  creator?: T;
   title?: T;
+  creator?: T;
   description?: T;
-  globs?: T;
-  content?: T;
+  downloadCount?: T;
   tags?: T;
   private?: T;
+  globs?: T;
+  content?: T;
   forkedFrom?: T;
-  downloadCount?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1131,6 +1178,11 @@ export interface RulesSearchSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;
+  creator?: T;
+  description?: T;
+  downloadCount?: T;
+  tags?: T;
+  private?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1142,6 +1194,20 @@ export interface FavoritesSearchSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;
+  creator?: T;
+  rule?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags-search_select".
+ */
+export interface TagsSearchSelect<T extends boolean = true> {
+  title?: T;
+  priority?: T;
+  doc?: T;
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }

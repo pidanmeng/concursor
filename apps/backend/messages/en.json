@@ -61,6 +61,13 @@
     "returnToCursor": "Return to Cursor",
     "goExploreRules": "Go explore rules"
   },
+  "common": {
+    "submitting": "Submitting...",
+    "errors": {
+      "submitFailed": "Submit failed:"
+    },
+    "preview": "Preview"
+  },
   "dashboard": {
     "title": "Dashboard",
     "stats": {
@@ -82,22 +89,21 @@
       "title": "Add Rule",
       "description": "Add a new Cursor rule",
       "confirm": "Confirm",
-      "formLabels": {
-        "title": "Title",
+      "form": {
         "description": "Description",
-        "globs": "Globs",
-        "content": "Content",
-        "private": "Private"
-      },
-      "placeholders": {
-        "title": "Enter the title of the rule",
-        "description": "Description of the task this rule is helpful for...",
-        "globs": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
-        "content": "Enter the prompt of the rule"
-      },
-      "formDescriptions": {
-        "description": "The Cursor agent can see this description and decide to read the full rule if it wants it.",
-        "globs": "When you specify file patterns here (e.g. *.py or client/**/*.tsx), this rule will automatically be included in AI responses for files matching those patterns"
+        "globPattern": "Glob Pattern",
+        "titlePlaceholder": "Enter the title of the rule",
+        "descriptionPlaceholder": "Description of the task this rule is helpful for...",
+        "globPatternPlaceholder": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
+        "contentPlaceholder": "Enter the prompt of the rule",
+        "title": {
+          "minLength": "Title must be at least 2 characters.",
+          "label": "Title"
+        },
+        "content": {
+          "minLength": "Content must be at least 10 characters.",
+          "label": "Content"
+        }
       }
     },
     "addProject": {
@@ -105,16 +111,14 @@
       "title": "Add Project",
       "description": "Add a new project",
       "confirm": "Confirm",
-      "formLabels": {
-        "title": "Title",
-        "description": "Description"
-      },
-      "placeholders": {
-        "title": "Enter the title of the project",
-        "description": "What is this project about..."
-      },
-      "formDescriptions": {
-        "description": "A brief description to help you identify your projects"
+      "form": {
+        "description": "Description",
+        "titlePlaceholder": "Enter the title of the project",
+        "descriptionPlaceholder": "What is this project about...",
+        "title": {
+          "minLength": "Title must be at least 2 characters.",
+          "label": "Title"
+        }
       }
     },
     "recentRules": {
@@ -122,16 +126,44 @@
       "empty": "No rules yet, click \"New Rule\" to create one",
       "addNew": "New Rule",
       "viewAll": "View All Rules",
-      "updatedAt": "Updated"
+      "updatedAt": "Updated {date}"
     },
     "recentProjects": {
       "title": "Recent Projects",
       "empty": "No projects yet, click \"New Project\" to create one",
       "addNew": "New Project",
       "viewAll": "View All Projects",
-      "updatedAt": "Updated"
+      "updatedAt": "Updated {date}"
     },
     "noDescription": "No description"
+  },
+  "Dashboard": {
+    "Rules": {
+      "title": "My Cursor Rules",
+      "description": "Manage all your created Cursor rules",
+      "tableCaption": "Your list of Cursor Rules",
+      "loading": "Loading...",
+      "noRules": "No rules yet, click \"New Rule\" to create one",
+      "column": {
+        "title": "Title",
+        "private": "Visibility",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "view": "View"
+      },
+      "createRule": "Create Rule",
+      "deleteConfirm": {
+        "title": "Confirm Deletion",
+        "description": "Are you sure you want to delete this rule? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel"
+      }
+    }
   },
   "switchLanguage": "Switch Language"
 }

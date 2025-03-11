@@ -10,6 +10,9 @@ import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { authjsPlugin } from 'payload-authjs'
 import { authConfig } from '@/utils/auth'
 import { authFixPlugin } from './authFix'
+import { baseFavoriteFields, favoriteBeforeSync } from '@/collections/Favorites'
+import { baseRuleFields, ruleBeforeSync } from '@/collections/Rules'
+import { baseTagFields, tagBeforeSync } from '@/collections/Tags'
 
 export const plugins: Plugin[] = [
   formBuilderPlugin({
@@ -57,11 +60,8 @@ export const plugins: Plugin[] = [
   payloadCloudPlugin(),
   searchPlugin({
     collections: [COLLECTION_SLUGS.RULES],
-    beforeSync: async ({ searchDoc }) => {
-      return {
-        ...searchDoc,
-      }
-    },
+    beforeSync: ruleBeforeSync,
+    localize: false,
     searchOverrides: {
       slug: COLLECTION_SLUGS.RULES_SEARCH,
       admin: {
@@ -71,15 +71,15 @@ export const plugins: Plugin[] = [
         singular: 'Rules搜索',
         plural: 'Rules搜索',
       },
+      fields: ({ defaultFields }) => {
+        return [...defaultFields, ...baseRuleFields]
+      },
     },
   }),
   searchPlugin({
     collections: [COLLECTION_SLUGS.FAVORITES],
-    beforeSync: async ({ searchDoc }) => {
-      return {
-        ...searchDoc,
-      }
-    },
+    beforeSync: favoriteBeforeSync,
+    localize: false,
     searchOverrides: {
       slug: COLLECTION_SLUGS.FAVORITES_SEARCH,
       admin: {
@@ -88,6 +88,27 @@ export const plugins: Plugin[] = [
       labels: {
         singular: '收藏搜索',
         plural: '收藏搜索',
+      },
+      fields: ({ defaultFields }) => {
+        return [...defaultFields, ...baseFavoriteFields]
+      },
+    },
+  }),
+  searchPlugin({
+    collections: [COLLECTION_SLUGS.TAGS],
+    beforeSync: tagBeforeSync,
+    localize: false,
+    searchOverrides: {
+      slug: COLLECTION_SLUGS.TAGS_SEARCH,
+      admin: {
+        group: '搜索结果',
+      },
+      labels: {
+        singular: 'Tags搜索',
+        plural: 'Tags搜索',
+      },
+      fields: ({ defaultFields }) => {
+        return [...defaultFields, ...baseTagFields]
       },
     },
   }),

@@ -1,29 +1,34 @@
+import { Rule } from '@/payload-types'
 import { useTranslations } from 'next-intl'
-import { ItemCard } from '@/components/dashboard/item-card'
-import { ItemRow } from '@/components/dashboard/item-row'
-import type { Rule } from '@/payload-types'
-import { AddRulesDialog } from '@/components/dashboard/add-rules-dialog'
+import { Settings } from 'lucide-react'
+import { memo, useCallback } from 'react'
+import { GenericItemCard } from './generic-item-card'
+import { ItemRow } from './item-row'
 import { useSetAtom } from 'jotai'
-import { statsAtom, recentRulesAtom } from '../page.client'
-import { useCallback } from 'react'
+import { recentRulesAtom, statsAtom } from '@/states/dashboard'
 import { DashboardData } from '@/actions/dashboard'
-import { RECENT_LIMIT } from '../constants/dashboard'
+import { AddRulesSheet } from './add-rules-sheet'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
-interface RulesCardProps {
+const RECENT_LIMIT = 5
+
+export interface RecentRulesCardProps {
   rules: Rule[]
-  icon: React.ReactNode
   onViewAllRules?: () => void
 }
 
-export function RecentRulesCard({ rules, icon, onViewAllRules }: RulesCardProps) {
+export const RecentRulesCard = memo(function RecentRulesCard({
+  rules,
+  onViewAllRules,
+}: RecentRulesCardProps) {
   const t = useTranslations('dashboard')
   const setRecentRules = useSetAtom(recentRulesAtom)
   const setStats = useSetAtom(statsAtom)
+
   const onSuccess = useCallback(
     (rule: Rule) => {
-      setRecentRules((prev) => [rule, ...prev].slice(0, RECENT_LIMIT))
+      setRecentRules((prev: Rule[]) => [rule, ...prev].slice(0, RECENT_LIMIT))
       setStats((prev: DashboardData['stats']) => ({
         ...prev,
         rules: { ...prev.rules, value: prev.rules.value + 1 },
@@ -31,32 +36,33 @@ export function RecentRulesCard({ rules, icon, onViewAllRules }: RulesCardProps)
     },
     [setRecentRules, setStats],
   )
+
   return (
-    <ItemCard
+    <GenericItemCard<Rule>
       title={t('recentRules.title')}
       emptyText={t('recentRules.empty')}
       viewAllText={t('recentRules.viewAll')}
+      items={rules}
       onViewAllClick={onViewAllRules}
-      isEmpty={rules.length === 0}
       addButton={
-        <AddRulesDialog onSuccess={onSuccess}>
+        <AddRulesSheet onSuccess={onSuccess}>
           <Button>
             <Plus className="mr-2 h-4 w-4" />
             {t('addRule.btn')}
           </Button>
-        </AddRulesDialog>
+        </AddRulesSheet>
       }
-    >
-      {rules.map((rule) => (
-        <ItemRow
-          key={rule.id}
+      renderItem={(rule) => (
+        <ItemRow<Rule>
           id={rule.id}
           title={rule.title}
           description={rule.description || t('noDescription')}
           updatedAt={rule.updatedAt}
-          icon={icon}
+          icon={<Settings className="text-primary h-5 w-5" />}
+          item={rule}
+          translationPrefix="dashboard.recentRules"
         />
-      ))}
-    </ItemCard>
+      )}
+    />
   )
-}
+})

@@ -3,7 +3,26 @@ import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Field } from 'payload'
+import type { BeforeSync } from '@payloadcms/plugin-search/types'
+
+export const baseFavoriteFields: Field[] = [
+  creator(),
+  {
+    name: 'rule',
+    type: 'relationship',
+    relationTo: COLLECTION_SLUGS.RULES,
+    required: true,
+  },
+]
+
+export const favoriteBeforeSync: BeforeSync = function ({ searchDoc, originalDoc }) {
+  return {
+    ...searchDoc,
+    rule: originalDoc.rule,
+    creator: originalDoc.creator,
+  }
+}
 
 export const Favorites: CollectionConfig = {
   slug: COLLECTION_SLUGS.FAVORITES,
@@ -20,13 +39,5 @@ export const Favorites: CollectionConfig = {
   admin: {
     group: 'Cursor Rules',
   },
-  fields: [
-    creator(),
-    {
-      name: 'rule',
-      type: 'relationship', 
-      relationTo: COLLECTION_SLUGS.RULES,
-      required: true,
-    }
-  ],
-} 
+  fields: [...baseFavoriteFields],
+}

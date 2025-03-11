@@ -1,50 +1,49 @@
-import { formatDate } from "@/lib/utils"
-import { useTranslations } from "next-intl"
-import { useLocale } from "next-intl"
-import { MoreHorizontal } from "lucide-react"
+import { formatDate } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
+import { memo } from 'react'
 
-interface ItemRowProps {
+export interface ItemRowProps<T> {
   id: string
   title: string
   description?: string
   updatedAt: string
   icon: React.ReactNode
-  updatedAtKey?: string
+  item: T
+  translationPrefix: string
+  onItemClick?: (item: T) => void
 }
 
-export function ItemRow({
+export function ItemRowComponent<T>({
   title,
   description,
   updatedAt,
   icon,
-  updatedAtKey = "recentRules.updatedAt"
-}: ItemRowProps) {
-  const t = useTranslations("dashboard")
-  const locale = useLocale()
-  
+  item,
+  translationPrefix,
+  onItemClick,
+}: ItemRowProps<T>) {
+  const t = useTranslations()
+
   return (
-    <div className="flex items-start space-x-4 border-b pb-4 last:border-0">
-      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
-        {icon}
-      </div>
-      <div className="flex-1 space-y-1">
-        <div className="flex items-center justify-between">
-          <p className="font-medium">{title}</p>
-          <div className="flex items-center text-muted-foreground">
-            <button className="rounded-full h-8 w-8 p-0 inline-flex items-center justify-center hover:bg-accent hover:text-accent-foreground">
-              <MoreHorizontal className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {description || t('noDescription')}
+    <div 
+      className="flex items-start space-x-4 p-4 rounded-md border hover:bg-muted/50 transition-colors cursor-pointer"
+      onClick={() => onItemClick?.(item)}
+    >
+      <div className="mt-1">{icon}</div>
+      <div className="flex-1 space-y-1 overflow-hidden">
+        <div className="font-medium leading-none line-clamp-1">{title}</div>
+        {description && (
+          <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>
+        )}
+        <p className="text-xs text-muted-foreground">
+          {t(`${translationPrefix}.updatedAt`, {
+            date: formatDate(updatedAt),
+          })}
         </p>
-        <div className="flex items-center pt-1">
-          <p className="text-xs text-muted-foreground">
-            {t(updatedAtKey)} {formatDate(updatedAt, locale)}
-          </p>
-        </div>
       </div>
     </div>
   )
-} 
+}
+
+// 使用泛型记忆化组件
+export const ItemRow = memo(ItemRowComponent) as typeof ItemRowComponent 

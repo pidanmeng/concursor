@@ -1,34 +1,33 @@
+import { Project } from '@/payload-types'
 import { useTranslations } from 'next-intl'
-import { ItemCard } from '@/components/dashboard/item-card'
-import { ItemRow } from '@/components/dashboard/item-row'
-import type { Project } from '@/payload-types'
-import { AddProjectsDialog } from '@/components/dashboard/add-projects-dialog'
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
-import { useSetAtom } from 'jotai'
-import { recentProjectsAtom, statsAtom } from '../page.client'
-import { useCallback } from 'react'
+import { Folder, Plus } from 'lucide-react'
+import { memo, useCallback } from 'react'
+import { GenericItemCard } from './generic-item-card'
+import { ItemRow } from './item-row'
 import { DashboardData } from '@/actions/dashboard'
-import { RECENT_LIMIT } from '../constants/dashboard'
+import { AddProjectsSheet } from './add-projects-sheet'
+import { Button } from '@/components/ui/button'
+import { useSetAtom } from 'jotai'
+import { recentProjectsAtom, statsAtom } from '@/states/dashboard'
 
-interface ProjectsCardProps {
+const RECENT_LIMIT = 5
+
+export interface RecentProjectsCardProps {
   projects: Project[]
-  icon: React.ReactNode
-  onAddProject?: (project: Project) => void
   onViewAllProjects?: () => void
 }
 
-export function RecentProjectsCard({
-  projects,
-  icon,
-  onViewAllProjects,
-}: ProjectsCardProps) {
+export const RecentProjectsCard = memo(function RecentProjectsCard({ 
+  projects, 
+  onViewAllProjects 
+}: RecentProjectsCardProps) {
   const t = useTranslations('dashboard')
   const setRecentProjects = useSetAtom(recentProjectsAtom)
   const setStats = useSetAtom(statsAtom)
+  
   const onSuccess = useCallback(
     (project: Project) => {
-      setRecentProjects((prev) => [project, ...prev].slice(0, RECENT_LIMIT))
+      setRecentProjects((prev: Project[]) => [project, ...prev].slice(0, RECENT_LIMIT))
       setStats((prev: DashboardData['stats']) => ({
         ...prev,
         projects: { ...prev.projects, value: prev.projects.value + 1 },
@@ -36,33 +35,33 @@ export function RecentProjectsCard({
     },
     [setRecentProjects, setStats],
   )
+
   return (
-    <ItemCard
+    <GenericItemCard<Project>
       title={t('recentProjects.title')}
       emptyText={t('recentProjects.empty')}
       viewAllText={t('recentProjects.viewAll')}
+      items={projects}
       onViewAllClick={onViewAllProjects}
-      isEmpty={projects.length === 0}
       addButton={
-        <AddProjectsDialog onSuccess={onSuccess}>
+        <AddProjectsSheet onSuccess={onSuccess}>
           <Button>
             <Plus className="mr-2 h-4 w-4" />
             {t('addProject.btn')}
           </Button>
-        </AddProjectsDialog>
+        </AddProjectsSheet>
       }
-    >
-      {projects.map((project) => (
-        <ItemRow
-          key={project.id}
+      renderItem={(project) => (
+        <ItemRow<Project>
           id={project.id}
           title={project.title}
           description={project.description || t('noDescription')}
           updatedAt={project.updatedAt}
-          icon={icon}
-          updatedAtKey="recentProjects.updatedAt"
+          icon={<Folder className="text-primary h-5 w-5" />}
+          item={project}
+          translationPrefix="dashboard.recentProjects"
         />
-      ))}
-    </ItemCard>
+      )}
+    />
   )
-}
+}) 

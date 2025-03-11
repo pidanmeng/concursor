@@ -1,8 +1,27 @@
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Field } from 'payload'
 import { adminUser } from '@/access/adminUser'
+import { BeforeSync } from '@payloadcms/plugin-search/types'
+
+export const baseTagFields: Field[] = [
+  {
+    name: 'name',
+    type: 'text',
+    required: true,
+    index: true,
+    unique: true,
+    label: '名称',
+  },
+]
+
+export const tagBeforeSync: BeforeSync = function ({ searchDoc, originalDoc }) {
+  return {
+    ...searchDoc,
+    name: originalDoc.name,
+  }
+}
 
 export const Tags: CollectionConfig = {
   access: {
@@ -21,14 +40,7 @@ export const Tags: CollectionConfig = {
     group: 'Cursor Rules',
   },
   fields: [
-    {
-      name: 'name',
-      type: 'text',
-      required: true,
-      unique: true,
-      label: '名称',
-      index: true,
-    },
+    ...baseTagFields,
     {
       name: 'rules',
       type: 'join',

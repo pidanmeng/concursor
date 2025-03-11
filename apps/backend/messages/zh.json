@@ -61,6 +61,13 @@
     "returnToCursor": "返回 Cursor",
     "goExploreRules": "去探索规则"
   },
+  "common": {
+    "submitting": "提交中...",
+    "errors": {
+      "submitFailed": "提交失败:"
+    },
+    "preview": "预览"
+  },
   "dashboard": {
     "title": "仪表盘",
     "stats": {
@@ -82,22 +89,21 @@
       "title": "添加规则",
       "description": "添加一个新的Cursor Rule",
       "confirm": "确认",
-      "formLabels": {
-        "title": "标题",
+      "form": {
         "description": "描述",
-        "globs": "Globs",
-        "content": "  内容",
-        "private": "私密"
-      },
-      "placeholders": {
-        "title": "输入规则的标题",
-        "description": "这个规则是做什么的...",
-        "globs": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
-        "content": "输入提示词"
-      },
-      "formDescriptions": {
-        "description": "Cursor 代理可以看到这个描述，并根据你的提示词决定是否阅读完整的规则",
-        "globs": "在这里指定文件模式（例如 *.py 或 client/**/*.tsx），这个规则将自动包含在匹配这些模式的文件的 AI 响应中"
+        "globPattern": "文件匹配模式",
+        "titlePlaceholder": "输入规则的标题",
+        "descriptionPlaceholder": "这个规则是做什么的...",
+        "globPatternPlaceholder": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
+        "contentPlaceholder": "输入提示词",
+        "title": {
+          "minLength": "标题至少需要2个字符",
+          "label": "标题"
+        },
+        "content": {
+          "minLength": "内容至少需要10个字符",
+          "label": "内容"
+        }
       }
     },
     "addProject": {
@@ -105,16 +111,14 @@
       "title": "添加项目",
       "description": "添加一个新的项目",
       "confirm": "确认",
-      "formLabels": {
-        "title": "标题",
-        "description": "描述"
-      },
-      "placeholders": {
-        "title": "输入项目的标题",
-        "description": "这个项目是做什么的..."
-      },
-      "formDescriptions": {
-        "description": "项目的简短描述，帮助你区分不同的项目"
+      "form": {
+        "description": "描述",
+        "titlePlaceholder": "输入项目的标题",
+        "descriptionPlaceholder": "这个项目是做什么的...",
+        "title": {
+          "minLength": "标题至少需要2个字符",
+          "label": "标题"
+        }
       }
     },
     "recentRules": {
@@ -122,16 +126,44 @@
       "empty": "暂无规则，点击\"新规则\"创建",
       "addNew": "新规则",
       "viewAll": "查看所有规则",
-      "updatedAt": "更新于"
+      "updatedAt": "更新于 {date}"
     },
     "recentProjects": {
       "title": "最近项目",
       "empty": "暂无项目，点击\"新项目\"创建",
       "addNew": "新项目",
       "viewAll": "查看所有项目",
-      "updatedAt": "更新于"
+      "updatedAt": "更新于 {date}"
     },
     "noDescription": "无描述"
+  },
+  "Dashboard": {
+    "Rules": {
+      "title": "我的 Cursor Rules",
+      "description": "管理你创建的所有 Cursor 规则",
+      "tableCaption": "你的 Cursor Rules 列表",
+      "loading": "加载中...",
+      "noRules": "暂无规则，点击\"新规则\"创建",
+      "column": {
+        "title": "标题",
+        "private": "可见性",
+        "createdAt": "创建时间",
+        "updatedAt": "更新时间",
+        "actions": "操作"
+      },
+      "actions": {
+        "edit": "编辑",
+        "delete": "删除",
+        "view": "查看"
+      },
+      "createRule": "创建规则",
+      "deleteConfirm": {
+        "title": "确认删除",
+        "description": "你确定要删除这个规则吗？此操作不可撤销。",
+        "confirm": "删除",
+        "cancel": "取消"
+      }
+    }
   },
   "switchLanguage": "切换语言"
 }
