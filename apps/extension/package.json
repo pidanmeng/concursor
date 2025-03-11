@@ -33,6 +33,10 @@
       {
         "command": "concursor.login",
         "title": "%concursor.login.title%"
+      },
+      {
+        "command": "concursor.init",
+        "title": "%concursor.init.title%"
       }
     ],
     "configuration": {

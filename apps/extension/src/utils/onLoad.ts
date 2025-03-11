@@ -4,6 +4,7 @@ import { getUserInfo } from '../auth/getUserInfo'
 import { getBaseUrl } from './getBaseUrl'
 import { logger } from './logger'
 
+//  todo:修改逻辑
 export async function onLoad() {
   getPayload(getBaseUrl())
   const { t } = l10n
