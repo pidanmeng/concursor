@@ -89,7 +89,7 @@ export async function createRule(
     throw new Error('User not authenticated')
   }
   const rule = await payload.create({
-    collection: 'rules',
+    collection: COLLECTION_SLUGS.RULES,
     data: {
       ...data,
       creator: { value: user.id, relationTo: COLLECTION_SLUGS.USERS },
@@ -108,7 +108,7 @@ export async function createProject(
     throw new Error('User not authenticated')
   }
   const project = await payload.create({
-    collection: 'projects',
+    collection: COLLECTION_SLUGS.PROJECTS,
     data: {
       ...data,
       creator: { value: user.id, relationTo: COLLECTION_SLUGS.USERS },

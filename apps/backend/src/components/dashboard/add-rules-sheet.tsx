@@ -29,12 +29,18 @@ export const AddRulesSheet = memo(function AddRulesSheet({
       content: '',
       globs: '',
       private: false,
+      tags: [],
     },
   })
 
   // 表单提交处理
   const handleSubmit = async (values: RuleFormValues): Promise<Rule> => {
-    return (await createRule(values))
+    // 转换tags为API所需的ID数组格式
+    const formattedValues = {
+      ...values,
+      tags: values.tags.map(tag => tag.id)
+    }
+    return (await createRule(formattedValues))
   }
 
   return (

@@ -64,7 +64,7 @@ export function GenericSheet<TFormValues extends FieldValues, TSuccessResult>({
       <SheetContent
         className={cn(
           'max-w-none p-0 overflow-hidden sm:max-w-none',
-          previewField ? 'w-4/5' : 'w-1/3'
+          previewField ? 'w-4/5' : 'w-1/3',
         )}
       >
         <div className="flex h-full">
@@ -86,13 +86,17 @@ export function GenericSheet<TFormValues extends FieldValues, TSuccessResult>({
           </div>
 
           {previewField && (
-            <div className={cn('w-1/2 border-l border-border p-6 bg-muted/30 overflow-y-auto')}>
+            <div
+              className={cn(
+                'w-1/2 border-l border-border p-6 bg-muted/30 overflow-y-auto flex flex-col',
+              )}
+            >
               <div className="sticky top-0 z-10 pb-2 mb-4">
                 <h3 className="text-lg font-medium">{t('preview')}</h3>
               </div>
               <MarkdownPreview
                 source={previewContent}
-                className="h-full"
+                className="h-full flex-1"
                 style={{
                   backgroundColor: 'transparent',
                   padding: 0,

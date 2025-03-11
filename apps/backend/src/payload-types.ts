@@ -176,6 +176,7 @@ export interface AdminUserAuthOperations {
  */
 export interface Rule {
   id: string;
+  private?: boolean | null;
   title: string;
   creator:
     | {
@@ -189,7 +190,6 @@ export interface Rule {
   description?: string | null;
   downloadCount?: number | null;
   tags?: (string | Tag)[] | null;
-  private?: boolean | null;
   globs?: string | null;
   content: string;
   forkedFrom?: (string | null) | Rule;
@@ -648,7 +648,6 @@ export interface RulesSearch {
   description?: string | null;
   downloadCount?: number | null;
   tags?: (string | Tag)[] | null;
-  private?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -813,12 +812,12 @@ export interface PayloadMigration {
  * via the `definition` "rules_select".
  */
 export interface RulesSelect<T extends boolean = true> {
+  private?: T;
   title?: T;
   creator?: T;
   description?: T;
   downloadCount?: T;
   tags?: T;
-  private?: T;
   globs?: T;
   content?: T;
   forkedFrom?: T;
@@ -1182,7 +1181,6 @@ export interface RulesSearchSelect<T extends boolean = true> {
   description?: T;
   downloadCount?: T;
   tags?: T;
-  private?: T;
   updatedAt?: T;
   createdAt?: T;
 }

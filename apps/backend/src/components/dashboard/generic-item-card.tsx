@@ -40,10 +40,10 @@ function GenericItemCardComponent<T>({
       </CardHeader>
       <CardContent className="flex-1">
         {!isEmpty ? (
-          <div className={cn("space-y-4", itemClassName)}>
-            {items.map((item, index) => (
-              <div key={index}>{renderItem(item)}</div>
-            ))}
+          <div className={cn('space-y-4', itemClassName)}>
+            {items.map((item, index) =>
+              index >= 3 ? null : <div key={index}>{renderItem(item)}</div>,
+            )}
           </div>
         ) : (
           <div className="flex h-24 items-center justify-center">
@@ -52,7 +52,7 @@ function GenericItemCardComponent<T>({
         )}
       </CardContent>
       {onViewAllClick && (
-        <CardFooter className={cn("flex justify-center", footerClassName)}>
+        <CardFooter className={cn('flex justify-center', footerClassName)}>
           <Button variant="outline" onClick={onViewAllClick}>
             {viewAllText}
           </Button>
@@ -63,4 +63,4 @@ function GenericItemCardComponent<T>({
 }
 
 // 使用泛型记忆化组件
-export const GenericItemCard = memo(GenericItemCardComponent) as typeof GenericItemCardComponent 
+export const GenericItemCard = memo(GenericItemCardComponent) as typeof GenericItemCardComponent

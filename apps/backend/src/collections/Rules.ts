@@ -1,14 +1,17 @@
+import { adminUser } from '@/access/adminUser'
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
+import { and, or } from '@/access/mergeAccess'
+import { notPrivate } from '@/access/notPrivate'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
+import { privateField } from '@/fields/private'
 import { BeforeSync } from '@payloadcms/plugin-search/types'
 import type { CollectionConfig, Field } from 'payload'
 
 export const baseRuleFields: Field[] = [
   creator(),
-
   {
     name: 'description',
     type: 'text',
@@ -24,11 +27,6 @@ export const baseRuleFields: Field[] = [
     type: 'relationship',
     relationTo: COLLECTION_SLUGS.TAGS,
     hasMany: true,
-  },
-  {
-    name: 'private',
-    type: 'checkbox',
-    defaultValue: false,
   },
 ]
 
@@ -54,10 +52,10 @@ export const Rules: CollectionConfig = {
     ],
   },
   access: {
-    read: anyone,
+    read: or([notPrivate, adminUser]),
     create: authenticated,
-    update: isCreator,
-    delete: isCreator,
+    update: or([and([isCreator, notPrivate]), adminUser]),
+    delete: or([and([isCreator, notPrivate]), adminUser]),
   },
   labels: {
     singular: 'Rule',
@@ -67,7 +65,15 @@ export const Rules: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Cursor Rules',
   },
+  defaultPopulate: {
+    title: true,
+    tags: true,
+    description: true,
+    downloadCount: true,
+    creator: true,
+  },
   fields: [
+    privateField(),
     {
       name: 'title',
       type: 'text',
