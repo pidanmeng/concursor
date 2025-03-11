@@ -1,6 +1,8 @@
+import { adminUser } from '@/access/adminUser'
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
+import { or } from '@/access/mergeAccess'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
 import type { CollectionConfig } from 'payload'
@@ -10,8 +12,8 @@ export const Projects: CollectionConfig = {
   access: {
     read: anyone,
     create: authenticated,
-    update: isCreator,
-    delete: isCreator,
+    update: or([isCreator, adminUser]),
+    delete: or([isCreator, adminUser]),
   },
   labels: {
     singular: '项目',

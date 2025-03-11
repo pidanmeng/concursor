@@ -1,4 +1,5 @@
 import type { SecretStorage } from 'vscode'
+import { getPayload } from '@concursor/api'
 import { extensionContext } from 'reactive-vscode'
 import { logger } from '../utils'
 
@@ -6,6 +7,7 @@ const API_KEY_STORAGE_KEY = 'cursor.apiKey'
 
 export async function saveApiKey(apiKey: string): Promise<void> {
   try {
+    getPayload().setApiKey(apiKey)
     if (!extensionContext.value) {
       throw new Error('Extension context not initialized')
     }
@@ -19,7 +21,7 @@ export async function saveApiKey(apiKey: string): Promise<void> {
   }
 }
 
-export async function getApiKey(): Promise<string | undefined> {
+export async function getApiKeyFromSecretStorage(): Promise<string | undefined> {
   try {
     if (!extensionContext.value) {
       throw new Error('Extension context not initialized')

@@ -96,6 +96,10 @@
         "descriptionPlaceholder": "这个规则是做什么的...",
         "globPatternPlaceholder": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
         "contentPlaceholder": "输入提示词",
+        "tagsPlaceholder": "输入标签名称",
+        "searching": "搜索中",
+        "private": "私有规则",
+        "tags": "标签",
         "title": {
           "minLength": "标题至少需要2个字符",
           "label": "标题"

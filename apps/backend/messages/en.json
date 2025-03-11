@@ -87,21 +87,25 @@
     "addRule": {
       "btn": "New Rule",
       "title": "Add Rule",
-      "description": "Add a new Cursor rule",
+      "description": "Add a new Cursor Rule",
       "confirm": "Confirm",
       "form": {
         "description": "Description",
-        "globPattern": "Glob Pattern",
-        "titlePlaceholder": "Enter the title of the rule",
-        "descriptionPlaceholder": "Description of the task this rule is helpful for...",
+        "globPattern": "File Pattern",
+        "titlePlaceholder": "Enter rule title",
+        "descriptionPlaceholder": "What does this rule do...",
         "globPatternPlaceholder": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
-        "contentPlaceholder": "Enter the prompt of the rule",
+        "contentPlaceholder": "Enter prompt",
+        "tagsPlaceholder": "Enter tag name",
+        "searching": "Searching",
+        "private": "Private Rule",
+        "tags": "Tags",
         "title": {
-          "minLength": "Title must be at least 2 characters.",
+          "minLength": "Title must be at least 2 characters",
           "label": "Title"
         },
         "content": {
-          "minLength": "Content must be at least 10 characters.",
+          "minLength": "Content must be at least 10 characters",
           "label": "Content"
         }
       }

@@ -14,7 +14,7 @@ export function creator({ override }: { override?: Partial<Field> } = {}): Field
     type: 'relationship',
     relationTo: [COLLECTION_SLUGS.USERS, COLLECTION_SLUGS.ADMIN_USERS],
     hooks: {
-      beforeValidate: [
+      beforeChange: [
         async ({ req, value }) => {
           if (!value && req.user) {
             return {
