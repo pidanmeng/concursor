@@ -48,7 +48,6 @@ export const AddRulesSheet = memo(function AddRulesSheet({
       title={t('title')}
       description={t('description')}
       formComponent={RuleForm}
-      submitButtonText={t('confirm')}
       form={form}
       onSubmit={handleSubmit}
       onSuccess={onSuccess}

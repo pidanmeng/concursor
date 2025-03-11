@@ -39,7 +39,6 @@ export const AddProjectsSheet = memo(function AddProjectsSheet({
       title={t('title')}
       description={t('description')}
       formComponent={ProjectForm}
-      submitButtonText={t('confirm')}
       form={form}
       onSubmit={handleSubmit}
       onSuccess={onSuccess}

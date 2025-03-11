@@ -1,14 +1,11 @@
-import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Form } from '@/components/ui/form'
 import { useState } from 'react'
 import { FieldValues, Path, UseFormReturn, useWatch } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
@@ -18,8 +15,11 @@ import { cn } from '@/lib/utils'
 export interface GenericSheetProps<TFormValues extends FieldValues, TSuccessResult> {
   title: string
   description: string
-  formComponent: React.ComponentType<{ form: UseFormReturn<TFormValues> }>
-  submitButtonText: string
+  formComponent: React.ComponentType<{
+    form: UseFormReturn<TFormValues>
+    onSubmit: (values: TFormValues) => Promise<TSuccessResult>
+    onSuccess?: (result: TSuccessResult) => void
+  }>
   form: UseFormReturn<TFormValues>
   onSubmit: (values: TFormValues) => Promise<TSuccessResult>
   onSuccess?: (result: TSuccessResult) => void
@@ -31,7 +31,6 @@ export function GenericSheet<TFormValues extends FieldValues, TSuccessResult>({
   title,
   description,
   formComponent: FormComponent,
-  submitButtonText,
   form,
   onSubmit,
   onSuccess,
@@ -39,21 +38,13 @@ export function GenericSheet<TFormValues extends FieldValues, TSuccessResult>({
   previewField,
 }: GenericSheetProps<TFormValues, TSuccessResult>) {
   const [open, setOpen] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const t = useTranslations('common')
 
   const handleSubmit = async (values: TFormValues) => {
-    try {
-      setIsSubmitting(true)
-      const result = await onSubmit(values)
-      onSuccess?.(result)
-      form.reset()
-      setOpen(false)
-    } catch (error) {
-      console.error(t('errors.submitFailed'), error)
-    } finally {
-      setIsSubmitting(false)
-    }
+    setOpen(false)
+    form.reset()
+    const result = await onSubmit(values)
+    return result
   }
 
   const previewContent = useWatch({ control: form.control, name: previewField! })
@@ -73,16 +64,7 @@ export function GenericSheet<TFormValues extends FieldValues, TSuccessResult>({
               <SheetTitle>{title}</SheetTitle>
               <SheetDescription>{description}</SheetDescription>
             </SheetHeader>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 mt-4">
-                <FormComponent form={form} />
-                <SheetFooter>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? t('submitting') : submitButtonText}
-                  </Button>
-                </SheetFooter>
-              </form>
-            </Form>
+            <FormComponent form={form} onSubmit={handleSubmit} onSuccess={onSuccess} />
           </div>
 
           {previewField && (

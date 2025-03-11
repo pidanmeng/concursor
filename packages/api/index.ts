@@ -3,7 +3,6 @@ import { getClientSideURL } from '@concursor/utils';
 
 import queryString from 'qs';
 import type { DeepPartial } from 'ts-essentials';
-import { logger } from '../../apps/extension/src/utils';
 import type { BulkOperationResult, Config as ConfigType, PaginatedDocs, Where } from './payloadClientTypes';
 
 export type PayloadApiClientOptions = {
@@ -169,10 +168,6 @@ export class PayloadApiClient<C extends ConfigType> {
     PaginatedDocs<K extends undefined ? C['collections'][T] : Pick<C['collections'][T], K[0]>>
   > {
     const qs = buildQueryString(toQs);
-    logger.info('this.apiKey', this.apiKey)
-    logger.info('this.apiURL', this.apiURL)
-    logger.info('collection', collection)
-    logger.info('qs', qs)
     const response = await this.fetcher(`${this.apiURL}/${collection.toString()}${qs}`);
 
     return response.json();

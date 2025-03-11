@@ -92,6 +92,7 @@
       "form": {
         "description": "描述",
         "globPattern": "文件匹配模式",
+        "globPatternDescription": "指定规则应用的文件匹配模式，例如 *.tsx, src/config/**/*.json",
         "titlePlaceholder": "输入规则的标题",
         "descriptionPlaceholder": "这个规则是做什么的...",
         "globPatternPlaceholder": "*.tsx, src/config/**/*.json, *Test.cpp, ...",
@@ -99,6 +100,7 @@
         "tagsPlaceholder": "输入标签名称",
         "searching": "搜索中",
         "private": "私有规则",
+        "privateDescription": "私有规则只有你能看到，不会被其他用户发现或使用",
         "tags": "标签",
         "title": {
           "minLength": "标题至少需要2个字符",
@@ -107,7 +109,9 @@
         "content": {
           "minLength": "内容至少需要10个字符",
           "label": "内容"
-        }
+        },
+        "submit": "提交",
+        "submitting": "提交中..."
       }
     },
     "addProject": {
@@ -122,7 +126,9 @@
         "title": {
           "minLength": "标题至少需要2个字符",
           "label": "标题"
-        }
+        },
+        "submit": "提交",
+        "submitting": "提交中..."
       }
     },
     "recentRules": {
@@ -147,14 +153,46 @@
       "description": "管理你创建的所有 Cursor 规则",
       "tableCaption": "你的 Cursor Rules 列表",
       "loading": "加载中...",
-      "noRules": "暂无规则，点击\"新规则\"创建",
+      "noRules": "暂无规则",
+      "createFirst": "点击\"新规则\"创建你的第一个规则",
       "column": {
         "title": "标题",
         "private": "可见性",
         "createdAt": "创建时间",
         "updatedAt": "更新时间",
+        "tags": "标签",
+        "downloads": "下载数",
+        "favorites": "收藏数",
         "actions": "操作"
       },
+      "searchPlaceholder": "搜索规则...",
+      "addRule": "新建规则",
+      "addDialogTitle": "添加新规则",
+      "addDialogDescription": "创建一个新的 Cursor Rule",
+      "formNotImplemented": "表单组件尚未实现",
+      "cancel": "取消",
+      "create": "创建",
+      "privateRule": "私有规则",
+      "publicRule": "公开规则",
+      "makePublic": "设为公开",
+      "makePrivate": "设为私有",
+      "edit": "编辑",
+      "delete": "删除",
+      "deleteConfirmTitle": "确认删除",
+      "deleteConfirmDescription": "你确定要删除这个规则吗？此操作不可撤销。",
+      "confirmDelete": "确认删除",
+      "totalItems": "共 {count} 条规则",
+      "loadFailed": "加载规则失败",
+      "deleteSuccess": "删除成功",
+      "deleteSuccessDescription": "规则已成功删除",
+      "deleteFailed": "删除失败",
+      "madePublic": "规则已设为公开",
+      "madePrivate": "规则已设为私有",
+      "visibilityChanged": "规则可见性已更改",
+      "toggleVisibilityFailed": "切换可见性失败",
+      "addSuccess": "添加成功",
+      "addSuccessDescription": "规则已成功添加",
+      "addFailed": "添加失败",
       "actions": {
         "edit": "编辑",
         "delete": "删除",
@@ -166,6 +204,15 @@
         "description": "你确定要删除这个规则吗？此操作不可撤销。",
         "confirm": "删除",
         "cancel": "取消"
+      },
+      "edit": {
+        "title": "编辑规则",
+        "description": "修改你的 Cursor Rule",
+        "back": "返回",
+        "update": "更新",
+        "updateSuccess": "更新成功",
+        "updateSuccessDescription": "规则已成功更新",
+        "updateFailed": "更新失败"
       }
     }
   },

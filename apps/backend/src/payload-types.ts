@@ -189,6 +189,7 @@ export interface Rule {
       };
   description?: string | null;
   downloadCount?: number | null;
+  favoriteCount?: number | null;
   tags?: (string | Tag)[] | null;
   globs?: string | null;
   content: string;
@@ -647,6 +648,7 @@ export interface RulesSearch {
       };
   description?: string | null;
   downloadCount?: number | null;
+  favoriteCount?: number | null;
   tags?: (string | Tag)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -817,6 +819,7 @@ export interface RulesSelect<T extends boolean = true> {
   creator?: T;
   description?: T;
   downloadCount?: T;
+  favoriteCount?: T;
   tags?: T;
   globs?: T;
   content?: T;
@@ -1180,6 +1183,7 @@ export interface RulesSearchSelect<T extends boolean = true> {
   creator?: T;
   description?: T;
   downloadCount?: T;
+  favoriteCount?: T;
   tags?: T;
   updatedAt?: T;
   createdAt?: T;

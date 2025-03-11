@@ -4,6 +4,20 @@ import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: COLLECTION_SLUGS.USERS,
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        if (!data.apiKey) {
+          return {
+            ...data,
+            apiKey: crypto.randomUUID(),
+            enableAPIKey: true,
+          }
+        }
+        return data
+      },
+    ],
+  },
   access: {
     read: anyone,
     update: ({ req, data }) => {

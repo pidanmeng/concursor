@@ -22,6 +22,11 @@ export const baseRuleFields: Field[] = [
     defaultValue: 0,
   },
   {
+    name: 'favoriteCount',
+    type: 'number',
+    defaultValue: 0,
+  },
+  {
     name: 'tags',
     type: 'relationship',
     relationTo: COLLECTION_SLUGS.TAGS,
@@ -37,6 +42,7 @@ export const ruleBeforeSync: BeforeSync = function ({ searchDoc, originalDoc }) 
     private: originalDoc.private,
     description: originalDoc.description,
     downloadCount: originalDoc.downloadCount,
+    favoriteCount: originalDoc.favoriteCount,
   }
 }
 
