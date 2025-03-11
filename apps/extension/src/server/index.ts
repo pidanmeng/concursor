@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { ref } from 'reactive-vscode'
+import { login } from '../auth/login'
 import { saveApiKey } from '../auth/storage'
 import { logger } from '../utils'
 
@@ -20,12 +21,6 @@ app.get('/', (c) => {
   return c.text('Hello ConCursor!')
 })
 
-app.get('/connect-to-concursor', (c) => {
-  return c.json({
-    success: true,
-  })
-})
-
 app.post('/auth', async (c) => {
   try {
     const { apiKey } = await c.req.json()
@@ -34,7 +29,10 @@ app.post('/auth', async (c) => {
       return c.json({ success: false, error: 'API key is required' }, 400)
     }
 
-    await saveApiKey(apiKey)
+    await login({
+      newApiKey: apiKey,
+      silent: true,
+    })
 
     return c.json({ success: true })
   }

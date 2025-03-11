@@ -48,6 +48,14 @@ export class PayloadApiClient<C extends ConfigType> {
     return this.baseFetcher(url, options);
   }
 
+  setBaseUrl(apiURL: string) {
+    this.apiURL = apiURL;
+  }
+
+  setApiKey(apiKey: string) {
+    this.apiKey = apiKey;
+  }
+
   async auth<T extends keyof C['collections']>({
     collection,
     ...toQs
@@ -337,11 +345,13 @@ export function buildQueryString(args: Record<string, unknown> | undefined) {
 let clientInstance: PayloadApiClient<Config> | null = null;
 
 export function getPayload(
-  apiURL?: string
+  apiURL?: string,
+  apiKey?: string,
 ): PayloadApiClient<Config> {
   if (!clientInstance) {
     clientInstance = new PayloadApiClient<Config>({
       apiURL: `${apiURL || getClientSideURL()}/api`,
+      apiKey,
     });
   }
   return clientInstance;

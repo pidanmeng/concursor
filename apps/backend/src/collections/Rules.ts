@@ -1,5 +1,4 @@
 import { adminUser } from '@/access/adminUser'
-import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
 import { and, or } from '@/access/mergeAccess'
