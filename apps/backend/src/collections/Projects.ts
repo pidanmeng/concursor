@@ -1,19 +1,20 @@
 import { adminUser } from '@/access/adminUser'
-import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
-import { or } from '@/access/mergeAccess'
+import { and, or } from '@/access/mergeAccess'
+import { notObsolete } from '@/access/notObosolete'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
+import { obsolete } from '@/fields/obsolete'
 import type { CollectionConfig } from 'payload'
 
 export const Projects: CollectionConfig = {
   slug: COLLECTION_SLUGS.PROJECTS,
   access: {
-    read: anyone,
+    read: or([and([isCreator, notObsolete]), adminUser]),
     create: authenticated,
     update: or([isCreator, adminUser]),
-    delete: or([isCreator, adminUser]),
+    delete: adminUser,
   },
   labels: {
     singular: '项目',
@@ -25,6 +26,7 @@ export const Projects: CollectionConfig = {
   },
   fields: [
     creator(),
+    obsolete(),
     {
       name: 'title',
       type: 'text',

@@ -18,7 +18,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
-import { TagInput } from '@/components/ui/tag-input'
+import { TagInput } from '@/components/dashboard/tag-input'
 import { Rule } from '@/payload-types'
 
 export const ruleFormSchema = z.object({
@@ -46,20 +46,30 @@ export type RuleFormValues = z.infer<typeof ruleFormSchema>
 // 表单属性
 export interface RuleFormProps {
   form: UseFormReturn<RuleFormValues>
-  onSubmit: (values: RuleFormValues) => Promise<Rule>
+  disableSubmit?: boolean
+  onSubmit?: (values: RuleFormValues) => Promise<Rule>
   onSuccess?: (result: Rule) => void
   loading?: boolean
   submitLabel?: string
 }
 
-export function RuleForm({ form, onSubmit, loading = false, submitLabel, onSuccess }: RuleFormProps) {
+export function RuleForm({
+  form,
+  onSubmit,
+  loading = false,
+  submitLabel,
+  onSuccess,
+  disableSubmit = false,
+}: RuleFormProps) {
   const t = useTranslations('dashboard.addRule.form')
 
   const handleSubmit = useCallback(
     async (values: RuleFormValues) => {
       try {
-        const result = await onSubmit(values)
-        onSuccess?.(result)
+        const result = await onSubmit?.(values)
+        if (result) {
+          onSuccess?.(result)
+        }
       } catch (error) {
         console.error('表单提交出错:', error)
       }
@@ -161,8 +171,8 @@ export function RuleForm({ form, onSubmit, loading = false, submitLabel, onSucce
                 <FormControl>
                   <TagInput
                     placeholder={t('tagsPlaceholder')}
-                    tags={field.value}
-                    setTags={(newTags) => field.onChange(newTags)}
+                    value={field.value}
+                    onChange={(newTags) => field.onChange(newTags)}
                   />
                 </FormControl>
                 <FormMessage />
@@ -188,9 +198,11 @@ export function RuleForm({ form, onSubmit, loading = false, submitLabel, onSucce
           />
 
           {/* 提交按钮 */}
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? t('submitting') : submitLabel || t('submit')}
-          </Button>
+          {disableSubmit ? null : (
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? t('submitting') : submitLabel || t('submit')}
+            </Button>
+          )}
         </div>
       </form>
     </Form>

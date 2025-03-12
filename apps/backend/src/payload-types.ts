@@ -421,6 +421,7 @@ export interface Project {
         relationTo: 'admin-users';
         value: string | AdminUser;
       } | null);
+  obsolete?: boolean | null;
   title: string;
   description?: string | null;
   tags?: (string | Tag)[] | null;
@@ -1014,6 +1015,7 @@ export interface AdminUsersSelect<T extends boolean = true> {
  */
 export interface ProjectsSelect<T extends boolean = true> {
   creator?: T;
+  obsolete?: T;
   title?: T;
   description?: T;
   tags?: T;

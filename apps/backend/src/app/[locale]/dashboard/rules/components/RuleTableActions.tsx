@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Edit2Icon, EyeIcon, EyeOffIcon, TrashIcon } from 'lucide-react'
+import { Edit2Icon, UnlockIcon, LockIcon, TrashIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -39,9 +39,9 @@ export function RuleTableActions({
               onClick={() => onToggleVisibility(rule)}
             >
               {rule.private ? (
-                <EyeIcon className="h-4 w-4 text-muted-foreground" />
+                <UnlockIcon className="h-4 w-4 text-muted-foreground" />
               ) : (
-                <EyeOffIcon className="h-4 w-4 text-muted-foreground" />
+                <LockIcon className="h-4 w-4 text-muted-foreground" />
               )}
             </Button>
           </TooltipTrigger>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Logo } from '@/components/Logos'
@@ -80,10 +80,8 @@ export function TagInput({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        searchResultsRef.current &&
-        !searchResultsRef.current.contains(event.target as Node) &&
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
+        !searchResultsRef.current?.contains(event.target as Node) &&
+        !inputRef.current?.contains(event.target as Node)
       ) {
         setIsFocused(false)
       }
@@ -96,13 +94,16 @@ export function TagInput({
   }, [])
 
   // 添加标签
-  const addTag = (tagItem: TagItem) => {
-    if (tagItem && !value.some((item) => item.id === tagItem.id)) {
-      onChange([...value, tagItem])
-    }
-    setInputValue('')
-    inputRef.current?.focus()
-  }
+  const addTag = useCallback(
+    (tagItem: TagItem) => {
+      if (tagItem && !value.some((item) => item.id === tagItem.id)) {
+        onChange([...value, tagItem])
+      }
+      setInputValue('')
+      inputRef.current?.focus()
+    },
+    [onChange, value],
+  )
 
   // 移除标签
   const removeTag = (tagId: string) => {
@@ -110,7 +111,7 @@ export function TagInput({
   }
 
   // 创建新标签
-  const createNewTag = async () => {
+  const createNewTag = useCallback(async () => {
     if (!formattedInputValue) return
 
     try {
@@ -127,7 +128,7 @@ export function TagInput({
     } catch (error) {
       console.error('Error creating tag:', error)
     }
-  }
+  }, [addTag, formattedInputValue])
 
   // 处理键盘事件
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -155,8 +156,8 @@ export function TagInput({
     <div className="relative w-full">
       <div
         className={cn(
-          'flex flex-wrap gap-1.5 p-1.5 border rounded-md bg-background min-h-10',
-          isFocused && 'ring-1 ring-ring',
+          'flex flex-wrap gap-1.5 p-1.5 border rounded-md bg-transparent min-h-10 transition-[color, box-shadow] duration-300',
+          isFocused && 'ring-3 ring-ring',
           disabled && 'opacity-50 pointer-events-none',
           className,
         )}
@@ -227,7 +228,10 @@ export function TagInput({
                     className="flex items-center justify-between px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer rounded-sm"
                     onClick={createNewTag}
                   >
-                    <span>&quot;{formattedInputValue}&quot;</span>
+                    <div className="flex items-center gap-1">
+                      <Logo name={formattedInputValue} className="h-4 w-4" />
+                      <span>&quot;{formattedInputValue}&quot;</span>
+                    </div>
                     <Plus className="h-3 w-3" />
                   </div>
                 )}

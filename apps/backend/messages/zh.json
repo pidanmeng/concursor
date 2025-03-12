@@ -211,7 +211,8 @@
         "update": "更新",
         "updateSuccess": "更新成功",
         "updateSuccessDescription": "规则已成功更新",
-        "updateFailed": "更新失败"
+        "updateFailed": "更新失败",
+        "submit": "提交"
       }
     }
   },

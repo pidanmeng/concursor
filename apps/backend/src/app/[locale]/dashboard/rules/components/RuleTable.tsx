@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
+import { UnlockIcon, LockIcon } from 'lucide-react'
 
 import {
   Table,
@@ -12,12 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Badge } from '@/components/ui/badge'
 
 import type { Rule } from '@/payload-types'
@@ -43,7 +38,7 @@ export function RuleTable({
   // 展示有限数量的标签
   const renderTags = (tags: (string | any)[] | null | undefined) => {
     if (!tags || tags.length === 0) return null
-    
+
     const displayTags = tags.slice(0, 3)
     const remainingCount = tags.length - 3
 
@@ -57,7 +52,7 @@ export function RuleTable({
             </Badge>
           )
         })}
-        
+
         {remainingCount > 0 && (
           <TooltipProvider>
             <Tooltip>
@@ -121,7 +116,7 @@ export function RuleTable({
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <EyeOffIcon className="h-4 w-4 text-amber-500 flex-shrink-0" />
+                          <LockIcon className="h-4 w-4 text-warning flex-shrink-0" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>{t('privateRule')}</p>
@@ -132,7 +127,7 @@ export function RuleTable({
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <EyeIcon className="h-4 w-4 text-green-500 flex-shrink-0" />
+                          <UnlockIcon className="h-4 w-4 text-success flex-shrink-0" />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>{t('publicRule')}</p>
@@ -142,9 +137,7 @@ export function RuleTable({
                   )}
                   <span className="truncate">{rule.title}</span>
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  {renderTags(rule.tags)}
-                </TableCell>
+                <TableCell className="hidden sm:table-cell">{renderTags(rule.tags)}</TableCell>
                 <TableCell className="text-center">
                   <span className="px-2 py-1 rounded-md bg-muted/50 text-muted-foreground text-sm">
                     {rule.downloadCount || 0}
@@ -156,8 +149,8 @@ export function RuleTable({
                   </span>
                 </TableCell>
                 <TableCell className="text-right">
-                  <RuleTableActions 
-                    rule={rule} 
+                  <RuleTableActions
+                    rule={rule}
                     onToggleVisibility={onToggleVisibility}
                     onEdit={onEdit}
                     onDelete={onDelete}
@@ -170,4 +163,4 @@ export function RuleTable({
       </Table>
     </div>
   )
-} 
+}

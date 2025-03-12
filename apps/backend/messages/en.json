@@ -211,7 +211,8 @@
         "update": "Update",
         "updateSuccess": "Update Successful",
         "updateSuccessDescription": "The rule has been successfully updated",
-        "updateFailed": "Update Failed"
+        "updateFailed": "Update Failed",
+        "submit": "Submit"
       }
     }
   },
