@@ -30,8 +30,8 @@ export default function RulesClient({
     currentPage,
     totalPages,
     totalDocs,
-    searchQuery,
-    setSearchQuery,
+    inputValue,
+    setInputValue,
     handlePageChange,
     handleSearch,
     handleDelete,
@@ -56,8 +56,8 @@ export default function RulesClient({
       {/* 搜索和添加按钮 */}
       <div className="flex flex-col sm:flex-row gap-4">
         <RuleSearchBar 
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
+          searchQuery={inputValue}
+          onSearchChange={setInputValue}
           onSearchSubmit={handleSearch}
         />
         

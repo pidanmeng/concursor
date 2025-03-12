@@ -178,15 +178,16 @@ export interface Rule {
   id: string;
   private?: boolean | null;
   title: string;
-  creator:
-    | {
+  creator?:
+    | ({
         relationTo: 'users';
         value: string | User;
-      }
-    | {
+      } | null)
+    | ({
         relationTo: 'admin-users';
         value: string | AdminUser;
-      };
+      } | null);
+  obsolete?: boolean | null;
   description?: string | null;
   downloadCount?: number | null;
   favoriteCount?: number | null;
@@ -321,15 +322,15 @@ export interface Media {
  */
 export interface Favorite {
   id: string;
-  creator:
-    | {
+  creator?:
+    | ({
         relationTo: 'users';
         value: string | User;
-      }
-    | {
+      } | null)
+    | ({
         relationTo: 'admin-users';
         value: string | AdminUser;
-      };
+      } | null);
   rule: string | Rule;
   updatedAt: string;
   createdAt: string;
@@ -368,15 +369,15 @@ export interface AdminUser {
  */
 export interface Package {
   id: string;
-  creator:
-    | {
+  creator?:
+    | ({
         relationTo: 'users';
         value: string | User;
-      }
-    | {
+      } | null)
+    | ({
         relationTo: 'admin-users';
         value: string | AdminUser;
-      };
+      } | null);
   name: string;
   description?: string | null;
   rules?: (string | Rule)[] | null;
@@ -411,15 +412,15 @@ export interface Tag {
  */
 export interface Project {
   id: string;
-  creator:
-    | {
+  creator?:
+    | ({
         relationTo: 'users';
         value: string | User;
-      }
-    | {
+      } | null)
+    | ({
         relationTo: 'admin-users';
         value: string | AdminUser;
-      };
+      } | null);
   title: string;
   description?: string | null;
   tags?: (string | Tag)[] | null;
@@ -637,15 +638,16 @@ export interface RulesSearch {
     relationTo: 'rules';
     value: string | Rule;
   };
-  creator:
-    | {
+  creator?:
+    | ({
         relationTo: 'users';
         value: string | User;
-      }
-    | {
+      } | null)
+    | ({
         relationTo: 'admin-users';
         value: string | AdminUser;
-      };
+      } | null);
+  obsolete?: boolean | null;
   description?: string | null;
   downloadCount?: number | null;
   favoriteCount?: number | null;
@@ -667,15 +669,15 @@ export interface FavoritesSearch {
     relationTo: 'favorites';
     value: string | Favorite;
   };
-  creator:
-    | {
+  creator?:
+    | ({
         relationTo: 'users';
         value: string | User;
-      }
-    | {
+      } | null)
+    | ({
         relationTo: 'admin-users';
         value: string | AdminUser;
-      };
+      } | null);
   rule: string | Rule;
   updatedAt: string;
   createdAt: string;
@@ -817,6 +819,7 @@ export interface RulesSelect<T extends boolean = true> {
   private?: T;
   title?: T;
   creator?: T;
+  obsolete?: T;
   description?: T;
   downloadCount?: T;
   favoriteCount?: T;
@@ -1181,6 +1184,7 @@ export interface RulesSearchSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   creator?: T;
+  obsolete?: T;
   description?: T;
   downloadCount?: T;
   favoriteCount?: T;

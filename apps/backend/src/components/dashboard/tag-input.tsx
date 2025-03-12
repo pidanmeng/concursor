@@ -8,8 +8,7 @@ import { X, Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Tag, TagsSearch } from '@/payload-types'
 import { cn } from '@/lib/utils'
-import { getPayload } from '@concursor/api'
-import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
+import { createTag, searchTags } from '@/actions/tags'
 
 // Tag对象结构
 export interface TagItem {
@@ -49,7 +48,7 @@ export function TagInput({
   // 搜索标签
   useEffect(() => {
     setIsSearching(true)
-    const searchTags = async () => {
+    const search = async () => {
       if (!formattedInputValue) {
         setSearchResults([])
         return
@@ -57,11 +56,8 @@ export function TagInput({
 
       try {
         // 调用API搜索标签
-        const response = await fetch(
-          `/api/tags/search?q=${encodeURIComponent(formattedInputValue)}`,
-        )
-        const data = await response.json()
-        setSearchResults(data.docs || [])
+        const response = await searchTags(formattedInputValue)
+        setSearchResults(response || [])
       } catch (error) {
         console.error('Error searching tags:', error)
         setSearchResults([])
@@ -70,7 +66,7 @@ export function TagInput({
 
     const debounce = setTimeout(async () => {
       if (formattedInputValue) {
-        await searchTags()
+        await search()
       } else {
         setSearchResults([])
       }
@@ -119,20 +115,13 @@ export function TagInput({
 
     try {
       // 使用API创建新标签
-      const payload = getPayload()
-      const result = await payload.create({
-        collection: COLLECTION_SLUGS.TAGS,
-        data: {
-          name: formattedInputValue,
-        },
-      })
+      const result = await createTag(formattedInputValue)
 
       // 创建成功后添加到选中的标签列表
-      if (result && result.doc) {
-        const newTag = result.doc as Tag
+      if (result && result) {
         addTag({
-          id: newTag.id,
-          name: newTag.name,
+          id: result.id,
+          name: result.name,
         })
       }
     } catch (error) {

@@ -7,9 +7,9 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { headers } from 'next/headers'
 import configPromise from '@/payload.config'
-import { getPayload } from 'payload'
 import { redirect } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
+import { getUser } from '@/actions/auth'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations()
@@ -27,10 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode
   params: Promise<{ locale: string }>
 }) {
-  const headersList = await headers()
-  const payloadConfig = await configPromise
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers: headersList })
+  const user = await getUser()
   const { locale } = await params
 
   if (!user) {

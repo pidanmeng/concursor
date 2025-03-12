@@ -163,7 +163,7 @@
         "favorites": "Favorites",
         "actions": "Actions"
       },
-      "searchPlaceholder": "Search rules...",
+      "searchPlaceholder": "Search rules or tags...",
       "addRule": "New Rule",
       "addDialogTitle": "Add New Rule",
       "addDialogDescription": "Create a new Cursor Rule",

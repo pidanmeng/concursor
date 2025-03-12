@@ -1,10 +1,11 @@
 'use server'
 
-import { headers } from 'next/headers'
 import payloadConfig from '@/payload.config'
-import { getPayload } from 'payload'
+import { getPayload, Where } from 'payload'
 import type { Rule } from '@/payload-types'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
+import { getUser } from './auth'
+import { getCodeMessage } from '@/constants/errorCode'
 
 export interface RulesData {
   docs: Rule[]
@@ -24,22 +25,21 @@ export interface SearchParams {
 
 // 获取用户规则列表
 export async function getUserRules(
-  page: number = 1, 
-  limit: number = 10, 
+  page: number = 1,
+  limit: number = 10,
   query: string = '',
-  sort: string = '-updatedAt'
+  sort: string = '-updatedAt',
 ): Promise<RulesData> {
   try {
     const payload = await getPayload({ config: payloadConfig })
-    const headersList = await headers()
-    const { user } = await payload.auth({ headers: headersList })
+    const user = await getUser()
 
     if (!user) {
-      throw new Error('用户未认证')
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
     }
 
     // 构建查询条件
-    const where: any = {
+    const where: Where = {
       'creator.value': {
         equals: user.id,
       },
@@ -47,9 +47,18 @@ export async function getUserRules(
 
     // 如果有搜索关键字，添加标题搜索条件
     if (query) {
-      where.title = {
-        like: query,
-      }
+      where.or = [
+        {
+          title: {
+            like: query,
+          },
+        },
+        {
+          'tags.name': {
+            like: query,
+          },
+        },
+      ]
     }
 
     const rules = await payload.find({
@@ -58,6 +67,8 @@ export async function getUserRules(
       page,
       sort,
       where,
+      overrideAccess: false,
+      user,
     })
 
     return {
@@ -66,7 +77,7 @@ export async function getUserRules(
       totalPages: rules.totalPages,
       page: rules.page || 1,
       hasNextPage: rules.hasNextPage,
-      hasPrevPage: rules.hasPrevPage
+      hasPrevPage: rules.hasPrevPage,
     }
   } catch (error) {
     console.error('获取规则失败:', error)
@@ -76,7 +87,7 @@ export async function getUserRules(
       totalPages: 0,
       page: 1,
       hasNextPage: false,
-      hasPrevPage: false
+      hasPrevPage: false,
     }
   }
 }
@@ -85,30 +96,20 @@ export async function getUserRules(
 export async function deleteRule(ruleId: string): Promise<boolean> {
   try {
     const payload = await getPayload({ config: payloadConfig })
-    const headersList = await headers()
-    const { user } = await payload.auth({ headers: headersList })
+    const user = await getUser()
 
     if (!user) {
-      throw new Error('用户未认证')
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
     }
 
-    // 先检查规则是否属于当前用户
-    const rule = await payload.findByID({
+    await payload.update({
       collection: COLLECTION_SLUGS.RULES,
       id: ruleId,
-    })
-
-    const creatorId = typeof rule.creator.value === 'string' 
-      ? rule.creator.value 
-      : (rule.creator.value as any).id
-
-    if (creatorId !== user.id) {
-      throw new Error('无权删除此规则')
-    }
-
-    await payload.delete({
-      collection: COLLECTION_SLUGS.RULES,
-      id: ruleId,
+      data: {
+        obsolete: true,
+      },
+      overrideAccess: false,
+      user,
     })
 
     return true
@@ -121,35 +122,22 @@ export async function deleteRule(ruleId: string): Promise<boolean> {
 // 更新规则
 export async function updateRule(
   ruleId: string,
-  data: Partial<Pick<Rule, 'title' | 'content' | 'description' | 'globs' | 'private' | 'tags'>>
+  data: Partial<Pick<Rule, 'title' | 'content' | 'description' | 'globs' | 'private' | 'tags'>>,
 ): Promise<Rule> {
   try {
     const payload = await getPayload({ config: payloadConfig })
-    const headersList = await headers()
-    const { user } = await payload.auth({ headers: headersList })
+    const user = await getUser()
 
     if (!user) {
-      throw new Error('用户未认证')
-    }
-
-    // 先检查规则是否属于当前用户
-    const rule = await payload.findByID({
-      collection: COLLECTION_SLUGS.RULES,
-      id: ruleId,
-    })
-
-    const creatorId = typeof rule.creator.value === 'string' 
-      ? rule.creator.value 
-      : (rule.creator.value as any).id
-
-    if (creatorId !== user.id) {
-      throw new Error('无权修改此规则')
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
     }
 
     const updatedRule = await payload.update({
       collection: COLLECTION_SLUGS.RULES,
       id: ruleId,
       data,
+      overrideAccess: false,
+      user,
     })
 
     return updatedRule as Rule
@@ -163,26 +151,22 @@ export async function updateRule(
 export async function toggleRuleVisibility(ruleId: string): Promise<Rule> {
   try {
     const payload = await getPayload({ config: payloadConfig })
-    const headersList = await headers()
-    const { user } = await payload.auth({ headers: headersList })
+    const user = await getUser()
 
     if (!user) {
-      throw new Error('用户未认证')
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
     }
 
     // 先获取规则当前状态
-    const rule = await payload.findByID({
+    const rule = (await payload.findByID({
       collection: COLLECTION_SLUGS.RULES,
       id: ruleId,
-    }) as Rule
-
-    const creatorId = typeof rule.creator.value === 'string' 
-      ? rule.creator.value 
-      : (rule.creator.value as any).id
-
-    if (creatorId !== user.id) {
-      throw new Error('无权修改此规则')
-    }
+      overrideAccess: false,
+      user,
+      select: {
+        private: true,
+      },
+    })) as Rule
 
     // 切换private状态
     const updatedRule = await payload.update({
@@ -204,16 +188,17 @@ export async function toggleRuleVisibility(ruleId: string): Promise<Rule> {
 export async function getRule(ruleId: string): Promise<Rule> {
   try {
     const payload = await getPayload({ config: payloadConfig })
-    const headersList = await headers()
-    const { user } = await payload.auth({ headers: headersList })
+    const user = await getUser()
 
     if (!user) {
-      throw new Error('用户未认证')
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
     }
 
     const rule = await payload.findByID({
       collection: COLLECTION_SLUGS.RULES,
       id: ruleId,
+      overrideAccess: false,
+      user,
     })
 
     return rule as Rule
@@ -221,4 +206,21 @@ export async function getRule(ruleId: string): Promise<Rule> {
     console.error('获取规则详情失败:', error)
     throw error
   }
-} 
+}
+
+export async function createRule(
+  data: Pick<Rule, 'title' | 'content' | 'description' | 'globs' | 'private'> & { id?: string },
+) {
+  const payload = await getPayload({ config: payloadConfig })
+  const user = await getUser()
+  if (!user) {
+    throw new Error('User not authenticated')
+  }
+  const rule = await payload.create({
+    collection: COLLECTION_SLUGS.RULES,
+    data,
+    overrideAccess: false,
+    user,
+  })
+  return rule
+}

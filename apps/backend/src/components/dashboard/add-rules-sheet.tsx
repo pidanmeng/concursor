@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GenericSheet } from './generic-sheet'
 import { RuleForm, RuleFormValues, ruleFormSchema } from './rule-form'
-import { createRule } from '@/actions/dashboard'
+import { createRule } from '@/actions/rules'
 import { memo } from 'react'
 
 interface AddRulesSheetProps {

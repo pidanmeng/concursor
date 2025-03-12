@@ -10,9 +10,9 @@ export function creator({ override }: { override?: Partial<Field> } = {}): Field
     },
     name: 'creator',
     index: true,
-    required: true,
     type: 'relationship',
     relationTo: [COLLECTION_SLUGS.USERS, COLLECTION_SLUGS.ADMIN_USERS],
+    label: '创建者',
     hooks: {
       beforeChange: [
         async ({ req, value }) => {

@@ -5,15 +5,12 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
-import { Header } from '@/components/Header'
 import { cn } from '@/lib/utils'
 import { UserProvider } from '@/providers/userProvider'
-import { headers } from 'next/headers'
-import { getPayload } from 'payload'
-import configPromise from '@/payload.config'
 import { getThemeServer } from '@/utils/getThemeServer'
 import { AuthProvider } from '@/providers/auth-provider'
 import { Metadata } from 'next'
+import { getUser } from '@/actions/auth'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations()
@@ -43,11 +40,8 @@ export default async function RootLayout({
   const messages = await getMessages()
 
   // 获取用户信息
-  const headersList = await headers()
   const theme = await getThemeServer()
-  const payloadConfig = await configPromise
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers: headersList })
+  const user = await getUser()
   const t = await getTranslations()
 
   return (
