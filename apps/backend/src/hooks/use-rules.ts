@@ -113,10 +113,17 @@ export function useRules({ initialRules, initialTotalPages, initialTotalDocs }: 
   // 处理删除
   const handleDelete = async (ruleId: string): Promise<void> => {
     try {
-      await deleteRule(ruleId)
+      const rule = await deleteRule(ruleId)
 
-      toast.success(t('deleteSuccess'), {
+      toast(t('deleteSuccess', { rule: rule.title }), {
         description: t('deleteSuccessDescription'),
+        action: {
+          label: t('undo'),
+          onClick: async () => {
+            await deleteRule(ruleId, { restore: true })
+            await loadRules(currentPage, searchQuery)
+          },
+        },
       })
 
       // 重新加载当前页数据

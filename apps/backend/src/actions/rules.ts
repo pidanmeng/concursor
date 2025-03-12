@@ -93,7 +93,10 @@ export async function getUserRules(
 }
 
 // 删除规则
-export async function deleteRule(ruleId: string): Promise<boolean> {
+export async function deleteRule(
+  ruleId: string,
+  { restore = false }: { restore?: boolean } = {},
+): Promise<Rule> {
   try {
     const payload = await getPayload({ config: payloadConfig })
     const user = await getUser()
@@ -102,17 +105,17 @@ export async function deleteRule(ruleId: string): Promise<boolean> {
       throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
     }
 
-    await payload.update({
+    const rule = await payload.update({
       collection: COLLECTION_SLUGS.RULES,
       id: ruleId,
       data: {
-        obsolete: true,
+        obsolete: restore ? false : true,
       },
       overrideAccess: false,
       user,
     })
 
-    return true
+    return rule
   } catch (error) {
     console.error('删除规则失败:', error)
     throw error
@@ -122,7 +125,9 @@ export async function deleteRule(ruleId: string): Promise<boolean> {
 // 更新规则
 export async function updateRule(
   ruleId: string,
-  data: Partial<Pick<Rule, 'title' | 'content' | 'description' | 'globs' | 'private' | 'tags'>>,
+  data: Partial<
+    Pick<Rule, 'title' | 'content' | 'description' | 'globs' | 'private' | 'tags' | 'obsolete'>
+  >,
 ): Promise<Rule> {
   try {
     const payload = await getPayload({ config: payloadConfig })

@@ -67,8 +67,8 @@ export const Rules: CollectionConfig = {
   access: {
     read: or([and([or([notPrivate, isCreator]), notObsolete]), adminUser]),
     create: authenticated,
-    update: or([and([isCreator, notPrivate]), adminUser]),
-    delete: or([and([isCreator, notPrivate]), adminUser]),
+    update: or([isCreator, adminUser]),
+    delete: adminUser,
   },
   labels: {
     singular: 'Rule',

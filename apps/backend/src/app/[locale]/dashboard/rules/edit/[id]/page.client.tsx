@@ -29,43 +29,49 @@ export default function EditRuleClient({ rule }: EditRuleClientProps) {
       content: rule.content,
       globs: rule.globs || '',
       private: rule.private || false,
-      tags: Array.isArray(rule.tags) 
-        ? rule.tags.map(tag => typeof tag === 'string' 
-            ? { id: tag, name: tag } 
-            : { id: tag.id, name: tag.name })
+      tags: Array.isArray(rule.tags)
+        ? rule.tags.map((tag) =>
+            typeof tag === 'string' ? { id: tag, name: tag } : { id: tag.id, name: tag.name },
+          )
         : [],
     },
   })
 
   // 处理表单提交
-  const handleSubmit = useCallback(async (values: RuleFormValues) => {
-    try {
-      setLoading(true)
-      
-      // 转换tags为API所需的ID数组格式
-      const formattedValues = {
-        ...values,
-        tags: values.tags.map(tag => tag.id)
+  const handleSubmit = useCallback(
+    async (values: RuleFormValues) => {
+      try {
+        setLoading(true)
+
+        // 转换tags为API所需的ID数组格式
+        const formattedValues = {
+          ...values,
+          tags: values.tags.map((tag) => tag.id),
+        }
+
+        const updatedRule = await updateRule(rule.id, formattedValues)
+
+        toast.success(t('updateSuccess'), {
+          description: t('updateSuccessDescription'),
+        })
+
+        // 更新成功后返回列表页
+        router.push('/dashboard/rules')
+        router.refresh()
+
+        return updatedRule
+      } catch (error) {
+        console.error('更新规则失败:', error)
+        toast.error(t('updateFailed'), {
+          description: String(error),
+        })
+        throw error
+      } finally {
+        setLoading(false)
       }
-      
-      await updateRule(rule.id, formattedValues)
-      
-      toast.success(t('updateSuccess'), {
-        description: t('updateSuccessDescription'),
-      })
-      
-      // 更新成功后返回列表页
-      router.push('/dashboard/rules')
-      router.refresh()
-    } catch (error) {
-      console.error('更新规则失败:', error)
-      toast.error(t('updateFailed'), {
-        description: String(error),
-      })
-    } finally {
-      setLoading(false)
-    }
-  }, [rule.id, router, t])
+    },
+    [rule.id, router, t],
+  )
 
   return (
     <div className="space-y-6">
@@ -76,25 +82,15 @@ export default function EditRuleClient({ rule }: EditRuleClientProps) {
           </h1>
           <p className="text-muted-foreground mt-1">{t('description')}</p>
         </div>
-        <Button 
-          variant="outline" 
-          onClick={() => router.back()} 
-          className="flex items-center gap-2"
-        >
+        <Button variant="outline" onClick={() => router.back()} className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
           {t('back')}
         </Button>
       </div>
-      
+
       <div className="rounded-md border border-border/50 overflow-hidden shadow-sm p-6">
-        <RuleForm 
-          form={form} 
-          onSubmit={handleSubmit}
-          loading={loading}
-          submitLabel={t('update')}
-          showPreview={true}
-        />
+        <RuleForm form={form} onSubmit={handleSubmit} loading={loading} submitLabel={t('update')} />
       </div>
     </div>
   )
-} 
+}

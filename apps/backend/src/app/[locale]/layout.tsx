@@ -11,6 +11,7 @@ import { getThemeServer } from '@/utils/getThemeServer'
 import { AuthProvider } from '@/providers/auth-provider'
 import { Metadata } from 'next'
 import { getUser } from '@/actions/auth'
+import { Toaster } from '@/components/ui/sonner'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations()
@@ -59,6 +60,7 @@ export default async function RootLayout({
             <NextIntlClientProvider messages={messages} locale={locale}>
               <AuthProvider>
                 {children}
+                <Toaster />
               </AuthProvider>
             </NextIntlClientProvider>
           </UserProvider>

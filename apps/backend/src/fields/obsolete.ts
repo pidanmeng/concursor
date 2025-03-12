@@ -5,7 +5,6 @@ export function obsolete({ override }: { override?: Partial<Field> } = {}): Fiel
   const defaultConfig: Field = {
     admin: {
       position: 'sidebar',
-      readOnly: true,
     },
     label: '已废弃',
     name: 'obsolete',

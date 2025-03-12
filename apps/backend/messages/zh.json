@@ -145,10 +145,8 @@
       "viewAll": "查看所有项目",
       "updatedAt": "更新于 {date}"
     },
-    "noDescription": "无描述"
-  },
-  "Dashboard": {
-    "Rules": {
+    "noDescription": "无描述",
+    "rules": {
       "title": "我的 Cursor Rules",
       "description": "管理你创建的所有 Cursor 规则",
       "tableCaption": "你的 Cursor Rules 列表",
@@ -183,9 +181,10 @@
       "confirmDelete": "确认删除",
       "totalItems": "共 {count} 条规则",
       "loadFailed": "加载规则失败",
-      "deleteSuccess": "删除成功",
+      "deleteSuccess": "{rule} 删除成功",
       "deleteSuccessDescription": "规则已成功删除",
       "deleteFailed": "删除失败",
+      "undo": "撤销",
       "madePublic": "规则已设为公开",
       "madePrivate": "规则已设为私有",
       "visibilityChanged": "规则可见性已更改",

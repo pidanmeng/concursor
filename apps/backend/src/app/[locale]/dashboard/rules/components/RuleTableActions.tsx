@@ -10,17 +10,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { 
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
 
 import type { Rule } from '@/payload-types'
 
@@ -79,44 +68,23 @@ export function RuleTableActions({
         </Tooltip>
       </TooltipProvider>
       
-      <AlertDialog>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <AlertDialogTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                >
-                  <TrashIcon className="h-4 w-4" />
-                </Button>
-              </AlertDialogTrigger>
-            </TooltipTrigger>
-            <TooltipContent>
-              {t('delete')}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t('deleteConfirmDescription')}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-            <AlertDialogAction 
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
               onClick={() => onDelete(rule.id)}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {t('confirmDelete')}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+              <TrashIcon className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            {t('delete')}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   )
 } 
