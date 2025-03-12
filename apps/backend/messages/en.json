@@ -213,6 +213,15 @@
         "updateSuccessDescription": "The rule has been successfully updated",
         "updateFailed": "Update Failed",
         "submit": "Submit"
+      },
+      "new": {
+        "title": "Create Rule",
+        "description": "Create a new Cursor Rule",
+        "back": "Back",
+        "submit": "Submit",
+        "createSuccess": "Create Successful",
+        "createSuccessDescription": "The rule has been successfully created",
+        "createFailed": "Create Failed"
       }
     }
   },

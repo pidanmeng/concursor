@@ -213,6 +213,15 @@
         "updateSuccessDescription": "规则已成功更新",
         "updateFailed": "更新失败",
         "submit": "提交"
+      },
+      "new": {
+        "title": "创建规则",
+        "description": "创建一个新的 Cursor Rule",
+        "back": "返回",
+        "submit": "提交",
+        "createSuccess": "创建成功",
+        "createSuccessDescription": "规则已成功创建",
+        "createFailed": "创建失败"
       }
     }
   },

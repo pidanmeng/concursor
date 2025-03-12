@@ -53,7 +53,7 @@ export default async function RootLayout({
         <meta name="description" content={t('metadata.global.description')} />
       </head>
       <body
-        className={cn('min-h-screen h-screen bg-background font-sans antialiased flex flex-col')}
+        className={cn('min-h-screen h-screen bg-background font-sans antialiased flex flex-col overflow-hidden')}
       >
         <ThemeProvider>
           <UserProvider user={user}>
