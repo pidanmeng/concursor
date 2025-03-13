@@ -94,7 +94,7 @@
     "apps",
   ],
   "i18n-ally.regex.usageMatchAppend": [
-    "t\\(['\"`]({key})['\"`]\\)"
+    "/\\*\\s*i18n\\s*\\*/\\s*['\"`]({key})['\"`]"
   ],
   "i18n-ally.enabledFrameworks": [
     "vscode",

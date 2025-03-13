@@ -190,7 +190,7 @@ export async function toggleRuleVisibility(ruleId: string): Promise<Rule> {
 }
 
 // 获取单个规则详情
-export async function getRule(ruleId: string): Promise<Rule> {
+export async function getRule(ruleId: string): Promise<Rule | null> {
   try {
     const payload = await getPayload({ config: payloadConfig })
     const user = await getUser()
@@ -209,7 +209,7 @@ export async function getRule(ruleId: string): Promise<Rule> {
     return rule as Rule
   } catch (error) {
     console.error('获取规则详情失败:', error)
-    throw error
+    return null
   }
 }
 

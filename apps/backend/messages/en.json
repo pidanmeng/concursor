@@ -151,6 +151,15 @@
     "rules": {
       "title": "My Cursor Rules",
       "description": "Manage all your created Cursor rules",
+      "favorite": "Favorite",
+      "download": "Download",
+      "favorites": "Favorites",
+      "downloads": "Downloads",
+      "content": "Rule Content",
+      "details": "Details",
+      "descriptionTitle": "Description",
+      "globs": "File Pattern",
+      "forkedFrom": "Forked From",
       "tableCaption": "Your list of Cursor Rules",
       "loading": "Loading...",
       "noRules": "No rules yet",
@@ -266,7 +275,11 @@
         "updateSuccess": "Update Successful",
         "updateSuccessDescription": "The project has been successfully updated",
         "updateFailed": "Update Failed"
-      }
+      },
+      "sync": "Sync",
+      "rules": "Rules",
+      "associatedRules": "Associated Rules",
+      "viewRule": "View Rule"
     }
   },
   "switchLanguage": "Switch Language"

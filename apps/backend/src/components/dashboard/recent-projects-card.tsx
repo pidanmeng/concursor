@@ -1,41 +1,39 @@
+'use client'
+
 import { Project } from '@/payload-types'
 import { useTranslations } from 'next-intl'
 import { Folder, Plus } from 'lucide-react'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import { GenericItemCard } from './generic-item-card'
 import { ItemRow } from './item-row'
-import { DashboardData } from '@/actions/dashboard'
-import { AddProjectsSheet } from './add-projects-sheet'
 import { Button } from '@/components/ui/button'
-import { useSetAtom } from 'jotai'
-import { recentProjectsAtom, statsAtom } from '@/states/dashboard'
-import { Link } from '@/i18n/routing'
+import { Link, useRouter } from '@/i18n/routing'
 
-const RECENT_LIMIT = 5
 
 export interface RecentProjectsCardProps {
   projects: Project[]
   onViewAllProjects?: () => void
 }
 
-export const RecentProjectsCard = memo(function RecentProjectsCard({ 
-  projects, 
-  onViewAllProjects 
+export const RecentProjectsCard = memo(function RecentProjectsCard({
+  projects,
+  onViewAllProjects,
 }: RecentProjectsCardProps) {
   const t = useTranslations('dashboard')
-  const setRecentProjects = useSetAtom(recentProjectsAtom)
-  const setStats = useSetAtom(statsAtom)
-  
-  const onSuccess = useCallback(
-    (project: Project) => {
-      setRecentProjects((prev: Project[]) => [project, ...prev].slice(0, RECENT_LIMIT))
-      setStats((prev: DashboardData['stats']) => ({
-        ...prev,
-        projects: { ...prev.projects, value: prev.projects.value + 1 },
-      }))
-    },
-    [setRecentProjects, setStats],
-  )
+  const router = useRouter()
+  // const setRecentProjects = useSetAtom(recentProjectsAtom)
+  // const setStats = useSetAtom(statsAtom)
+
+  // const onSuccess = useCallback(
+  //   (project: Project) => {
+  //     setRecentProjects((prev: Project[]) => [project, ...prev].slice(0, RECENT_LIMIT))
+  //     setStats((prev: DashboardData['stats']) => ({
+  //       ...prev,
+  //       projects: { ...prev.projects, value: prev.projects.value + 1 },
+  //     }))
+  //   },
+  //   [setRecentProjects, setStats],
+  // )
 
   return (
     <GenericItemCard<Project>
@@ -61,8 +59,11 @@ export const RecentProjectsCard = memo(function RecentProjectsCard({
           icon={<Folder className="text-primary h-5 w-5" />}
           item={project}
           translationPrefix="dashboard.recentProjects"
+          onItemClick={() => {
+            router.push(`/dashboard/projects/${project.id}`)
+          }}
         />
       )}
     />
   )
-}) 
+})

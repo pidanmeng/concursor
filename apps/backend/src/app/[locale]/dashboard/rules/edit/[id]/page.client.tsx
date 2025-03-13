@@ -9,8 +9,9 @@ import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { updateRule } from '@/actions/rules'
 import type { Rule } from '@/payload-types'
-import { RuleForm, RuleFormValues } from '@/components/dashboard/rule-form'
+import { RuleForm } from '@/components/dashboard/rule-form'
 import { useForm } from 'react-hook-form'
+import { RuleFormValues } from '@/forms/rule'
 
 interface EditRuleClientProps {
   rule: Rule

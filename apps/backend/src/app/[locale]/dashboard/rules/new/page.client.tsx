@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -12,12 +12,16 @@ import { RuleForm } from '@/components/dashboard/rule-form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRuleFormSchema, RuleFormValues } from '@/forms/rule'
+import { useRouter } from '@/i18n/routing'
 
 export default function NewRuleClient() {
   const t = useTranslations('dashboard.rules.new')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   const ruleFormSchema = useRuleFormSchema()
+
+  const from = searchParams.get('from')
 
   // 初始化表单
   const form = useForm<RuleFormValues>({
@@ -50,8 +54,11 @@ export default function NewRuleClient() {
           description: t('createSuccessDescription'),
         })
 
-        // 创建成功后返回列表页
-        router.push('/dashboard/rules')
+        let redirectUrl = '/dashboard/rules'
+        if (from?.startsWith('/')) {
+          redirectUrl = from
+        }
+        router.push(redirectUrl)
         router.refresh()
 
         return createdRule

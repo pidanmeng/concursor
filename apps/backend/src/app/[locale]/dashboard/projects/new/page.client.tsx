@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,11 +12,14 @@ import { Button } from '@/components/ui/button'
 import { createProject } from '@/actions/projects'
 import { ProjectForm } from '@/components/dashboard/project-form'
 import { ProjectFormValues, useProjectFormSchema } from '@/forms/project'
+import { useRouter } from '@/i18n/routing'
 
 export function NewProjectClient() {
   const t = useTranslations('dashboard.projects.new')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
+  const from = searchParams.get('from')
 
   const projectFormSchema = useProjectFormSchema()
 
@@ -45,8 +48,11 @@ export function NewProjectClient() {
           description: t('createSuccessDescription'),
         })
 
-        // 创建成功后返回列表页
-        router.push('/dashboard/projects')
+        let redirectUrl = '/dashboard/projects'
+        if (from?.startsWith('/')) {
+          redirectUrl = from
+        }
+        router.push(redirectUrl)
         router.refresh()
 
         return createdProject

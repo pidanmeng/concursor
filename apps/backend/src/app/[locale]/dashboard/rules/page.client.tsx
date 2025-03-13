@@ -7,7 +7,9 @@ import { useRules } from '@/hooks/use-rules'
 import { RuleTable } from './components/RuleTable'
 import { RuleSearchBar } from './components/RuleSearchBar'
 import { RulePagination } from './components/RulePagination'
-import { AddRulesSheet } from '@/components/dashboard/add-rules-sheet'
+import { Plus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
 
 // 客户端组件接口
 interface RulesClientProps {
@@ -37,7 +39,6 @@ export default function RulesClient({
     handleDelete,
     handleToggleVisibility,
     handleEdit,
-    handleAddSuccess,
   } = useRules({
     initialRules,
     initialTotalPages,
@@ -61,9 +62,12 @@ export default function RulesClient({
           onSearchSubmit={handleSearch}
         />
         
-        <AddRulesSheet onSuccess={handleAddSuccess}>
-          {/* 按钮由 AddRulesSheet 组件内部提供 */}
-        </AddRulesSheet>
+        <Button asChild>
+          <Link href="/dashboard/rules/new">
+            <Plus />
+            {t('addRule')}
+          </Link>
+        </Button>
       </div>
 
       {/* 表格 */}

@@ -151,6 +151,15 @@
     "rules": {
       "title": "我的 Cursor Rules",
       "description": "管理你创建的所有 Cursor 规则",
+      "favorite": "收藏",
+      "download": "下载",
+      "favorites": "收藏",
+      "downloads": "下载",
+      "content": "规则内容",
+      "details": "详细信息",
+      "descriptionTitle": "描述",
+      "globs": "文件匹配模式",
+      "forkedFrom": "复制自",
       "tableCaption": "你的 Cursor Rules 列表",
       "loading": "加载中...",
       "noRules": "暂无规则",
@@ -266,7 +275,11 @@
         "updateSuccess": "更新成功",
         "updateSuccessDescription": "项目已成功更新",
         "updateFailed": "更新失败"
-      }
+      },
+      "sync": "同步",
+      "rules": "条规则",
+      "associatedRules": "关联规则",
+      "viewRule": "查看规则"
     }
   },
   "switchLanguage": "切换语言"

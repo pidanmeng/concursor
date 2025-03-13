@@ -1,18 +1,13 @@
 import { Rule } from '@/payload-types'
 import { useTranslations } from 'next-intl'
 import { Settings } from 'lucide-react'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import { GenericItemCard } from './generic-item-card'
 import { ItemRow } from './item-row'
-import { useSetAtom } from 'jotai'
-import { recentRulesAtom, statsAtom } from '@/states/dashboard'
-import { DashboardData } from '@/actions/dashboard'
-import { AddRulesSheet } from './add-rules-sheet'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-import { Link } from '@/i18n/routing'
+import { Link, useRouter } from '@/i18n/routing'
 
-const RECENT_LIMIT = 5
 
 export interface RecentRulesCardProps {
   rules: Rule[]
@@ -24,19 +19,21 @@ export const RecentRulesCard = memo(function RecentRulesCard({
   onViewAllRules,
 }: RecentRulesCardProps) {
   const t = useTranslations('dashboard')
-  const setRecentRules = useSetAtom(recentRulesAtom)
-  const setStats = useSetAtom(statsAtom)
 
-  const onSuccess = useCallback(
-    (rule: Rule) => {
-      setRecentRules((prev: Rule[]) => [rule, ...prev].slice(0, RECENT_LIMIT))
-      setStats((prev: DashboardData['stats']) => ({
-        ...prev,
-        rules: { ...prev.rules, value: prev.rules.value + 1 },
-      }))
-    },
-    [setRecentRules, setStats],
-  )
+  const router = useRouter()
+  // const setRecentRules = useSetAtom(recentRulesAtom)
+  // const setStats = useSetAtom(statsAtom)
+
+  // const onSuccess = useCallback(
+  //   (rule: Rule) => {
+  //     setRecentRules((prev: Rule[]) => [rule, ...prev].slice(0, RECENT_LIMIT))
+  //     setStats((prev: DashboardData['stats']) => ({
+  //       ...prev,
+  //       rules: { ...prev.rules, value: prev.rules.value + 1 },
+  //     }))
+  //   },
+  //   [setRecentRules, setStats],
+  // )
 
   return (
     <GenericItemCard<Rule>
@@ -62,6 +59,9 @@ export const RecentRulesCard = memo(function RecentRulesCard({
           icon={<Settings className="text-primary h-5 w-5" />}
           item={rule}
           translationPrefix="dashboard.recentRules"
+          onItemClick={() => {
+            router.push(`/dashboard/rules/${rule.id}`)
+          }}
         />
       )}
     />

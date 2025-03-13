@@ -1,7 +1,7 @@
 import { Sidebar, SidebarContent } from '@/components/ui/sidebar'
 import { DashboardSidebarHeader } from './sidebar-header'
 import { SidebarSection } from './sidebar-section'
-import { PanelLeft, Settings, Star, Folder } from 'lucide-react'
+import { Home, Settings, Folder } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
 export async function DashboardSidebar() {
@@ -9,7 +9,7 @@ export async function DashboardSidebar() {
 
   const sidebarItems = [
     {
-      icon: <PanelLeft />,
+      icon: <Home />,
       label: t('sidebar.dashboard'),
       href: '/dashboard',
     },
@@ -18,11 +18,11 @@ export async function DashboardSidebar() {
       label: t('sidebar.rules'),
       href: '/dashboard/rules',
     },
-    {
-      icon: <Star />,
-      label: t('sidebar.favorites'),
-      href: '/dashboard/favorites',
-    },
+    // {
+    //   icon: <Star />,
+    //   label: t('sidebar.favorites'),
+    //   href: '/dashboard/favorites',
+    // },
     {
       icon: <Folder />,
       label: t('sidebar.projects'),

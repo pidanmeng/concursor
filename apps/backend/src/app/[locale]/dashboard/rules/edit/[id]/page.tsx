@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import EditRuleClient from './page.client'
 import { getTranslations } from 'next-intl/server'
 import { redirect } from '@/i18n/routing'
+import { NotFound } from '@/components/404'
 
 interface EditRulePageProps {
   params: Promise<{
@@ -15,7 +16,9 @@ export default async function EditRulePage({ params }: EditRulePageProps) {
   const { id, locale } = await params
   try {
     const rule = await getRule(id)
-
+    if (!rule) {
+      return <NotFound />
+    }
     return <EditRuleClient rule={rule} />
   } catch (error) {
     console.error('获取规则失败:', error)
@@ -39,8 +42,8 @@ export async function generateMetadata({ params }: EditRulePageProps) {
     const t = await getTranslations('metadata.dashboard')
 
     return {
-      title: `${t('title')} - ${rule.title}`,
-      description: rule.description || t('description'),
+      title: `${t('title')} - ${rule?.title || ''}`,
+      description: rule?.description || t('description'),
     }
   } catch (error) {
     // 出错时使用默认元数据

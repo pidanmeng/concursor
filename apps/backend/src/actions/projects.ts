@@ -52,7 +52,7 @@ export async function getProjects({
 }
 
 // 根据ID获取单个项目
-export async function getProject(id: string): Promise<Project> {
+export async function getProject(id: string): Promise<Project | null> {
   const payload = await getPayload({ config: payloadConfig })
   const user = await getUser()
 
@@ -71,7 +71,7 @@ export async function getProject(id: string): Promise<Project> {
     return project as Project
   } catch (error) {
     console.error('获取项目详情失败:', error)
-    throw new Error('Failed to get project')
+    return null
   }
 }
 
