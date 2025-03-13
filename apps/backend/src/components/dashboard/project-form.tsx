@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl'
 import { useCallback } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
+import { TagInput } from '@/components/dashboard/tag-input'
 
 // 定义表单验证模式
 export const projectFormSchema = z.object({
@@ -21,6 +22,14 @@ export const projectFormSchema = z.object({
     message: 'title.minLength',
   }),
   description: z.string().optional(),
+  tags: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      }),
+    )
+    .default([]),
 })
 
 export type ProjectFormValues = z.infer<typeof projectFormSchema>
@@ -31,6 +40,7 @@ interface ProjectFormProps {
   onSuccess?: (result: Project) => void
   loading?: boolean
   submitLabel?: string
+  disableSubmit?: boolean
 }
 
 export function ProjectForm({
@@ -39,6 +49,7 @@ export function ProjectForm({
   onSuccess,
   loading = false,
   submitLabel,
+  disableSubmit = false,
 }: ProjectFormProps) {
   const t = useTranslations('dashboard.addProject.form')
 
@@ -89,10 +100,32 @@ export function ProjectForm({
               </FormItem>
             )}
           />
+
+          {/* 标签字段 */}
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('tags')}</FormLabel>
+                <FormControl>
+                  <TagInput
+                    placeholder={t('tagsPlaceholder')}
+                    value={field.value}
+                    onChange={(newTags) => field.onChange(newTags)}
+                  />
+                </FormControl>
+                <FormMessage messagePreHandler={t} />
+              </FormItem>
+            )}
+          />
+
           {/* 提交按钮 */}
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? t('submitting') : submitLabel || t('submit')}
-          </Button>
+          {disableSubmit ? null : (
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? t('submitting') : submitLabel || t('submit')}
+            </Button>
+          )}
         </div>
       </form>
     </Form>

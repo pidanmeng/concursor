@@ -123,6 +123,8 @@
         "description": "Description",
         "titlePlaceholder": "Enter the title of the project",
         "descriptionPlaceholder": "What is this project about...",
+        "tags": "Tags",
+        "tagsPlaceholder": "Enter tag name",
         "title": {
           "minLength": "Title must be at least 2 characters.",
           "label": "Title"
@@ -245,6 +247,8 @@
       "deleteFailed": "Failed to delete project",
       "duplicateSuccess": "Project duplicated successfully",
       "duplicateFailed": "Failed to duplicate project",
+      "loadMoreError": "Failed to load more projects",
+      "loadingMore": "Loading more projects...",
       "new": {
         "title": "Create Project",
         "description": "Create a new project collection",

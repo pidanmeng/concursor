@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge'
 
 import type { Rule } from '@/payload-types'
 import { RuleTableActions } from './RuleTableActions'
+import { TagList } from '@/components/tag-list'
 
 interface RuleTableProps {
   rules: Rule[]
@@ -34,47 +35,6 @@ export function RuleTable({
   onDelete,
 }: RuleTableProps) {
   const t = useTranslations('dashboard.rules')
-
-  // 展示有限数量的标签
-  const renderTags = (tags: (string | any)[] | null | undefined) => {
-    if (!tags || tags.length === 0) return null
-
-    const displayTags = tags.slice(0, 3)
-    const remainingCount = tags.length - 3
-
-    return (
-      <div className="flex flex-wrap gap-1">
-        {displayTags.map((tag, index) => {
-          const tagName = typeof tag === 'string' ? tag : tag.name || ''
-          return (
-            <Badge key={index} variant="outline" className="bg-secondary text-xs">
-              {tagName}
-            </Badge>
-          )
-        })}
-
-        {remainingCount > 0 && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge variant="outline" className="bg-secondary/50 text-xs cursor-help">
-                  +{remainingCount}
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div className="space-y-1">
-                  {tags.slice(3).map((tag, index) => {
-                    const tagName = typeof tag === 'string' ? tag : tag.name || ''
-                    return <div key={index}>{tagName}</div>
-                  })}
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        )}
-      </div>
-    )
-  }
 
   return (
     <div className="rounded-md border border-border/50 overflow-hidden shadow-sm">
@@ -137,7 +97,9 @@ export function RuleTable({
                   )}
                   <span className="truncate">{rule.title}</span>
                 </TableCell>
-                <TableCell className="hidden sm:table-cell">{renderTags(rule.tags)}</TableCell>
+                <TableCell className="hidden sm:table-cell">
+                  <TagList tags={rule.tags} />
+                </TableCell>
                 <TableCell className="text-center">
                   <span className="px-2 py-1 rounded-md bg-muted/50 text-muted-foreground text-sm">
                     {rule.downloadCount || 0}

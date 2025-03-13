@@ -5,31 +5,20 @@ import { useRouter } from '@/i18n/routing'
 import { useTranslations, useLocale } from 'next-intl'
 import { format, formatDistanceToNow } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
-import { MoreHorizontal, Pencil, Trash2, Copy, Tag } from 'lucide-react'
+import { MoreHorizontal, Pencil, Trash2, Copy } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Project } from '@/payload-types'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { Badge } from '@/components/ui/badge'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { TagList } from '@/components/tag-list'
 
 interface ProjectCardProps {
   project: Project
@@ -66,15 +55,6 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
 
   // 计算规则数量
   const rulesCount = project.rules?.length || 0
-
-  // 处理标签显示，最多显示3个
-  const displayTags = project.tags
-    ? Array.isArray(project.tags)
-      ? project.tags.slice(0, 3)
-      : []
-    : []
-  
-  const hasMoreTags = project.tags && Array.isArray(project.tags) && project.tags.length > 3
 
   // 处理编辑
   const handleEdit = () => {
@@ -132,12 +112,12 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
                 <Copy className="mr-2 h-4 w-4" />
                 {t('duplicate')}
               </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={handleDelete} 
+              <DropdownMenuItem
+                onClick={handleDelete}
                 disabled={isDeleting}
-                className="text-destructive focus:text-destructive"
+                className="text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground"
               >
-                <Trash2 className="mr-2 h-4 w-4" />
+                <Trash2 className="mr-2 h-4 w-4 text-destructive-foreground" />
                 {t('delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -145,43 +125,11 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
         </div>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-3">
-        <p className="text-sm text-muted-foreground line-clamp-3">
-          {project.description || t('noDescription')}
-        </p>
+        {project.description ? (
+          <p className="text-sm text-muted-foreground line-clamp-3">{project.description}</p>
+        ) : null}
 
-        <div className="flex items-center gap-1.5 mt-auto">
-          {displayTags.map((tag) => {
-            const tagName = typeof tag === 'string' ? tag : tag.name
-            return (
-              <Badge key={typeof tag === 'string' ? tag : tag.id} variant="outline" className="h-6">
-                <Tag className="h-3 w-3 mr-1" />
-                {tagName}
-              </Badge>
-            )
-          })}
-          
-          {hasMoreTags && (
-            <TooltipProvider>
-              <Tooltip delayDuration={200}>
-                <TooltipTrigger asChild>
-                  <Badge variant="outline" className="h-6">
-                    +{(project.tags?.length || 0) - 3}
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <div className="flex flex-col gap-1 p-1">
-                    {project.tags?.slice(3).map((tag) => (
-                      <div key={typeof tag === 'string' ? tag : tag.id} className="text-sm flex items-center">
-                        <Tag className="h-3 w-3 mr-1" />
-                        {typeof tag === 'string' ? tag : tag.name}
-                      </div>
-                    ))}
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </div>
+        <TagList tags={project.tags} className="mt-auto" />
       </CardContent>
       <CardFooter className="pt-2 pb-4 flex justify-between text-xs text-muted-foreground">
         <TooltipProvider>
@@ -202,4 +150,4 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
       </CardFooter>
     </Card>
   )
-} 
+}

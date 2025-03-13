@@ -31,7 +31,6 @@ export const Logo = ({ name, className }: LogoProps) => {
   }
 
   if (!iconName) {
-    console.warn(`Icon not found: ${name}, tried: ${tryIconNames.join(', ')}`)
     return null
   }
 

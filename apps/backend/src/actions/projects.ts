@@ -5,31 +5,46 @@ import { getUser } from '@/actions/auth'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { Project } from '@/payload-types'
 import payloadConfig from '@/payload.config'
+import { getCodeMessage } from '@/constants/errorCode'
 
 // 获取当前用户的项目列表
-export async function getProjects(): Promise<Project[]> {
+export async function getProjects({
+  page = 1,
+  limit = 9,
+}: {
+  page?: number
+  limit?: number
+} = {}): Promise<{
+  docs: Project[]
+  totalDocs: number
+  totalPages: number
+  page: number
+  hasNextPage: boolean
+}> {
   const payload = await getPayload({ config: payloadConfig })
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
     const projects = await payload.find({
       collection: COLLECTION_SLUGS.PROJECTS,
-      where: {
-        'creator.value': {
-          equals: user.id,
-        },
-        obsolete: {
-          equals: false,
-        },
-      },
+      limit: limit,
+      page: page,
       sort: '-updatedAt',
+      overrideAccess: false,
+      user,
     })
 
-    return projects.docs as Project[]
+    return {
+      docs: projects.docs as Project[],
+      totalDocs: projects.totalDocs,
+      totalPages: projects.totalPages,
+      page: projects.page || 1,
+      hasNextPage: projects.hasNextPage,
+    }
   } catch (error) {
     console.error('获取项目列表失败:', error)
     throw new Error('Failed to get projects')
@@ -42,23 +57,16 @@ export async function getProject(id: string): Promise<Project> {
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
     const project = await payload.findByID({
       collection: COLLECTION_SLUGS.PROJECTS,
       id,
+      overrideAccess: false,
+      user,
     })
-
-    // 检查当前用户是否是项目创建者
-    if (
-      project?.creator?.value &&
-      typeof project.creator.value === 'string' &&
-      project.creator.value !== user.id
-    ) {
-      throw new Error('无权访问此项目')
-    }
 
     return project as Project
   } catch (error) {
@@ -68,32 +76,59 @@ export async function getProject(id: string): Promise<Project> {
 }
 
 // 搜索项目
-export async function searchProjects(query: string): Promise<Project[]> {
+export async function searchProjects(
+  query: string,
+  { page = 1, limit = 9 }: { page?: number; limit?: number } = {},
+): Promise<{
+  docs: Project[]
+  totalDocs: number
+  totalPages: number
+  page: number
+  hasNextPage: boolean
+}> {
   const payload = await getPayload({ config: payloadConfig })
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
     const projects = await payload.find({
       collection: COLLECTION_SLUGS.PROJECTS,
+      page,
+      limit,
       where: {
-        'creator.value': {
-          equals: user.id,
-        },
-        obsolete: {
-          equals: false,
-        },
-        title: {
-          like: query,
-        },
+        or: [
+          {
+            title: {
+              like: query,
+            },
+          },
+          {
+            description: {
+              like: query,
+            },
+          },
+          {
+            'tags.name': {
+              like: query,
+            },
+          },
+        ],
       },
       sort: '-updatedAt',
+      overrideAccess: false,
+      user,
     })
 
-    return projects.docs as Project[]
+    return {
+      docs: projects.docs as Project[],
+      totalDocs: projects.totalDocs,
+      totalPages: projects.totalPages,
+      page: projects.page || 1,
+      hasNextPage: projects.hasNextPage,
+    }
   } catch (error) {
     console.error('搜索项目失败:', error)
     throw new Error('Failed to search projects')
@@ -108,7 +143,7 @@ export async function createProject(
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
@@ -139,28 +174,16 @@ export async function updateProject(
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
-    // 检查当前用户是否是项目创建者
-    const existingProject = await payload.findByID({
-      collection: COLLECTION_SLUGS.PROJECTS,
-      id,
-    })
-
-    if (
-      existingProject?.creator?.value &&
-      typeof existingProject.creator.value === 'string' &&
-      existingProject.creator.value !== user.id
-    ) {
-      throw new Error('无权修改此项目')
-    }
-
     const project = await payload.update({
       collection: COLLECTION_SLUGS.PROJECTS,
       id,
       data,
+      overrideAccess: false,
+      user,
     })
 
     return project as Project
@@ -176,31 +199,18 @@ export async function deleteProject(id: string): Promise<void> {
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
-    // 检查当前用户是否是项目创建者
-    const existingProject = await payload.findByID({
-      collection: COLLECTION_SLUGS.PROJECTS,
-      id,
-    })
-
-    if (
-      existingProject?.creator?.value &&
-      typeof existingProject.creator.value === 'string' &&
-      existingProject.creator.value !== user.id
-    ) {
-      throw new Error('无权删除此项目')
-    }
-
-    // 使用软删除
     await payload.update({
       collection: COLLECTION_SLUGS.PROJECTS,
       id,
       data: {
         obsolete: true,
       },
+      overrideAccess: false,
+      user,
     })
   } catch (error) {
     console.error('删除项目失败:', error)
@@ -214,41 +224,20 @@ export async function duplicateProject(id: string): Promise<Project> {
   const user = await getUser()
 
   if (!user) {
-    throw new Error('User not authenticated')
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
   }
 
   try {
-    // 获取原项目
-    const sourceProject = await payload.findByID({
+    const sourceProject = (await payload.duplicate({
       collection: COLLECTION_SLUGS.PROJECTS,
       id,
-      depth: 0,
-    }) as Project
+      overrideAccess: false,
+      user,
+    })) as Project
 
-    if (
-      sourceProject?.creator?.value &&
-      typeof sourceProject.creator.value === 'string' &&
-      sourceProject.creator.value !== user.id
-    ) {
-      throw new Error('无权复制此项目')
-    }
-
-    // 创建项目副本
-    const newProject = await payload.create({
-      collection: COLLECTION_SLUGS.PROJECTS,
-      data: {
-        title: `${sourceProject.title} (副本)`,
-        description: sourceProject.description,
-        tags: sourceProject.tags,
-        rules: sourceProject.rules,
-        creator: { value: user.id, relationTo: COLLECTION_SLUGS.USERS },
-        obsolete: false,
-      },
-    })
-
-    return newProject as Project
+    return sourceProject as Project
   } catch (error) {
     console.error('复制项目失败:', error)
     throw new Error('Failed to duplicate project')
   }
-} 
+}

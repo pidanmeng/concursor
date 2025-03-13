@@ -123,6 +123,8 @@
         "description": "描述",
         "titlePlaceholder": "输入项目的标题",
         "descriptionPlaceholder": "这个项目是做什么的...",
+        "tags": "标签",
+        "tagsPlaceholder": "输入标签名称",
         "title": {
           "minLength": "标题至少需要2个字符",
           "label": "标题"
@@ -245,6 +247,8 @@
       "deleteFailed": "删除项目失败",
       "duplicateSuccess": "项目复制成功",
       "duplicateFailed": "复制项目失败",
+      "loadMoreError": "加载更多项目失败",
+      "loadingMore": "正在加载更多项目...",
       "new": {
         "title": "创建项目",
         "description": "创建一个新的项目集合",

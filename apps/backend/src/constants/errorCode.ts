@@ -2,6 +2,7 @@ const ERROR_CODE_PERMISSION = {
   USER_NOT_AUTHENTICATED: 'User not authenticated',
   NO_PERMISSION_TO_DELETE_RULE: 'No permission to delete rule',
   NO_PERMISSION_TO_UPDATE_RULE: 'No permission to update rule',
+  NO_PERMISSION_TO_ACCESS_PROJECT: 'No permission to access project',
 }
 
 export const ERROR_CODE = {

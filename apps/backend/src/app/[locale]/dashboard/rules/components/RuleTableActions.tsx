@@ -74,7 +74,7 @@ export function RuleTableActions({
             <Button 
               variant="ghost" 
               size="icon"
-              className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+              className="text-destructive-foreground hover:text-destructive-foreground/90 hover:bg-destructive/90"
               onClick={() => onDelete(rule.id)}
             >
               <TrashIcon className="h-4 w-4" />

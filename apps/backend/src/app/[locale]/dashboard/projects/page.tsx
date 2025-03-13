@@ -11,10 +11,11 @@ interface ProjectsProps {
 
 export default async function Projects({ searchParams }: ProjectsProps) {
   const t = await getTranslations('dashboard.projects')
-  const searchQuery = (await searchParams)?.q || '';
+  const params = await searchParams;
+  const searchQuery = params?.q || '';
   
   // 在服务端获取项目列表，如果有搜索参数则执行搜索
-  const projects = searchQuery 
+  const projectsData = searchQuery 
     ? await searchProjects(searchQuery)
     : await getProjects();
   
@@ -30,8 +31,11 @@ export default async function Projects({ searchParams }: ProjectsProps) {
       </div>
 
       <ProjectsList 
-        initialProjects={projects} 
+        initialProjects={projectsData.docs} 
         initialSearchQuery={searchQuery}
+        totalPages={projectsData.totalPages}
+        currentPage={projectsData.page}
+        hasNextPage={projectsData.hasNextPage}
       />
     </div>
   )

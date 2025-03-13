@@ -11,7 +11,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { updateProject } from '@/actions/projects'
 import { Project } from '@/payload-types'
-import { ProjectForm, ProjectFormValues, projectFormSchema } from '@/components/dashboard/project-form'
+import {
+  ProjectForm,
+  ProjectFormValues,
+  projectFormSchema,
+} from '@/components/dashboard/project-form'
 
 interface EditProjectClientProps {
   project: Project
@@ -22,12 +26,20 @@ export function EditProjectClient({ project }: EditProjectClientProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
+  // 准备标签数据
+  const formattedTags = Array.isArray(project.tags)
+    ? project.tags.map((tag) =>
+        typeof tag === 'string' ? { id: tag, name: tag } : { id: tag.id, name: tag.name },
+      )
+    : []
+
   // 初始化表单
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectFormSchema),
     defaultValues: {
       title: project.title,
       description: project.description || '',
+      tags: formattedTags,
     },
   })
 
@@ -39,6 +51,7 @@ export function EditProjectClient({ project }: EditProjectClientProps) {
         const updatedProject = await updateProject(project.id, {
           title: values.title,
           description: values.description,
+          tags: values.tags.map((tag) => tag.id),
         })
 
         toast.success(t('updateSuccess'), {
@@ -63,14 +76,8 @@ export function EditProjectClient({ project }: EditProjectClientProps) {
     [project.id, router, t],
   )
 
-  // 处理成功
-  const handleSuccess = useCallback(() => {
-    router.push('/dashboard/projects')
-    router.refresh()
-  }, [router])
-
   return (
-    <>
+    <div className="flex flex-col gap-4 h-full">
       <div className="flex items-center justify-between sticky top-0 bg-primary-foreground z-10 py-2">
         <div>
           <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
@@ -78,24 +85,34 @@ export function EditProjectClient({ project }: EditProjectClientProps) {
           </h1>
           <p className="text-muted-foreground mt-1">{t('description')}</p>
         </div>
-        <Button
-          variant="outline"
-          onClick={() => router.back()}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t('back')}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={() => router.back()}
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            {t('back')}
+          </Button>
+          <Button
+            onClick={form.handleSubmit(handleSubmit)}
+            disabled={loading}
+            className="flex items-center gap-2"
+          >
+            {t('submit')}
+          </Button>
+        </div>
       </div>
 
-      <div className="rounded-md border border-border/50 overflow-hidden shadow-sm p-6">
+      <div className="rounded-md border border-border/50 overflow-hidden shadow-sm p-6 flex-1">
         <ProjectForm
           form={form}
           onSubmit={handleSubmit}
-          onSuccess={handleSuccess}
+          onSuccess={() => {}}
           loading={loading}
+          disableSubmit
         />
       </div>
-    </>
+    </div>
   )
-} 
+}
