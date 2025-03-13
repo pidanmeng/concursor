@@ -18,6 +18,8 @@ import { Badge } from '@/components/ui/badge'
 import type { Rule } from '@/payload-types'
 import { RuleTableActions } from './RuleTableActions'
 import { TagList } from '@/components/tag-list'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
 
 interface RuleTableProps {
   rules: Rule[]
@@ -44,8 +46,8 @@ export function RuleTable({
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-[220px]">{t('column.title')}</TableHead>
             <TableHead className="hidden sm:table-cell">{t('column.tags')}</TableHead>
-            <TableHead className="text-center">{t('column.downloads')}</TableHead>
-            <TableHead className="text-center">{t('column.favorites')}</TableHead>
+            {/* <TableHead className="text-center">{t('column.downloads')}</TableHead>
+            <TableHead className="text-center">{t('column.favorites')}</TableHead> */}
             <TableHead className="text-right">{t('column.actions')}</TableHead>
           </TableRow>
         </TableHeader>
@@ -96,13 +98,17 @@ export function RuleTable({
                         </Tooltip>
                       </TooltipProvider>
                     )}
-                    <span className="truncate">{rule.title}</span>
+                    <Button variant="link" asChild>
+                      <Link href={`/dashboard/rules/${rule.id}`}>
+                        <span className="truncate">{rule.title}</span>
+                      </Link>
+                    </Button>
                   </div>
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
                   <TagList tags={rule.tags} />
                 </TableCell>
-                <TableCell className="text-center">
+                {/* <TableCell className="text-center">
                   <span className="px-2 py-1 rounded-md bg-muted/50 text-muted-foreground text-sm">
                     {rule.downloadCount || 0}
                   </span>
@@ -111,7 +117,7 @@ export function RuleTable({
                   <span className="px-2 py-1 rounded-md bg-muted/50 text-muted-foreground text-sm">
                     {rule.favoriteCount || 0}
                   </span>
-                </TableCell>
+                </TableCell> */}
                 <TableCell className="text-right">
                   <RuleTableActions
                     rule={rule}

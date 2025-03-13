@@ -58,6 +58,11 @@ export async function getUserRules(
             like: query,
           },
         },
+        {
+          'description': {
+            like: query,
+          },
+        },
       ]
     }
 

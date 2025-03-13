@@ -54,7 +54,7 @@ export default function NewRuleClient() {
           description: t('createSuccessDescription'),
         })
 
-        let redirectUrl = '/dashboard/rules'
+        let redirectUrl = `/dashboard/rules/${createdRule.id}`
         if (from?.startsWith('/')) {
           redirectUrl = from
         }

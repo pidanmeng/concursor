@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { CalendarIcon, PencilIcon, UserIcon } from 'lucide-react'
 import { Link } from '@/i18n/routing'
 import { NotFound } from '@/components/404'
+import { ExpandableDescription } from '@/components/expandable-description'
 
 interface RuleDetailProps {
   params: Promise<{
@@ -31,13 +32,12 @@ export default async function RuleDetail({ params }: RuleDetailProps) {
 
   return (
     <div className="space-y-6">
-      <div>
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
-            {rule.title}
-          </h1>
-          <div className="flex items-center gap-2">
-            {/* <Button variant="outline" size="sm">
+      <div className="flex items-center justify-between py-4 bg-primary-foreground sticky top-0 z-10">
+        <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+          {rule.title}
+        </h1>
+        <div className="flex items-center gap-2">
+          {/* <Button variant="outline" size="sm">
               <HeartIcon className="w-4 h-4 mr-2" />
               {t('favorite')}
             </Button>
@@ -45,15 +45,15 @@ export default async function RuleDetail({ params }: RuleDetailProps) {
               <DownloadIcon className="w-4 h-4 mr-2" />
               {t('download')}
             </Button> */}
-            <Button variant="default" size="sm" asChild>
-              <Link href={`/dashboard/rules/edit/${id}`}>
-                <PencilIcon className="w-4 h-4 mr-2" />
-                {t('editBtn')}
-              </Link>
-            </Button>
-          </div>
+          <Button variant="default" size="sm" asChild>
+            <Link href={`/dashboard/rules/edit/${id}`}>
+              <PencilIcon className="w-4 h-4 mr-2" />
+              {t('editBtn')}
+            </Link>
+          </Button>
         </div>
-
+      </div>
+      <div>
         <div className="mt-4 flex items-center gap-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <UserIcon className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default async function RuleDetail({ params }: RuleDetailProps) {
               {rule.description && (
                 <div>
                   <h3 className="font-medium mb-2">{t('descriptionTitle')}</h3>
-                  <p className="text-sm text-muted-foreground">{rule.description}</p>
+                  <ExpandableDescription description={rule.description} />
                 </div>
               )}
               {rule.globs && (

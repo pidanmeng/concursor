@@ -2,11 +2,12 @@ import { getProject } from '@/actions/projects'
 import { getTranslations } from 'next-intl/server'
 import { TagList } from '@/components/tag-list'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { CalendarIcon, FileIcon, PencilIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import { NotFound } from '@/components/404'
+import { ExpandableDescription } from '@/components/expandable-description'
+import { ProjectDetailClient } from './page.client'
 
 interface ProjectDetailProps {
   params: Promise<{
@@ -31,7 +32,7 @@ export default async function ProjectDetail({ params }: ProjectDetailProps) {
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-4 bg-primary-foreground sticky top-0 z-10">
           <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
             {project.title}
           </h1>
@@ -50,7 +51,6 @@ export default async function ProjectDetail({ params }: ProjectDetailProps) {
             </Button>
           </div>
         </div>
-
         <div className="mt-4 flex items-center gap-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <UserIcon className="w-4 h-4" />
@@ -66,58 +66,17 @@ export default async function ProjectDetail({ params }: ProjectDetailProps) {
           </div>
         </div>
 
-        {project.description && <p className="mt-4 text-muted-foreground">{project.description}</p>}
+        {project.description && (
+          <div className="mt-4">
+            <ExpandableDescription description={project.description} />
+          </div>
+        )}
+        <TagList tags={project.tags} maxVisible={5} className="mt-4" />
       </div>
-
-      <TagList tags={project.tags} maxVisible={5} className="mt-4" />
 
       <Separator />
 
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold">{t('associatedRules')}</h2>
-        <div className="grid grid-cols-1 gap-4">
-          {project.rules?.map((ruleItem) => {
-            if (!ruleItem.rule || typeof ruleItem.rule === 'string') return null
-
-            return (
-              <Card key={ruleItem.id}>
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Link
-                          href={`/dashboard/rules/${ruleItem.rule.id}`}
-                          className="text-lg font-medium hover:underline"
-                        >
-                          {ruleItem.alias || ruleItem.rule.title}
-                        </Link>
-                        {ruleItem.alias && (
-                          <span className="text-sm text-muted-foreground">
-                            ({ruleItem.rule.title})
-                          </span>
-                        )}
-                      </div>
-                      {ruleItem.rule.description && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {ruleItem.rule.description}
-                        </p>
-                      )}
-                    </div>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/dashboard/rules/${ruleItem.rule.id}`}>{t('viewRule')}</Link>
-                    </Button>
-                  </div>
-                  {ruleItem.rule.tags && (
-                    <div className="mt-3">
-                      <TagList tags={ruleItem.rule.tags} maxVisible={3} />
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-      </div>
+      <ProjectDetailClient project={project} />
     </div>
   )
 }

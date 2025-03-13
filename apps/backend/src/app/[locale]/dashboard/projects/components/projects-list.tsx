@@ -24,7 +24,6 @@ interface ProjectsListProps {
 export function ProjectsList({ 
   initialProjects, 
   initialSearchQuery = '', 
-  totalPages,
   currentPage,
   hasNextPage 
 }: ProjectsListProps) {
@@ -36,12 +35,38 @@ export function ProjectsList({
     initialSearchQuery ? initialProjects : [],
   )
   const [isSearching, setIsSearching] = useState(Boolean(initialSearchQuery))
-  const [isLoading, setIsLoading] = useState(false)
   const [currentPageState, setCurrentPageState] = useState(currentPage)
   const [hasNextPageState, setHasNextPageState] = useState(hasNextPage)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   
   const observerTarget = useRef<HTMLDivElement>(null)
+  
+  // 加载更多项目
+  const loadMoreProjects = useCallback(async () => {
+    if (!hasNextPageState || isLoadingMore) return
+
+    try {
+      setIsLoadingMore(true)
+      const nextPage = currentPageState + 1
+
+      if (isSearching) {
+        const searchData = await searchProjects(searchQuery, { page: nextPage })
+        setSearchResults(prev => [...prev, ...searchData.docs])
+        setHasNextPageState(searchData.hasNextPage)
+        setCurrentPageState(searchData.page)
+      } else {
+        const projectsData = await getProjects({ page: nextPage })
+        setProjects(prev => [...prev, ...projectsData.docs])
+        setHasNextPageState(projectsData.hasNextPage)
+        setCurrentPageState(projectsData.page)
+      }
+    } catch (error) {
+      console.error('加载更多项目失败:', error)
+      toast.error(t('loadMoreError'))
+    } finally {
+      setIsLoadingMore(false)
+    }
+  }, [hasNextPageState, isLoadingMore, currentPageState, isSearching, searchQuery, t])
 
   // 处理触底加载
   useEffect(() => {
@@ -69,34 +94,7 @@ export function ProjectsList({
         observer.unobserve(currentTarget)
       }
     }
-  }, [hasNextPageState, isLoadingMore, currentPageState, searchQuery, isSearching])
-
-  // 加载更多项目
-  const loadMoreProjects = async () => {
-    if (!hasNextPageState || isLoadingMore) return
-
-    try {
-      setIsLoadingMore(true)
-      const nextPage = currentPageState + 1
-
-      if (isSearching) {
-        const searchData = await searchProjects(searchQuery, { page: nextPage })
-        setSearchResults(prev => [...prev, ...searchData.docs])
-        setHasNextPageState(searchData.hasNextPage)
-        setCurrentPageState(searchData.page)
-      } else {
-        const projectsData = await getProjects({ page: nextPage })
-        setProjects(prev => [...prev, ...projectsData.docs])
-        setHasNextPageState(projectsData.hasNextPage)
-        setCurrentPageState(projectsData.page)
-      }
-    } catch (error) {
-      console.error('加载更多项目失败:', error)
-      toast.error(t('loadMoreError'))
-    } finally {
-      setIsLoadingMore(false)
-    }
-  }
+  }, [hasNextPageState, isLoadingMore, currentPageState, searchQuery, isSearching, loadMoreProjects])
 
   // 搜索项目 - 客户端搜索
   const handleSearch = useCallback(
@@ -110,7 +108,6 @@ export function ProjectsList({
       }
 
       try {
-        setIsLoading(true)
 
         // 使用URL参数进行搜索，这样可以在刷新页面时保持搜索结果
         router.push(`/dashboard/projects?q=${encodeURIComponent(searchQuery)}&page=1`)
@@ -124,8 +121,6 @@ export function ProjectsList({
       } catch (error) {
         console.error('搜索项目失败:', error)
         toast.error(t('searchError'))
-      } finally {
-        setIsLoading(false)
       }
     },
     [searchQuery, t, router],
@@ -149,16 +144,12 @@ export function ProjectsList({
   const handleDelete = useCallback(
     async (id: string) => {
       try {
-        await deleteProject(id)
 
         // 更新本地状态
         setProjects((prev) => prev.filter((project) => project.id !== id))
         if (isSearching) {
           setSearchResults((prev) => prev.filter((project) => project.id !== id))
         }
-
-        // 成功提示
-        toast.success(t('deleteSuccess'))
 
         // 如果删除后列表为空且正在搜索，则返回到全部项目页面
         if (isSearching && searchResults.length <= 1) {
@@ -171,35 +162,41 @@ export function ProjectsList({
         }
       } catch (error) {
         console.error('删除项目失败:', error)
-        toast.error(t('deleteFailed'))
       }
     },
-    [isSearching, searchResults.length, router, t],
+    [isSearching, searchResults.length, router],
   )
 
   // 处理复制
   const handleDuplicate = useCallback(
-    async (id: string) => {
+    async (project: Project) => {
       try {
-        const newProject = await duplicateProject(id)
 
         // 更新本地状态
-        setProjects((prev) => [newProject, ...prev])
-
-        // 成功提示
-        toast.success(t('duplicateSuccess'))
+        setProjects((prev) => [project, ...prev])
 
         // 刷新页面以获取最新数据
         router.refresh()
 
-        return newProject
+        return project
       } catch (error) {
         console.error('复制项目失败:', error)
-        toast.error(t('duplicateFailed'))
         throw error
       }
     },
-    [router, t],
+    [router],
+  )
+
+  // 处理恢复
+  const handleRestore = useCallback(
+    async (project: Project) => {
+      // 更新本地状态
+      setProjects((prev) => [project, ...prev])
+
+      // 刷新页面以获取最新数据
+      router.refresh()
+    },
+    [router],
   )
 
   // 显示的项目列表
@@ -234,6 +231,7 @@ export function ProjectsList({
                 project={project}
                 onDelete={handleDelete}
                 onDuplicate={handleDuplicate}
+                onRestore={handleRestore}
               />
             ))}
             <AddProjectCard />

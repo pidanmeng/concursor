@@ -48,7 +48,7 @@ export function NewProjectClient() {
           description: t('createSuccessDescription'),
         })
 
-        let redirectUrl = '/dashboard/projects'
+        let redirectUrl = `/dashboard/projects/${createdProject.id}`
         if (from?.startsWith('/')) {
           redirectUrl = from
         }

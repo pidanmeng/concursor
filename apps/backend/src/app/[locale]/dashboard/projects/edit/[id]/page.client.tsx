@@ -57,7 +57,7 @@ export function EditProjectClient({ project }: EditProjectClientProps) {
         })
 
         // 更新成功后返回列表页
-        router.push('/dashboard/projects')
+        router.push(`/dashboard/projects/${updatedProject.id}`)
         router.refresh()
 
         return updatedProject

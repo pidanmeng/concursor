@@ -19,14 +19,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { TagList } from '@/components/tag-list'
+import { deleteProject, duplicateProject } from '@/actions/projects'
 
 interface ProjectCardProps {
   project: Project
   onDelete: (id: string) => Promise<void>
-  onDuplicate: (id: string) => Promise<Project | void>
+  onDuplicate: (project: Project) => Promise<Project | void>
+  onRestore: (project: Project) => Promise<void>
 }
 
-export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps) {
+export function ProjectCard({ project, onDelete, onDuplicate, onRestore }: ProjectCardProps) {
   const t = useTranslations('dashboard.projects')
   const locale = useLocale() as string
   const router = useRouter()
@@ -65,8 +67,22 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
   const handleDelete = async () => {
     try {
       setIsDeleting(true)
+      await deleteProject(project.id)
       await onDelete(project.id)
-      toast.success(t('deleteSuccess'))
+      toast.success(
+        t('deleteSuccess', {
+          project: project.title,
+        }),
+        {
+          action: {
+            label: t('undo'),
+            onClick: async () => {
+              await deleteProject(project.id, { restore: true })
+              await onRestore(project)
+            },
+          },
+        },
+      )
     } catch (error) {
       console.error('删除项目失败:', error)
       toast.error(t('deleteFailed'))
@@ -79,7 +95,8 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
   const handleDuplicate = async () => {
     try {
       setIsDuplicating(true)
-      await onDuplicate(project.id)
+      const newProject = await duplicateProject(project.id)
+      await onDuplicate(newProject)
       toast.success(t('duplicateSuccess'))
     } catch (error) {
       console.error('复制项目失败:', error)
@@ -90,7 +107,7 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
   }
 
   return (
-    <Card className="flex flex-col h-full overflow-hidden border border-border/50 shadow-sm hover:shadow-md transition-shadow duration-200">
+    <Card className="flex flex-col h-full overflow-hidden border border-border/50 shadow-sm hover:shadow-md transition-shadow duration-200" onClick={() => {console.log(1)}}>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-bold truncate" title={project.title}>

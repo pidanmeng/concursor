@@ -66,7 +66,9 @@
     "errors": {
       "submitFailed": "Submit failed:"
     },
-    "preview": "Preview"
+    "preview": "Preview",
+    "expand": "Expand",
+    "collapse": "Collapse"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -252,8 +254,9 @@
       "rulesCount": "Rules",
       "fetchError": "Failed to fetch projects",
       "searchError": "Failed to search projects",
-      "deleteSuccess": "Project deleted successfully",
+      "deleteSuccess": "{project} deleted successfully",
       "deleteFailed": "Failed to delete project",
+      "undo": "Undo",
       "duplicateSuccess": "Project duplicated successfully",
       "duplicateFailed": "Failed to duplicate project",
       "loadMoreError": "Failed to load more projects",
@@ -279,7 +282,29 @@
       "sync": "Sync",
       "rules": "Rules",
       "associatedRules": "Associated Rules",
-      "viewRule": "View Rule"
+      "viewRule": "View Rule",
+      "addRule": "Add Rule",
+      "noRulesAssociated": "No rules associated. Click \"Add Rule\" button to add.",
+      "removeRule": "Remove",
+      "editAlias": "Edit Alias",
+      "cancel": "Cancel",
+      "adding": "Adding...",
+      "removing": "Removing...",
+      "addRuleSuccess": "Rule added successfully",
+      "addRuleFailed": "Failed to add rule",
+      "removeRuleSuccess": "Rule removed successfully",
+      "removeRuleFailed": "Failed to remove rule",
+      "updateAliasSuccess": "Alias updated successfully",
+      "updateAliasFailed": "Failed to update alias",
+      "addRuleDialog": {
+        "title": "Add Rule",
+        "description": "Select a rule to add to the project",
+        "searchPlaceholder": "Search rules...",
+        "noRules": "No rules available to add",
+        "noSearchResults": "No matching rules found",
+        "addBtn": "Add"
+      },
+      "selectedRules": "{count} rules selected"
     }
   },
   "switchLanguage": "Switch Language"

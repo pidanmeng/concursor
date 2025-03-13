@@ -57,7 +57,7 @@ export default function EditRuleClient({ rule }: EditRuleClientProps) {
         })
 
         // 更新成功后返回列表页
-        router.push('/dashboard/rules')
+        router.push(`/dashboard/rules/${updatedRule.id}`)
         router.refresh()
 
         return updatedRule
@@ -93,7 +93,7 @@ export default function EditRuleClient({ rule }: EditRuleClientProps) {
             {t('back')}
           </Button>
           <Button
-            onClick={() => handleSubmit(form.getValues())}
+            onClick={form.handleSubmit(handleSubmit)}
             disabled={loading}
             className="flex items-center gap-2"
           >

@@ -66,7 +66,9 @@
     "errors": {
       "submitFailed": "提交失败:"
     },
-    "preview": "预览"
+    "preview": "预览",
+    "expand": "展开",
+    "collapse": "收起"
   },
   "dashboard": {
     "title": "仪表盘",
@@ -252,8 +254,9 @@
       "rulesCount": "规则数",
       "fetchError": "获取项目列表失败",
       "searchError": "搜索项目失败",
-      "deleteSuccess": "项目删除成功",
+      "deleteSuccess": "{project} 删除成功",
       "deleteFailed": "删除项目失败",
+      "undo": "撤销",
       "duplicateSuccess": "项目复制成功",
       "duplicateFailed": "复制项目失败",
       "loadMoreError": "加载更多项目失败",
@@ -279,7 +282,29 @@
       "sync": "同步",
       "rules": "条规则",
       "associatedRules": "关联规则",
-      "viewRule": "查看规则"
+      "viewRule": "查看规则",
+      "addRule": "添加规则",
+      "noRulesAssociated": "暂无关联规则，点击\"添加规则\"按钮添加",
+      "removeRule": "移除",
+      "editAlias": "编辑别名",
+      "cancel": "取消",
+      "adding": "添加中...",
+      "removing": "移除中...",
+      "addRuleSuccess": "规则添加成功",
+      "addRuleFailed": "规则添加失败",
+      "removeRuleSuccess": "规则移除成功",
+      "removeRuleFailed": "规则移除失败",
+      "updateAliasSuccess": "别名更新成功",
+      "updateAliasFailed": "别名更新失败",
+      "addRuleDialog": {
+        "title": "添加规则",
+        "description": "选择要添加到项目的规则",
+        "searchPlaceholder": "搜索规则...",
+        "noRules": "暂无可添加的规则",
+        "noSearchResults": "未找到匹配的规则",
+        "addBtn": "添加"
+      },
+      "selectedRules": "已选择 {count} 个规则"
     }
   },
   "switchLanguage": "切换语言"

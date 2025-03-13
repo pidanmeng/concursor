@@ -1,9 +1,9 @@
 'use server'
 
-import { getPayload } from 'payload'
+import { getPayload, Where } from 'payload'
 import { getUser } from '@/actions/auth'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
-import { Project } from '@/payload-types'
+import { Project, Rule } from '@/payload-types'
 import payloadConfig from '@/payload.config'
 import { getCodeMessage } from '@/constants/errorCode'
 
@@ -194,7 +194,7 @@ export async function updateProject(
 }
 
 // 删除项目
-export async function deleteProject(id: string): Promise<void> {
+export async function deleteProject(id: string, { restore = false }: { restore?: boolean } = {}): Promise<void> {
   const payload = await getPayload({ config: payloadConfig })
   const user = await getUser()
 
@@ -207,7 +207,7 @@ export async function deleteProject(id: string): Promise<void> {
       collection: COLLECTION_SLUGS.PROJECTS,
       id,
       data: {
-        obsolete: true,
+        obsolete: restore ? false : true,
       },
       overrideAccess: false,
       user,
@@ -239,5 +239,160 @@ export async function duplicateProject(id: string): Promise<Project> {
   } catch (error) {
     console.error('复制项目失败:', error)
     throw new Error('Failed to duplicate project')
+  }
+}
+
+// 添加规则到项目
+export async function addRulesToProject(
+  projectId: string,
+  ruleIds: string[],
+): Promise<Project> {
+  const payload = await getPayload({ config: payloadConfig })
+  const user = await getUser()
+
+  if (!user) {
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
+  }
+
+  try {
+    // 先获取项目当前的rules
+    const project = await payload.findByID({
+      collection: COLLECTION_SLUGS.PROJECTS,
+      id: projectId,
+      overrideAccess: false,
+      user,
+    }) as Project
+
+    // 当前项目已有的规则ID
+    const existingRules = project.rules || []
+    const existingRuleIds = existingRules
+      .filter(item => item.rule && typeof item.rule !== 'string')
+      .map(item => typeof item.rule === 'string' ? item.rule : (item.rule as Rule).id)
+
+    // 过滤掉已经存在的规则ID
+    const newRuleIds = ruleIds.filter(id => !existingRuleIds.includes(id))
+
+    // 如果没有新的规则需要添加，直接返回
+    if (newRuleIds.length === 0) {
+      return project
+    }
+
+    // 构建新的规则数组
+    const newRules = [
+      ...existingRules,
+      ...newRuleIds.map(id => ({
+        rule: id,
+        alias: null,
+      })),
+    ]
+
+    // 更新项目
+    const updatedProject = await payload.update({
+      collection: COLLECTION_SLUGS.PROJECTS,
+      id: projectId,
+      data: {
+        rules: newRules,
+      },
+      overrideAccess: false,
+      user,
+    })
+
+    return updatedProject as Project
+  } catch (error) {
+    console.error('添加规则到项目失败:', error)
+    throw new Error('Failed to add rules to project')
+  }
+}
+
+// 从项目中移除规则
+export async function removeRuleFromProject(
+  projectId: string,
+  ruleItemId: string,
+): Promise<Project> {
+  const payload = await getPayload({ config: payloadConfig })
+  const user = await getUser()
+
+  if (!user) {
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
+  }
+
+  try {
+    // 获取项目
+    const project = await payload.findByID({
+      collection: COLLECTION_SLUGS.PROJECTS,
+      id: projectId,
+      overrideAccess: false,
+      user,
+    }) as Project
+
+    // 移除指定规则
+    const rules = (project.rules || []).filter(item => item.id !== ruleItemId)
+
+    // 更新项目
+    const updatedProject = await payload.update({
+      collection: COLLECTION_SLUGS.PROJECTS,
+      id: projectId,
+      data: {
+        rules,
+      },
+      overrideAccess: false,
+      user,
+    })
+
+    return updatedProject as Project
+  } catch (error) {
+    console.error('从项目中移除规则失败:', error)
+    throw new Error('Failed to remove rule from project')
+  }
+}
+
+// 更新项目中规则的别名
+export async function updateRuleAlias(
+  projectId: string,
+  ruleItemId: string,
+  alias: string,
+): Promise<Project> {
+  const payload = await getPayload({ config: payloadConfig })
+  const user = await getUser()
+
+  if (!user) {
+    throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
+  }
+
+  try {
+    // 获取项目
+    const project = await payload.findByID({
+      collection: COLLECTION_SLUGS.PROJECTS,
+      id: projectId,
+      overrideAccess: false,
+      user,
+    }) as Project
+
+    // 更新指定规则的别名
+    const rules = (project.rules || []).map(item => {
+      if (item.id === ruleItemId) {
+        return {
+          ...item,
+          alias: alias || null, // 如果别名为空字符串，则设为null
+        }
+      }
+      return item
+    })
+
+    // 更新项目
+    const updatedProject = await payload.update({
+      collection: COLLECTION_SLUGS.PROJECTS,
+      id: projectId,
+      data: {
+        rules,
+      },
+      overrideAccess: false,
+      user,
+    })
+
+    return updatedProject as Project
+  } catch (error) {
+    console.error('更新规则别名失败:', error)
+    throw new Error('Failed to update rule alias')
   }
 }
