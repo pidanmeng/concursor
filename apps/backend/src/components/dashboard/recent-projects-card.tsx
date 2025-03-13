@@ -9,6 +9,7 @@ import { AddProjectsSheet } from './add-projects-sheet'
 import { Button } from '@/components/ui/button'
 import { useSetAtom } from 'jotai'
 import { recentProjectsAtom, statsAtom } from '@/states/dashboard'
+import { Link } from '@/i18n/routing'
 
 const RECENT_LIMIT = 5
 
@@ -44,12 +45,12 @@ export const RecentProjectsCard = memo(function RecentProjectsCard({
       items={projects}
       onViewAllClick={onViewAllProjects}
       addButton={
-        <AddProjectsSheet onSuccess={onSuccess}>
-          <Button>
+        <Button asChild>
+          <Link href="/dashboard/projects/new">
             <Plus className="mr-2 h-4 w-4" />
             {t('addProject.btn')}
-          </Button>
-        </AddProjectsSheet>
+          </Link>
+        </Button>
       }
       renderItem={(project) => (
         <ItemRow<Project>

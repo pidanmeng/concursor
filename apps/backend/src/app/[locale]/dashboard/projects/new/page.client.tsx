@@ -10,16 +10,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button } from '@/components/ui/button'
 import { createProject } from '@/actions/projects'
-import {
-  ProjectForm,
-  ProjectFormValues,
-  projectFormSchema,
-} from '@/components/dashboard/project-form'
+import { ProjectForm } from '@/components/dashboard/project-form'
+import { ProjectFormValues, useProjectFormSchema } from '@/forms/project'
 
 export function NewProjectClient() {
   const t = useTranslations('dashboard.projects.new')
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+
+  const projectFormSchema = useProjectFormSchema()
 
   // 初始化表单
   const form = useForm<ProjectFormValues>({

@@ -1,3 +1,5 @@
+'use client'
+
 import { Project } from '@/payload-types'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
@@ -5,9 +7,10 @@ import { Plus } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GenericSheet } from './generic-sheet'
-import { ProjectForm, ProjectFormValues, projectFormSchema } from './project-form'
+import { ProjectForm } from './project-form'
 import { createProject } from '@/actions/dashboard'
 import { memo } from 'react'
+import { ProjectFormValues, useProjectFormSchema } from '@/forms/project'
 
 interface AddProjectsSheetProps {
   onSuccess?: (project: Project) => void
@@ -19,6 +22,7 @@ export const AddProjectsSheet = memo(function AddProjectsSheet({
   children,
 }: AddProjectsSheetProps) {
   const t = useTranslations('dashboard.addProject')
+  const projectFormSchema = useProjectFormSchema()
 
   // 初始化表单
   const form = useForm<ProjectFormValues>({

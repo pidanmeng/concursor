@@ -151,7 +151,7 @@ function FormMessage({ className, messagePreHandler, ...props }: FormMessageProp
     <p
       data-slot="form-message"
       id={formMessageId}
-      className={cn("text-destructive-foreground text-sm", className)}
+      className={cn("text-destructive text-sm", className)}
       {...props}
     >
       {body}

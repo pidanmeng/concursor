@@ -115,9 +115,9 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
               <DropdownMenuItem
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground"
+                className="text-destructive focus:bg-destructive focus:text-destructive-foreground"
               >
-                <Trash2 className="mr-2 h-4 w-4 text-destructive-foreground" />
+                <Trash2 className="mr-2 h-4 w-4 text-current" />
                 {t('delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -71,31 +71,33 @@ export function RuleTable({
           ) : (
             rules.map((rule) => (
               <TableRow key={rule.id} className="hover:bg-muted/20">
-                <TableCell className="font-medium flex items-center gap-2">
-                  {rule.private ? (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <LockIcon className="h-4 w-4 text-warning flex-shrink-0" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t('privateRule')}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  ) : (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <UnlockIcon className="h-4 w-4 text-success flex-shrink-0" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t('publicRule')}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  )}
-                  <span className="truncate">{rule.title}</span>
+                <TableCell className="hidden sm:table-cell">
+                  <div className="flex items-center gap-2">
+                    {rule.private ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <LockIcon className="h-4 w-4 text-warning flex-shrink-0" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{t('privateRule')}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <UnlockIcon className="h-4 w-4 text-success flex-shrink-0" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{t('publicRule')}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+                    <span className="truncate">{rule.title}</span>
+                  </div>
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
                   <TagList tags={rule.tags} />

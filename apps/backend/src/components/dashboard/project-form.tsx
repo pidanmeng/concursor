@@ -13,26 +13,8 @@ import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { useCallback } from 'react'
 import { UseFormReturn } from 'react-hook-form'
-import { z } from 'zod'
 import { TagInput } from '@/components/dashboard/tag-input'
-
-// 定义表单验证模式
-export const projectFormSchema = z.object({
-  title: z.string().min(2, {
-    message: 'title.minLength',
-  }),
-  description: z.string().optional(),
-  tags: z
-    .array(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-      }),
-    )
-    .default([]),
-})
-
-export type ProjectFormValues = z.infer<typeof projectFormSchema>
+import { ProjectFormValues } from '@/forms/project'
 
 interface ProjectFormProps {
   form: UseFormReturn<ProjectFormValues>

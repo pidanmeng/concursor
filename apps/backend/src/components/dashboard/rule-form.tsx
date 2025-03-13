@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 import { UseFormReturn } from 'react-hook-form'
-import { z } from 'zod'
 import { useCallback } from 'react'
 
 import {
@@ -20,28 +19,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { TagInput } from '@/components/dashboard/tag-input'
 import { Rule } from '@/payload-types'
-
-export const ruleFormSchema = z.object({
-  title: z.string().min(2, {
-    message: 'title.minLength',
-  }),
-  description: z.string().optional(),
-  content: z.string().min(10, {
-    message: 'content.minLength',
-  }),
-  globs: z.string().optional(),
-  private: z.boolean().default(false),
-  tags: z
-    .array(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-      }),
-    )
-    .default([]),
-})
-
-export type RuleFormValues = z.infer<typeof ruleFormSchema>
+import { RuleFormValues } from '@/forms/rule'
 
 // 表单属性
 export interface RuleFormProps {

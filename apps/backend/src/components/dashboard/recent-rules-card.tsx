@@ -10,6 +10,7 @@ import { DashboardData } from '@/actions/dashboard'
 import { AddRulesSheet } from './add-rules-sheet'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
+import { Link } from '@/i18n/routing'
 
 const RECENT_LIMIT = 5
 
@@ -45,12 +46,12 @@ export const RecentRulesCard = memo(function RecentRulesCard({
       items={rules}
       onViewAllClick={onViewAllRules}
       addButton={
-        <AddRulesSheet onSuccess={onSuccess}>
-          <Button>
+        <Button asChild>
+          <Link href="/dashboard/rules/new">
             <Plus className="mr-2 h-4 w-4" />
             {t('addRule.btn')}
-          </Button>
-        </AddRulesSheet>
+          </Link>
+        </Button>
       }
       renderItem={(rule) => (
         <ItemRow<Rule>

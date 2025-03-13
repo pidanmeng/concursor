@@ -11,11 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { updateProject } from '@/actions/projects'
 import { Project } from '@/payload-types'
-import {
-  ProjectForm,
-  ProjectFormValues,
-  projectFormSchema,
-} from '@/components/dashboard/project-form'
+import { ProjectForm } from '@/components/dashboard/project-form'
+import { ProjectFormValues, useProjectFormSchema } from '@/forms/project'
 
 interface EditProjectClientProps {
   project: Project
@@ -32,6 +29,7 @@ export function EditProjectClient({ project }: EditProjectClientProps) {
         typeof tag === 'string' ? { id: tag, name: tag } : { id: tag.id, name: tag.name },
       )
     : []
+  const projectFormSchema = useProjectFormSchema()
 
   // 初始化表单
   const form = useForm<ProjectFormValues>({

@@ -1,3 +1,5 @@
+'use client'
+
 import { Rule } from '@/payload-types'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
@@ -5,9 +7,10 @@ import { Plus } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GenericSheet } from './generic-sheet'
-import { RuleForm, RuleFormValues, ruleFormSchema } from './rule-form'
+import { RuleForm } from './rule-form'
 import { createRule } from '@/actions/rules'
 import { memo } from 'react'
+import { RuleFormValues, useRuleFormSchema } from '@/forms/rule'
 
 interface AddRulesSheetProps {
   onSuccess?: (rule: Rule) => void
@@ -19,6 +22,7 @@ export const AddRulesSheet = memo(function AddRulesSheet({
   children,
 }: AddRulesSheetProps) {
   const t = useTranslations('dashboard.addRule')
+  const ruleFormSchema = useRuleFormSchema()
 
   // 初始化表单
   const form = useForm<RuleFormValues>({
@@ -38,9 +42,9 @@ export const AddRulesSheet = memo(function AddRulesSheet({
     // 转换tags为API所需的ID数组格式
     const formattedValues = {
       ...values,
-      tags: values.tags.map(tag => tag.id)
+      tags: values.tags.map((tag) => tag.id),
     }
-    return (await createRule(formattedValues))
+    return await createRule(formattedValues)
   }
 
   return (

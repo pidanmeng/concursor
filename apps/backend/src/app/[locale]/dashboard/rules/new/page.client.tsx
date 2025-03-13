@@ -8,16 +8,20 @@ import { ArrowLeft } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { createRule } from '@/actions/rules'
-import { RuleForm, RuleFormValues } from '@/components/dashboard/rule-form'
+import { RuleForm } from '@/components/dashboard/rule-form'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRuleFormSchema, RuleFormValues } from '@/forms/rule'
 
 export default function NewRuleClient() {
   const t = useTranslations('dashboard.rules.new')
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const ruleFormSchema = useRuleFormSchema()
 
   // 初始化表单
   const form = useForm<RuleFormValues>({
+    resolver: zodResolver(ruleFormSchema),
     defaultValues: {
       title: '',
       description: '',
@@ -83,7 +87,7 @@ export default function NewRuleClient() {
             {t('back')}
           </Button>
           <Button
-            onClick={() => handleSubmit(form.getValues())}
+            onClick={form.handleSubmit(handleSubmit)}
             disabled={loading}
             className="flex items-center gap-2"
           >
@@ -97,4 +101,4 @@ export default function NewRuleClient() {
       </div>
     </>
   )
-} 
+}
