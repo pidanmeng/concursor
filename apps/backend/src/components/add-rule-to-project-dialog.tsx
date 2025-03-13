@@ -68,6 +68,7 @@ export function AddRuleToProjectDialog({
     try {
       const result = await getUserRules(1, 50, query)
       // 过滤掉已经添加到项目的规则
+      console.log(existingRuleIds, 'existingRuleIds', result.docs)
       const filteredRules = result.docs.filter(rule => 
         !existingRuleIds.includes(rule.id)
       )

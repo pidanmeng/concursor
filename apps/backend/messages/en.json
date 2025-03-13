@@ -235,7 +235,49 @@
         "createSuccess": "Create Successful",
         "createSuccessDescription": "The rule has been successfully created",
         "createFailed": "Create Failed"
-      }
+      },
+      "addDialog": {
+        "descriptionPlaceholder": "What does this rule do...",
+        "globPatternDescription": "Specify the file pattern for the rule, e.g. *.tsx, src/config/**/*.json",
+        "contentPlaceholder": "Enter prompt",
+        "tagsPlaceholder": "Enter tag name",
+        "privateDescription": "Private rules are only visible to you and cannot be discovered by other users",
+        "multiFileUpload": {
+          "title": "Upload Files",
+          "description": "Upload multiple .md or .mdc files to create rules",
+          "previous": "Previous",
+          "next": "Next",
+          "currentFile": "Current File ({current}/{total})",
+          "confirmAll": "Confirm All",
+          "processing": "Processing files...",
+          "allFilesProcessed": "All files have been processed. Please review and confirm."
+        }
+      },
+      "uploadMarkdown": "Upload Markdown File",
+      "uploadDescription": "Upload a .md or .mdc file to create a rule. The filename will be used as the title, and metadata will be parsed automatically.",
+      "selectFile": "Select File",
+      "fileFormatError": "Only .md or .mdc files are supported",
+      "fileParseError": "Failed to parse file, please check the format",
+      "processing": "Processing...",
+      "continueEditing": "Continue Editing",
+      "remove": "Remove",
+      "submitting": "Submitting...",
+      "form": "Form",
+      "importFromFile": "Import from File",
+      "selectAll": "Select all rules",
+      "selectRule": "Select {rule}",
+      "selectedCount": "{count} rules selected",
+      "batchVisibility": "Batch Visibility",
+      "batchDelete": "Delete Selected",
+      "batchDeleteSuccess": "Selected rules deleted successfully",
+      "batchDeletePartialSuccess": "Some rules were deleted successfully",
+      "batchDeleteErrors": "{count} rules failed to delete",
+      "batchDeleteFailed": "Failed to delete selected rules",
+      "batchMadePublic": "Selected rules are now public",
+      "batchMadePrivate": "Selected rules are now private",
+      "batchVisibilityPartialSuccess": "Some rules' visibility was changed successfully",
+      "batchVisibilityErrors": "{count} rules failed to change visibility",
+      "batchVisibilityFailed": "Failed to change visibility for selected rules"
     },
     "projects": {
       "title": "My Projects",
@@ -304,7 +346,8 @@
         "noSearchResults": "No matching rules found",
         "addBtn": "Add"
       },
-      "selectedRules": "{count} rules selected"
+      "selectedRules": "{count} rules selected",
+      "createRuleBtnText": "Create & Add Rule"
     }
   },
   "switchLanguage": "Switch Language"

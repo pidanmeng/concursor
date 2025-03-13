@@ -235,7 +235,49 @@
         "createSuccess": "创建成功",
         "createSuccessDescription": "规则已成功创建",
         "createFailed": "创建失败"
-      }
+      },
+      "addDialog": {
+        "descriptionPlaceholder": "这个规则是做什么的...",
+        "globPatternDescription": "指定规则应用的文件匹配模式，例如 *.tsx, src/config/**/*.json",
+        "contentPlaceholder": "输入提示词",
+        "tagsPlaceholder": "输入标签名称",
+        "privateDescription": "私有规则只有你能看到，不会被其他用户发现或使用",
+        "multiFileUpload": {
+          "title": "上传文件",
+          "description": "上传多个 .md 或 .mdc 文件来创建规则",
+          "previous": "上一个",
+          "next": "下一个",
+          "currentFile": "当前文件 ({current}/{total})",
+          "confirmAll": "全部确认",
+          "processing": "正在处理文件...",
+          "allFilesProcessed": "所有文件已处理完成，请检查并确认。"
+        }
+      },
+      "uploadMarkdown": "上传Markdown文件",
+      "uploadDescription": "上传.md或.mdc文件来创建规则，文件名将作为规则标题，元数据将被自动解析",
+      "selectFile": "选择文件",
+      "fileFormatError": "仅支持.md或.mdc文件",
+      "fileParseError": "文件解析失败，请检查文件格式",
+      "processing": "处理中...",
+      "continueEditing": "继续编辑",
+      "remove": "移除",
+      "submitting": "提交中...",
+      "form": "表单",
+      "importFromFile": "从文件导入",
+      "selectAll": "选择全部规则",
+      "selectRule": "选择 {rule}",
+      "selectedCount": "已选择 {count} 条规则",
+      "batchVisibility": "批量修改可见性",
+      "batchDelete": "删除选中",
+      "batchDeleteSuccess": "选中的规则已成功删除",
+      "batchDeletePartialSuccess": "部分规则已成功删除",
+      "batchDeleteErrors": "{count} 条规则删除失败",
+      "batchDeleteFailed": "删除选中的规则失败",
+      "batchMadePublic": "选中的规则已设为公开",
+      "batchMadePrivate": "选中的规则已设为私有",
+      "batchVisibilityPartialSuccess": "部分规则的可见性已成功修改",
+      "batchVisibilityErrors": "{count} 条规则修改可见性失败",
+      "batchVisibilityFailed": "修改选中规则的可见性失败"
     },
     "projects": {
       "title": "我的项目",
@@ -304,7 +346,8 @@
         "noSearchResults": "未找到匹配的规则",
         "addBtn": "添加"
       },
-      "selectedRules": "已选择 {count} 个规则"
+      "selectedRules": "已选择 {count} 个规则",
+      "createRuleBtnText": "新建规则并添加"
     }
   },
   "switchLanguage": "切换语言"

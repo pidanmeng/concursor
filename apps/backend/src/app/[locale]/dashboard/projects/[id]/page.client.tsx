@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { Project, Rule } from '@/payload-types'
 import { ProjectRuleCard } from '@/components/project-rule-card'
 import { AddRuleToProjectDialog } from '@/components/add-rule-to-project-dialog'
+import { CreateRuleDialog } from '@/components/create-rule-dialog'
 import { addRulesToProject, removeRuleFromProject, updateRuleAlias } from '@/actions/projects'
 
 interface ProjectDetailClientProps {
@@ -20,13 +21,13 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
   // 获取已关联的规则ID列表，用于过滤添加规则弹窗中已添加的规则
   const existingRuleIds = (project.rules || [])
-    .filter(item => item.rule && typeof item.rule !== 'string')
-    .map(item => typeof item.rule === 'string' ? item.rule : (item.rule as Rule).id)
+    .filter((item) => item.rule && typeof item.rule !== 'string')
+    .map((item) => (typeof item.rule === 'string' ? item.rule : (item.rule as Rule).id))
 
   // 添加规则到项目
   const handleAddRules = async (ruleIds: string[]) => {
     if (isUpdating) return
-    
+
     try {
       setIsUpdating(true)
       await addRulesToProject(project.id, ruleIds)
@@ -40,10 +41,20 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
     }
   }
 
+  // 创建规则并添加到项目
+  const handleCreateAndAddRule = async (rule: Rule) => {
+    try {
+      await handleAddRules([rule.id])
+    } catch (error) {
+      console.error('添加新规则到项目失败:', error)
+      throw error
+    }
+  }
+
   // 从项目中移除规则
   const handleRemoveRule = async (ruleItemId: string) => {
     if (isUpdating) return
-    
+
     try {
       setIsUpdating(true)
       await removeRuleFromProject(project.id, ruleItemId)
@@ -60,7 +71,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   // 更新规则别名
   const handleUpdateAlias = async (ruleItemId: string, alias: string) => {
     if (isUpdating) return
-    
+
     try {
       setIsUpdating(true)
       await updateRuleAlias(project.id, ruleItemId, alias)
@@ -79,18 +90,28 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
       <div className="sticky top-0 z-10 -mx-4 bg-primary-foreground backdrop-blur-sm shadow-sm transition-all duration-200">
         <div className="flex items-center justify-between py-3 px-4">
           <h2 className="text-lg font-semibold">{t('associatedRules')}</h2>
-          <AddRuleToProjectDialog 
-            onAddRules={handleAddRules}
-            existingRuleIds={existingRuleIds}
-          />
+          <div className="flex gap-2">
+            <CreateRuleDialog onSuccess={handleCreateAndAddRule} buttonVariant="outline">
+              {t('createRuleBtnText')}
+            </CreateRuleDialog>
+
+            <AddRuleToProjectDialog
+              onAddRules={handleAddRules}
+              existingRuleIds={
+                (
+                  project.rules?.map((ruleObj) => {
+                    return typeof ruleObj.rule === 'string' ? ruleObj : ruleObj.rule?.id
+                  }) || []
+                ).filter(Boolean) as string[]
+              }
+            />
+          </div>
         </div>
       </div>
-      
+
       <div className="pt-4">
-        {(!project.rules || project.rules.length === 0) ? (
-          <div className="text-center py-12 text-muted-foreground">
-            {t('noRulesAssociated')}
-          </div>
+        {!project.rules || project.rules.length === 0 ? (
+          <div className="text-center py-12 text-muted-foreground">{t('noRulesAssociated')}</div>
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {project.rules.map((ruleItem) => {
@@ -112,4 +133,4 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
       </div>
     </div>
   )
-} 
+}

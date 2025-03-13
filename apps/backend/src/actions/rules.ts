@@ -59,7 +59,7 @@ export async function getUserRules(
           },
         },
         {
-          'description': {
+          description: {
             like: query,
           },
         },
@@ -185,6 +185,8 @@ export async function toggleRuleVisibility(ruleId: string): Promise<Rule> {
       data: {
         private: !rule.private,
       },
+      overrideAccess: false,
+      user,
     })
 
     return updatedRule as Rule
@@ -233,4 +235,84 @@ export async function createRule(
     user,
   })
   return rule
+}
+
+// 批量更新规则
+export async function batchUpdateRules(
+  where: Where,
+  data: Partial<Pick<Rule, 'private' | 'obsolete'>>,
+): Promise<{
+  docs: Rule[]
+  errors: { id: string; message: string }[]
+}> {
+  try {
+    const payload = await getPayload({ config: payloadConfig })
+    const user = await getUser()
+
+    if (!user) {
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
+    }
+
+    const result = await payload.update({
+      collection: COLLECTION_SLUGS.RULES,
+      where,
+      data,
+      overrideAccess: false,
+      user,
+    })
+
+    return {
+      docs: result.docs as Rule[],
+      errors: result.errors?.map(error => ({
+        id: error.id as string,
+        message: error.message
+      })) || []
+    }
+  } catch (error) {
+    console.error('批量更新规则失败:', error)
+    throw error
+  }
+}
+
+// 批量删除规则（软删除）
+export async function batchDeleteRules(
+  ruleIds: string[],
+  { restore = false }: { restore?: boolean } = {},
+): Promise<{
+  docs: Rule[]
+  errors: { id: string; message: string }[]
+}> {
+  try {
+    const payload = await getPayload({ config: payloadConfig })
+    const user = await getUser()
+
+    if (!user) {
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
+    }
+
+    const result = await payload.update({
+      collection: COLLECTION_SLUGS.RULES,
+      where: {
+        id: {
+          in: ruleIds
+        }
+      },
+      data: {
+        obsolete: restore ? false : true
+      },
+      overrideAccess: false,
+      user,
+    })
+
+    return {
+      docs: result.docs as Rule[],
+      errors: result.errors?.map(error => ({
+        id: error.id as string,
+        message: error.message
+      })) || []
+    }
+  } catch (error) {
+    console.error('批量删除规则失败:', error)
+    throw error
+  }
 }

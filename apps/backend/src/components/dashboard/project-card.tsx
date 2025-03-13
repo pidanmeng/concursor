@@ -106,8 +106,16 @@ export function ProjectCard({ project, onDelete, onDuplicate, onRestore }: Proje
     }
   }
 
+  // 处理卡片点击
+  const handleCardClick = () => {
+    router.push(`/dashboard/projects/${project.id}`)
+  }
+
   return (
-    <Card className="flex flex-col h-full overflow-hidden border border-border/50 shadow-sm hover:shadow-md transition-shadow duration-200" onClick={() => {console.log(1)}}>
+    <Card 
+      className="flex flex-col h-full overflow-hidden border border-border/50 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer" 
+      onClick={handleCardClick}
+    >
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-bold truncate" title={project.title}>
@@ -115,12 +123,17 @@ export function ProjectCard({ project, onDelete, onDuplicate, onRestore }: Proje
           </CardTitle>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8"
+                onClick={(e) => e.stopPropagation()} // 阻止事件冒泡
+              >
                 <MoreHorizontal className="h-4 w-4" />
                 <span className="sr-only">{t('actions')}</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}> {/* 阻止事件冒泡 */}
               <DropdownMenuItem onClick={handleEdit}>
                 <Pencil className="mr-2 h-4 w-4" />
                 {t('editBtn')}
