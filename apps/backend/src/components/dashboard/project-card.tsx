@@ -1,15 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/i18n/routing'
 import { useTranslations, useLocale } from 'next-intl'
 import { format, formatDistanceToNow } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
 import { MoreHorizontal, Pencil, Trash2, Copy, Tag } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { Project, Tag as TagType } from '@/payload-types'
-import { cn } from '@/lib/utils'
+import { Project } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -79,7 +78,7 @@ export function ProjectCard({ project, onDelete, onDuplicate }: ProjectCardProps
 
   // 处理编辑
   const handleEdit = () => {
-    router.push(`/dashboard/projects/${project.id}/edit`)
+    router.push(`/dashboard/projects/edit/${project.id}`)
   }
 
   // 处理删除
