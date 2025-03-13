@@ -1,0 +1,14 @@
+---
+description: You should always follow this rule.
+globs: 
+alwaysApply: true
+---
+!!! 所有组件统一kebabCase命名 !!!
+业务相关的类型定义参考 [payload-types.ts](mdc:apps/backend/src/payload-types.ts)
+1. 使用nextjs的最佳实践构建页面，每个页面按照功能和布局拆分组件，并且通过hooks解耦视图和逻辑
+2. 始终支持多语言，禁止在代码中硬编码文案，而是用i18n代替 [zh.json](mdc:apps/backend/messages/zh.json) [en.json](mdc:apps/backend/messages/en.json)
+3. 前端涉及网络请求的部分，应该使用nextjs的Server actions进行实现，参考 [rules.ts](mdc:apps/backend/src/actions/rules.ts)
+4. 尽量保证组件的可复用性，实现某个功能前先搜索代码中是否有相似的实现，如果有，则应该收敛这些相似实现
+5. 始终兼容长文本
+6. 当你不知道应该如何实现一个功能时，你应该搜索代码，寻找相似的实现，并借鉴他们
+7. 尽量避免类型断言，保持类型安全。

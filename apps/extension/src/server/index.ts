@@ -4,7 +4,6 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { ref } from 'reactive-vscode'
 import { login } from '../auth/login'
-import { saveApiKey } from '../auth/storage'
 import { logger } from '../utils'
 
 const app = new Hono()

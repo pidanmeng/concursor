@@ -223,6 +223,46 @@
         "createSuccessDescription": "The rule has been successfully created",
         "createFailed": "Create Failed"
       }
+    },
+    "projects": {
+      "title": "My Projects",
+      "description": "Manage all your created projects",
+      "addProject": "Add Project",
+      "addProjectDescription": "Create a new project",
+      "actions": "Actions",
+      "editBtn": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "searchPlaceholder": "Search projects...",
+      "noSearchResults": "No matching projects found",
+      "updatedAt": "Updated at",
+      "unknownTime": "Unknown time",
+      "invalidDate": "Invalid date",
+      "rulesCount": "Rules",
+      "fetchError": "Failed to fetch projects",
+      "searchError": "Failed to search projects",
+      "deleteSuccess": "Project deleted successfully",
+      "deleteFailed": "Failed to delete project",
+      "duplicateSuccess": "Project duplicated successfully",
+      "duplicateFailed": "Failed to duplicate project",
+      "new": {
+        "title": "Create Project",
+        "description": "Create a new project collection",
+        "back": "Back",
+        "submit": "Submit",
+        "createSuccess": "Create Successful",
+        "createSuccessDescription": "The project has been successfully created",
+        "createFailed": "Create Failed"
+      },
+      "edit": {
+        "title": "Edit Project",
+        "description": "Modify project information",
+        "back": "Back",
+        "submit": "Submit",
+        "updateSuccess": "Update Successful",
+        "updateSuccessDescription": "The project has been successfully updated",
+        "updateFailed": "Update Failed"
+      }
     }
   },
   "switchLanguage": "Switch Language"

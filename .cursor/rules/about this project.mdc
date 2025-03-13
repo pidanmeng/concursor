@@ -65,7 +65,7 @@ Code style and architecture preferences for specific folders
 	- Edit Profile
 	- My Rules - 管理(创建/编辑/修改/删除)用户自己创建的Cursor Rules
 	- Favorite Rules - 管理用户收藏的Cursor Rules
-	- Projects - 管理用户的Projects,允许给每个Project设置别名,订阅Rules,取消订阅等等
+	- Projects - 管理用户的Projects,允许订阅Rules,取消订阅,给每个rules设置别名等等
 - Browse Rules
 	- All Rules
 	- by Tag

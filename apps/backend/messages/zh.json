@@ -223,6 +223,46 @@
         "createSuccessDescription": "规则已成功创建",
         "createFailed": "创建失败"
       }
+    },
+    "projects": {
+      "title": "我的项目",
+      "description": "管理你创建的所有项目集合",
+      "addProject": "新增项目",
+      "addProjectDescription": "创建一个新的项目",
+      "actions": "操作",
+      "editBtn": "编辑",
+      "duplicate": "复制",
+      "delete": "删除",
+      "searchPlaceholder": "搜索项目...",
+      "noSearchResults": "未找到匹配的项目",
+      "updatedAt": "更新时间",
+      "unknownTime": "未知时间",
+      "invalidDate": "无效日期",
+      "rulesCount": "规则数",
+      "fetchError": "获取项目列表失败",
+      "searchError": "搜索项目失败",
+      "deleteSuccess": "项目删除成功",
+      "deleteFailed": "删除项目失败",
+      "duplicateSuccess": "项目复制成功",
+      "duplicateFailed": "复制项目失败",
+      "new": {
+        "title": "创建项目",
+        "description": "创建一个新的项目集合",
+        "back": "返回",
+        "submit": "提交",
+        "createSuccess": "创建成功",
+        "createSuccessDescription": "项目已成功创建",
+        "createFailed": "创建失败"
+      },
+      "edit": {
+        "title": "编辑项目",
+        "description": "修改项目信息",
+        "back": "返回",
+        "submit": "提交",
+        "updateSuccess": "更新成功",
+        "updateSuccessDescription": "项目已成功更新",
+        "updateFailed": "更新失败"
+      }
     }
   },
   "switchLanguage": "切换语言"

@@ -46,7 +46,7 @@ export default async function RootLayout({
             'flex-1 bg-primary-foreground rounded-3xl overflow-y-auto h-full w-full flex justify-center',
           )}
         >
-          <div className="p-6 space-y-6 w-full md:w-2/3">{children}</div>
+          <div className="p-6 space-y-6 w-full 2xl:w-3/4">{children}</div>
         </div>
       </main>
     </SidebarProvider>
