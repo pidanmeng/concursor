@@ -76,4 +76,14 @@ Code style and architecture preferences for specific folders
 
 </web>
 
+<extension>
+
+- 登录模块
+- MCP Server
+  - 通过MCP获取项目详细信息，以及提示词
+  - 通过MCP向AI大模型提供提示词，让AI每次完成一次输出后，评估输出的结果，并进行复盘
+  - 允许AI使用MCP提供的工具，迭代自身的提示词
+
+</extension>
+
 </project_detail>

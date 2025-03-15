@@ -57,7 +57,7 @@ const configPromise = buildConfig({
       ],
     },
   },
-  cors: [getServerSideURL(), 'http://localhost:3000'].filter(Boolean),
+  cors: [getServerSideURL(), 'http://localhost:*'].filter(Boolean),
   collections,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

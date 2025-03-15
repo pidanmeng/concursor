@@ -1,8 +1,5 @@
-import { ModeToggle } from '@/components/ModeToggle'
-import { LanguageToggle } from '@/components/LanguageToggle'
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
-import { AuthButton } from './AuthButton'
 import { ConcursorLogo } from './concursorLogo'
 import { HeaderToolbar } from './header-toolbar'
 
@@ -26,10 +23,10 @@ export function Header() {
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <HeaderLink href="/">{t('nav.home')}</HeaderLink>
             <HeaderLink href="/rules">{t('nav.rules')}</HeaderLink>
-            <HeaderLink href="/pricing">{t('nav.pricing')}</HeaderLink>
-            <HeaderLink href="/extension">{t('nav.extension')}</HeaderLink>
             <HeaderLink href="/generate">{t('nav.generate')}</HeaderLink>
-            <HeaderLink href="/mcp">{t('nav.mcp')}</HeaderLink>
+            {/* <HeaderLink href="/extension">{t('nav.extension')}</HeaderLink>
+            <HeaderLink href="/pricing">{t('nav.pricing')}</HeaderLink>
+            <HeaderLink href="/mcp">{t('nav.mcp')}</HeaderLink> */}
           </nav>
         </div>
 

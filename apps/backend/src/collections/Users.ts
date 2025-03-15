@@ -20,11 +20,19 @@ export const Users: CollectionConfig = {
   },
   access: {
     read: anyone,
-    update: ({ req, data }) => {
-      return req.user?.collection === 'admin-users' || req.user?.id === data?.id
+    update: ({ req }) => {
+      return {
+        id: {
+          equals: req.user?.id,
+        },
+      }
     },
-    delete: ({ req, data }) => {
-      return req.user?.collection === 'admin-users' || req.user?.id === data?.id
+    delete: ({ req }) => {
+      return {
+        id: {
+          equals: req.user?.id,
+        },
+      }
     },
     create: anyone,
   },

@@ -1,0 +1,35 @@
+{
+  "name": "concursor-mcp",
+  "module": "index.ts",
+  "main": "dist/index.js",
+  "version": "0.0.5",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run build.ts",
+    "build": "bun build index.ts --target=node --format=esm --outfile=dist/index.js",
+    "postbuild": "node -e \"require('fs').writeFileSync('dist/package.json', JSON.stringify({type:'module'}, null, 2));\"",
+    "prepare": "npm run build",
+    "test": "node dist/index.js",
+    "inspector": "npx @modelcontextprotocol/inspector node dist/index.js"
+  },
+  "bin": {
+    "concursor-mcp": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=14.16"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "zod": "^3.22.4"
+  }
+}
