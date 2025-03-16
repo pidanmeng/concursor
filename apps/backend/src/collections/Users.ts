@@ -1,4 +1,6 @@
+import { adminUser } from '@/access/adminUser'
 import { anyone } from '@/access/anyone'
+import { or } from '@/access/mergeAccess'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import type { CollectionConfig } from 'payload'
 
@@ -20,20 +22,26 @@ export const Users: CollectionConfig = {
   },
   access: {
     read: anyone,
-    update: ({ req }) => {
-      return {
-        id: {
-          equals: req.user?.id,
-        },
-      }
-    },
-    delete: ({ req }) => {
-      return {
-        id: {
-          equals: req.user?.id,
-        },
-      }
-    },
+    update: or([
+      ({ req }) => {
+        return {
+          id: {
+            equals: req.user?.id,
+          },
+        }
+      },
+      adminUser,
+    ]),
+    delete: or([
+      ({ req }) => {
+        return {
+          id: {
+            equals: req.user?.id,
+          },
+        }
+      },
+      adminUser,
+    ]),
     create: anyone,
   },
   labels: {
