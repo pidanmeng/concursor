@@ -2,7 +2,7 @@
   "name": "concursor-mcp",
   "module": "index.ts",
   "main": "dist/index.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "scripts": {
     "dev": "bun run build.ts",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
+    "@vue/reactivity": "^3.5.13",
     "zod": "^3.22.4"
   }
 }

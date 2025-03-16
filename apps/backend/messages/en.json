@@ -237,7 +237,7 @@
         "createFailed": "Create Failed"
       },
       "addDialog": {
-        "descriptionPlaceholder": "What does this rule do...",
+        "descriptionPlaceholder": "How to follow this rule...",
         "globPatternDescription": "Specify the file pattern for the rule, e.g. *.tsx, src/config/**/*.json",
         "contentPlaceholder": "Enter prompt",
         "tagsPlaceholder": "Enter tag name",

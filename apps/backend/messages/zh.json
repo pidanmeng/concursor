@@ -237,7 +237,7 @@
         "createFailed": "创建失败"
       },
       "addDialog": {
-        "descriptionPlaceholder": "这个规则是做什么的...",
+        "descriptionPlaceholder": "如何遵循这个规则...",
         "globPatternDescription": "指定规则应用的文件匹配模式，例如 *.tsx, src/config/**/*.json",
         "contentPlaceholder": "输入提示词",
         "tagsPlaceholder": "输入标签名称",

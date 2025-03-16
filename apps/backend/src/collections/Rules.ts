@@ -84,6 +84,7 @@ export const Rules: CollectionConfig = {
     description: true,
     downloadCount: true,
     creator: true,
+    content: true,
   },
   fields: [
     privateField(),

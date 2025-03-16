@@ -1,6 +1,8 @@
 import { z } from 'zod'
 import { server } from '../server'
 import type { ToolCallback } from '@modelcontextprotocol/sdk/server/mcp.js'
+import { registerGetProjectDetailTool } from './getProjectDetail'
+import { registerRulesTools } from './rules'
 
 type MCPTool<T extends z.ZodRawShape> = {
   name: string
@@ -9,17 +11,11 @@ type MCPTool<T extends z.ZodRawShape> = {
   cb: ToolCallback<T>
 }
 
-function registerTool<T extends z.ZodRawShape>(tool: MCPTool<T>): void {
+export function registerTool<T extends z.ZodRawShape>(tool: MCPTool<T>): void {
   server.tool(tool.name, tool.description, tool.parameters, tool.cb)
 }
 
 export function registerTools(): void {
-  registerTool({
-    name: 'add',
-    description: 'Add two numbers',
-    parameters: { a: z.number(), b: z.number() },
-    cb: async ({ a, b }) => ({
-      content: [{ type: 'text', text: String(a + b) }],
-    }),
-  })
+  registerGetProjectDetailTool()
+  registerRulesTools()
 }
