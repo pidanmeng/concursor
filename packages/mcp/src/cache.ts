@@ -2,6 +2,7 @@ import { ref } from '@vue/reactivity'
 import type { Project, Rule } from '../../../apps/backend/src/payload-types'
 import { getProject as getProjectApi } from './api/getProject'
 import { getRule as getRuleApi } from './api/getRule'
+import { updateRule as updateRuleApi } from './api/updateRule'
 
 type ID = string
 type Cache = {
@@ -66,4 +67,12 @@ export async function getRule(id: ID): Promise<Rule> {
   rule = await getRuleApi(id)
   setCachedRule(id, rule)
   return rule
+}
+
+export async function updateRule(id: ID, content: string): Promise<void> {
+  await updateRuleApi(id, content)
+  setCachedRule(id, {
+    ...(await getRule(id)),
+    content,
+  })
 }
