@@ -8,3 +8,16 @@ export const getRule = async (
   const response = await fetchWithAuth(`/rules/${ruleId}`)
   return response
 }
+
+export const getOwnedRules = async (): Promise<{
+  docs: Rule[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  hasNextPage: boolean
+  hasPrevPage: boolean
+}> => {
+  const response = await fetchWithAuth('/rules/owned')
+  return response
+}

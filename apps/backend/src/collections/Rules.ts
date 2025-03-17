@@ -115,4 +115,23 @@ export const Rules: CollectionConfig = {
       label: 'Forked From',
     },
   ],
+  endpoints: [
+    {
+      path: '/owned',
+      method: 'get',
+      handler: async ({ payload, user }) => {
+        console.log(user)
+        const rules = await payload.find({
+          collection: COLLECTION_SLUGS.RULES,
+          limit: 999,
+          where: {
+            'creator.value': {
+              equals: user?.id,
+            },
+          },
+        })
+        return Response.json(rules)
+      },
+    },
+  ],
 }

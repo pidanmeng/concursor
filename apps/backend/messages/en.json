@@ -277,7 +277,14 @@
       "batchMadePrivate": "Selected rules are now private",
       "batchVisibilityPartialSuccess": "Some rules' visibility was changed successfully",
       "batchVisibilityErrors": "{count} rules failed to change visibility",
-      "batchVisibilityFailed": "Failed to change visibility for selected rules"
+      "batchVisibilityFailed": "Failed to change visibility for selected rules",
+      "copySuccess": "Copy Success",
+      "copySuccessDescription": "Rule content has been copied to clipboard",
+      "copyFailed": "Copy Failed",
+      "copyFailedDescription": "Failed to copy rule content",
+      "creator": "Creator",
+      "updatedAt": "Updated {date}",
+      "unknownUser": "Unknown User"
     },
     "projects": {
       "title": "My Projects",
@@ -350,5 +357,77 @@
       "createRuleBtnText": "Create & Add Rule"
     }
   },
-  "switchLanguage": "Switch Language"
+  "switchLanguage": "Switch Language",
+  "rules": {
+    "title": "Explore Cursor Rules"
+  },
+  "landing": {
+    "hero": {
+      "title": "Smarter Cursor Rules Management",
+      "subtitle": "ConCursor helps you manage, share, and sync Cursor Rules effortlessly for better team collaboration and code quality.",
+      "getStarted": "Get Started",
+      "github": "View on GitHub"
+    },
+    "features": {
+      "title": "Why Choose ConCursor?",
+      "manage": {
+        "title": "Smart Management",
+        "description": "Centrally manage Cursor Rules across all your projects. Create, edit, and organize rules with ease."
+      },
+      "share": {
+        "title": "Community Sharing",
+        "description": "Discover and share high-quality Cursor Rules. Learn best practices from the community."
+      },
+      "sync": {
+        "title": "Auto Sync",
+        "description": "Automatically sync rule updates across projects to ensure your team follows the latest coding standards."
+      }
+    },
+    "howItWorks": {
+      "title": "How ConCursor Works",
+      "step1": {
+        "title": "Install VSCode Extension",
+        "description": "Install ConCursor extension from VSCode marketplace and connect to your account with one click."
+      },
+      "step2": {
+        "title": "Create or Import Rules",
+        "description": "Create new Cursor Rules or import existing ones from your projects. Markdown format supported."
+      },
+      "step3": {
+        "title": "Apply to Projects",
+        "description": "Apply rules to your projects and let ConCursor automatically sync updates to keep rules up-to-date."
+      }
+    },
+    "cta": {
+      "title": "Get Started with ConCursor",
+      "description": "Join the developer community and help build better coding standards.",
+      "button": "Sign Up Free"
+    }
+  },
+  "Generate": {
+    "title": "Generate Cursor Rule",
+    "inputPlaceholder": "Describe the rule you want to generate...",
+    "generate": "Generate",
+    "generating": "Generating...",
+    "generationFailed": "Generation failed, please try again",
+    "parseError": "Failed to parse generated rule, please try again",
+    "invalidRuleFormat": "Generated rule format is invalid",
+    "generatedRule": "Generated Rule",
+    "preview": "Preview",
+    "saveOptions": "Save Options",
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "createNewRule": "Create New Rule",
+    "createRule": "Create Rule",
+    "addToProject": "Add to Project",
+    "selectProject": "Select a project",
+    "close": "Close",
+    "ruleSaved": "Rule saved successfully",
+    "ruleAddedToProject": "Rule added to project successfully",
+    "saveError": "Save failed, please try again",
+    "ruleSavedDescription": "Rule {rule} saved successfully",
+    "ruleAddedToProjectDescription": "Rule {rule} added to project {project} successfully",
+    "saveErrorDescription": "Save failed, please try again"
+  }
 }

@@ -277,7 +277,14 @@
       "batchMadePrivate": "选中的规则已设为私有",
       "batchVisibilityPartialSuccess": "部分规则的可见性已成功修改",
       "batchVisibilityErrors": "{count} 条规则修改可见性失败",
-      "batchVisibilityFailed": "修改选中规则的可见性失败"
+      "batchVisibilityFailed": "修改选中规则的可见性失败",
+      "copySuccess": "复制成功",
+      "copySuccessDescription": "规则内容已复制到剪贴板",
+      "copyFailed": "复制失败",
+      "copyFailedDescription": "无法复制规则内容",
+      "creator": "创建者",
+      "updatedAt": "更新于 {date}",
+      "unknownUser": "未知用户"
     },
     "projects": {
       "title": "我的项目",
@@ -350,5 +357,77 @@
       "createRuleBtnText": "新建规则并添加"
     }
   },
-  "switchLanguage": "切换语言"
+  "rules": {
+    "title": "探索 Cursor Rules"
+  },
+  "switchLanguage": "切换语言",
+  "landing": {
+    "hero": {
+      "title": "更智能的 Cursor Rules 管理助手",
+      "subtitle": "ConCursor 帮助你轻松管理、分享和同步 Cursor Rules，让团队协作更高效，代码质量更出色。",
+      "getStarted": "立即开始",
+      "github": "在 GitHub 上查看"
+    },
+    "features": {
+      "title": "为什么选择 ConCursor?",
+      "manage": {
+        "title": "智能管理",
+        "description": "集中管理所有项目的 Cursor Rules，轻松创建、编辑和组织规则。"
+      },
+      "share": {
+        "title": "社区分享",
+        "description": "发现和分享高质量的 Cursor Rules，从社区中获取最佳实践。"
+      },
+      "sync": {
+        "title": "自动同步",
+        "description": "跨项目自动同步规则更新，确保团队使用最新的编码标准。"
+      }
+    },
+    "howItWorks": {
+      "title": "如何使用 ConCursor",
+      "step1": {
+        "title": "安装 VSCode 扩展",
+        "description": "从 VSCode 扩展市场安装 ConCursor 扩展，一键连接到你的账户。"
+      },
+      "step2": {
+        "title": "创建或导入规则",
+        "description": "创建新的 Cursor Rules，或从已有项目中导入规则。支持 Markdown 格式导入。"
+      },
+      "step3": {
+        "title": "应用到项目",
+        "description": "将规则应用到你的项目中，ConCursor 会自动同步更新，确保规则始终保持最新。"
+      }
+    },
+    "cta": {
+      "title": "开始使用 ConCursor",
+      "description": "加入开发者社区，一起打造更好的代码规范。",
+      "button": "免费注册"
+    }
+  },
+  "Generate": {
+    "title": "生成Cursor规则",
+    "inputPlaceholder": "描述你想要生成的规则...",
+    "generate": "生成",
+    "generating": "生成中...",
+    "generationFailed": "生成失败，请重试",
+    "parseError": "解析生成的规则失败，请重试",
+    "invalidRuleFormat": "生成的规则格式无效",
+    "generatedRule": "生成的规则",
+    "preview": "预览",
+    "saveOptions": "保存选项",
+    "copy": "复制",
+    "copied": "已复制",
+    "download": "下载",
+    "createNewRule": "新建规则",
+    "createRule": "创建规则",
+    "addToProject": "添加到项目",
+    "selectProject": "选择项目",
+    "close": "关闭",
+    "ruleSaved": "规则已保存",
+    "ruleAddedToProject": "规则已添加到项目",
+    "saveError": "保存失败，请重试",
+    "ruleSavedDescription": "规则{rule}已保存",
+    "ruleAddedToProjectDescription": "规则{rule}已添加到项目{project}",
+    "saveErrorDescription": "保存失败，请重试"
+  }
 }

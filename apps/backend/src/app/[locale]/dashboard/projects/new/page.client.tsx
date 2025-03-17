@@ -66,7 +66,7 @@ export function NewProjectClient() {
         setLoading(false)
       }
     },
-    [router, t],
+    [from, router, t],
   )
 
   return (

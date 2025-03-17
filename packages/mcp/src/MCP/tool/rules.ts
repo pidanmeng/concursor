@@ -4,11 +4,12 @@ import { logMessage } from '../../utils/logMessage'
 import { getRule } from '../../cache'
 import type { Rule } from '../../../../../apps/backend/src/payload-types'
 import { updateRule } from '../../api'
+import { getOwnedRules } from '../../api/getRule'
 
 export const GET_RULES_TOOL_NAME = 'get_rules'
 export const GET_RULE_TOOL_NAME = 'get_rule'
 export const UPDATE_RULES_TOOL_NAME = 'update_rules'
-
+export const GET_OWNED_RULES_TOOL_NAME = 'get_owned_rules'
 /**
  * Tool description for get_rules
  */
@@ -56,6 +57,18 @@ Returns:
 - Confirmation of your rule update submission
 - A unique identifier for tracking your update
 
+`
+
+/**
+ * Tool description for get_owned_rules
+ */
+const GET_OWNED_RULES_TOOL_DESCRIPTION = `Retrieve all rules created by the current user.
+
+Parameters:
+- None
+
+Returns:
+- All rules from the database
 `
 
 /**
@@ -237,7 +250,6 @@ export function registerUpdateRulesTool() {
         } else {
           throw new Error('Failed to update rule')
         }
-
       } catch (error) {
         logMessage('error', `Error in update_rules: ${error}`)
         return {
@@ -254,10 +266,47 @@ export function registerUpdateRulesTool() {
 }
 
 /**
+ * Register the get_all_rules tool
+ */
+export function registerGetOwnedRulesTool() {
+  registerTool({
+    name: GET_OWNED_RULES_TOOL_NAME,
+    description: GET_OWNED_RULES_TOOL_DESCRIPTION,
+    parameters: {},
+    cb: async () => {
+      try {
+        const rules = await getOwnedRules()
+        logMessage('info', JSON.stringify(rules, null, 2))
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `All rules: ${rules.docs
+                .map(formatRuleDetails)
+                .join('\n---\n')}`,
+            },
+          ],
+        }
+      } catch (error) {
+        logMessage('error', `Error in get_all_rules: ${error}`)
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Error retrieving all rules: ${error}`,
+            },
+          ],
+        }
+      }
+    },
+  })
+}
+/**
  * Register all rules-related tools
  */
 export function registerRulesTools() {
   registerGetRulesTool()
   registerGetRuleTool()
   registerUpdateRulesTool()
+  registerGetOwnedRulesTool()
 }
