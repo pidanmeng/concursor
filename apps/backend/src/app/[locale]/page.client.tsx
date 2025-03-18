@@ -28,7 +28,6 @@ import { CodeBlock } from '@/components/ui/code-block'
 import { TagBadge, TagList } from '@/components/tag-list'
 import { AnimatedBeam } from '@/components/magicui/animated-beam'
 import { HugeiconsPackageOpen } from '@/components/concursorLogo'
-import { Logo } from '@/components/Logos'
 
 const Circle = forwardRef<HTMLDivElement, { className?: string; children?: React.ReactNode }>(
   ({ className, children }, ref) => {

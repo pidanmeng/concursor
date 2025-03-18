@@ -1,6 +1,6 @@
 'use server'
 
-import { getPayload, Where } from 'payload'
+import { getPayload } from 'payload'
 import { getUser } from '@/actions/auth'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { Project, Rule } from '@/payload-types'

@@ -28,11 +28,11 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: 'en' | 'zh' }>
 }) {
   const { locale } = await params
   // 验证 locale 是否有效
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale)) {
     notFound()
   }
 

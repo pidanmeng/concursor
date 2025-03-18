@@ -19,11 +19,6 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   const router = useRouter()
   const [isUpdating, setIsUpdating] = useState(false)
 
-  // 获取已关联的规则ID列表，用于过滤添加规则弹窗中已添加的规则
-  const existingRuleIds = (project.rules || [])
-    .filter((item) => item.rule && typeof item.rule !== 'string')
-    .map((item) => (typeof item.rule === 'string' ? item.rule : (item.rule as Rule).id))
-
   // 添加规则到项目
   const handleAddRules = async (ruleIds: string[]) => {
     if (isUpdating) return

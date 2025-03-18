@@ -72,7 +72,7 @@ export default function NewRuleClient() {
         setLoading(false)
       }
     },
-    [router, t],
+    [from, router, t],
   )
 
   return (

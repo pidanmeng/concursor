@@ -56,7 +56,7 @@ export function RuleCard({ rule, onAddToProject, onDownload }: RuleCardProps) {
       toast.success(t('copySuccess'), {
         description: t('copySuccessDescription'),
       })
-    } catch (err) {
+    } catch {
       toast.error(t('copyFailed'), {
         description: t('copyFailedDescription'),
       })

@@ -2,7 +2,6 @@ import { getRule } from '@/actions/rules'
 import { notFound } from 'next/navigation'
 import EditRuleClient from './page.client'
 import { getTranslations } from 'next-intl/server'
-import { redirect } from '@/i18n/routing'
 import { NotFound } from '@/components/404'
 
 interface EditRulePageProps {
@@ -13,7 +12,7 @@ interface EditRulePageProps {
 }
 
 export default async function EditRulePage({ params }: EditRulePageProps) {
-  const { id, locale } = await params
+  const { id } = await params
   try {
     const rule = await getRule(id)
     if (!rule) {
@@ -22,15 +21,7 @@ export default async function EditRulePage({ params }: EditRulePageProps) {
     return <EditRuleClient rule={rule} />
   } catch (error) {
     console.error('获取规则失败:', error)
-    if ((error as any).status === 404) {
-      notFound()
-    }
-
-    // 重定向回规则列表页
-    redirect({
-      href: '/dashboard/rules',
-      locale,
-    })
+    notFound()
   }
 }
 
@@ -46,6 +37,9 @@ export async function generateMetadata({ params }: EditRulePageProps) {
       description: rule?.description || t('description'),
     }
   } catch (error) {
+    if (error instanceof Error) {
+      notFound()
+    }
     // 出错时使用默认元数据
     const t = await getTranslations('metadata.dashboard')
     return {

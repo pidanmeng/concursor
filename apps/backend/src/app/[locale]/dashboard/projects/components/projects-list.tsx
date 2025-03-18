@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { SearchBar } from '@/components/common/search-bar'
-import { searchProjects, deleteProject, duplicateProject, getProjects } from '@/actions/projects'
+import { searchProjects, getProjects } from '@/actions/projects'
 import type { Project } from '@/payload-types'
 import { ProjectCard } from '@/components/dashboard/project-card'
 import { AddProjectCard } from '@/components/dashboard/add-project-card'

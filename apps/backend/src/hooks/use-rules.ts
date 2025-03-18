@@ -31,33 +31,30 @@ export function useRules({ initialRules, initialTotalPages, initialTotalDocs }: 
   const loadingRef = useRef(false)
 
   // 加载规则数据 - 使用防抖
-  const loadRulesDebounced = useCallback(
-    debounce(async (page: number = 1, query: string = '') => {
-      // 如果已经在加载中，不重复请求
-      if (loadingRef.current) return
+  const loadRulesDebounced = debounce(async (page: number = 1, query: string = '') => {
+    // 如果已经在加载中，不重复请求
+    if (loadingRef.current) return
 
-      try {
-        setLoading(true)
-        loadingRef.current = true
+    try {
+      setLoading(true)
+      loadingRef.current = true
 
-        const data = await getUserRules(page, limit, query)
+      const data = await getUserRules(page, limit, query)
 
-        setRules(data.docs)
-        setTotalPages(data.totalPages)
-        setTotalDocs(data.totalDocs)
-        setCurrentPage(page)
-      } catch (error) {
-        console.error('加载规则失败', error)
-        toast.error(t('loadFailed'), {
-          description: String(error),
-        })
-      } finally {
-        setLoading(false)
-        loadingRef.current = false
-      }
-    }, 300),
-    [t, limit],
-  )
+      setRules(data.docs)
+      setTotalPages(data.totalPages)
+      setTotalDocs(data.totalDocs)
+      setCurrentPage(page)
+    } catch (error) {
+      console.error('加载规则失败', error)
+      toast.error(t('loadFailed'), {
+        description: String(error),
+      })
+    } finally {
+      setLoading(false)
+      loadingRef.current = false
+    }
+  }, 300)
 
   // 标准的加载函数，直接调用防抖版本
   const loadRules = useCallback(
@@ -96,13 +93,10 @@ export function useRules({ initialRules, initialTotalPages, initialTotalDocs }: 
   }
 
   // 输入后自动触发搜索的防抖函数
-  const debouncedSearch = useCallback(
-    debounce((value: string) => {
-      setSearchQuery(value)
-      setCurrentPage(1)
-    }, 300),
-    [],
-  )
+  const debouncedSearch = debounce((value: string) => {
+    setSearchQuery(value)
+    setCurrentPage(1)
+  }, 300)
 
   // 监听输入值变化，防抖触发搜索
   useEffect(() => {

@@ -60,7 +60,7 @@ export function RulesList({ initialData }: RulesListProps) {
         })}`,
         { scroll: false },
       )
-    } catch (error) {
+    } catch {
       toast.error(t('searchFailed'), {
         description: t('searchFailedDescription'),
       })
@@ -83,7 +83,7 @@ export function RulesList({ initialData }: RulesListProps) {
         setRules((prev) => [...prev, ...data.docs])
         setPage(nextPage)
       }
-    } catch (error) {
+    } catch {
       toast.error(t('loadFailed'), {
         description: t('loadMoreFailedDescription'),
       })
@@ -121,7 +121,7 @@ export function RulesList({ initialData }: RulesListProps) {
     URL.revokeObjectURL(url)
   }, [])
 
-  const handleAddToProject = useCallback((rule: Rule) => {
+  const handleAddToProject = useCallback(() => {
     // TODO: 实现添加到项目的功能
     toast(t('featureInDevelopment'), {
       description: t('addToProjectComingSoon'),
