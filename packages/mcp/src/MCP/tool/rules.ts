@@ -1,10 +1,8 @@
 import { z } from 'zod'
 import { registerTool } from '.'
 import { logMessage } from '../../utils/logMessage'
-import { getRule } from '../../cache'
+import { getRule, updateRule, getOwnedRules } from '../../cache'
 import type { Rule } from '../../../../../apps/backend/src/payload-types'
-import { updateRule } from '../../api'
-import { getOwnedRules } from '../../api/getRule'
 
 export const GET_RULES_TOOL_NAME = 'get_rules'
 export const GET_RULE_TOOL_NAME = 'get_rule'
@@ -232,7 +230,7 @@ export function registerUpdateRulesTool() {
         const updatedRule = await updateRule(rule_id, content)
 
         // Construct response message
-        if (updatedRule.doc.id) {
+        if (updatedRule.id) {
           let responseText = `Rule Content Updated Successfully`
           return {
             content: [
@@ -276,7 +274,7 @@ export function registerGetOwnedRulesTool() {
           content: [
             {
               type: 'text',
-              text: `All rules: ${rules.docs
+              text: `All rules: ${rules
                 .map(formatRuleDetails)
                 .join('\n---\n')}`,
             },

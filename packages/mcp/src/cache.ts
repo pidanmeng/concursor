@@ -3,6 +3,7 @@ import type { Project, Rule } from '../../../apps/backend/src/payload-types'
 import { getProject as getProjectApi } from './api/getProject'
 import { getRule as getRuleApi } from './api/getRule'
 import { updateRule as updateRuleApi } from './api/updateRule'
+import { getOwnedRules as getOwnedRulesApi } from './api/getRule'
 
 type ID = string
 type Cache = {
@@ -69,10 +70,18 @@ export async function getRule(id: ID): Promise<Rule> {
   return rule
 }
 
-export async function updateRule(id: ID, content: string): Promise<void> {
-  await updateRuleApi(id, content)
-  setCachedRule(id, {
-    ...(await getRule(id)),
-    content,
+export async function updateRule(id: ID, content: string): Promise<Rule> {
+  const updatedRule = await updateRuleApi(id, content)
+  if (updatedRule?.doc?.id) {
+    setCachedRule(updatedRule.doc.id, updatedRule.doc)
+  }
+  return updatedRule.doc
+}
+
+export async function getOwnedRules(): Promise<Rule[]> {
+  const ownedRules = await getOwnedRulesApi()
+  ownedRules.docs.forEach((rule) => {
+    setCachedRule(rule.id, rule)
   })
+  return ownedRules.docs
 }

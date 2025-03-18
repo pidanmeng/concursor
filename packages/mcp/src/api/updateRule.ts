@@ -11,6 +11,9 @@ export const updateRule = async (
   const response = await fetchWithAuth(`/rules/${ruleId}`, {
     method: 'PATCH',
     body: JSON.stringify({ content }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
   return response
 }
