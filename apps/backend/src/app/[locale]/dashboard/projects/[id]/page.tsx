@@ -62,7 +62,9 @@ export default async function ProjectDetail({ params }: ProjectDetailProps) {
           </div>
           <div className="flex items-center gap-2">
             <FileIcon className="w-4 h-4" />
-            {project.rules?.length || 0} {t('rules')}
+            {project.rules?.filter((rule) => rule.rule !== null && typeof rule.rule !== 'string')
+              .length || 0}{' '}
+            {t('rules')}
           </div>
         </div>
 

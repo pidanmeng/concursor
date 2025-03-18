@@ -23,6 +23,75 @@ export interface SearchParams {
   sort?: string
 }
 
+export async function getRules(
+  page: number = 1,
+  limit: number = 10,
+  query: string = '',
+  sort: string = '-updatedAt',
+): Promise<RulesData> {
+  try {
+    const payload = await getPayload({ config: payloadConfig })
+    const user = await getUser()
+
+    if (!user) {
+      throw new Error(getCodeMessage('USER_NOT_AUTHENTICATED'))
+    }
+
+    // 构建查询条件
+    const where: Where = {}
+
+    // 如果有搜索关键字，添加标题搜索条件
+    if (query) {
+      where.or = [
+        {
+          title: {
+            like: query,
+          },
+        },
+        {
+          'tags.name': {
+            like: query,
+          },
+        },
+        {
+          description: {
+            like: query,
+          },
+        },
+      ]
+    }
+
+    const rules = await payload.find({
+      collection: COLLECTION_SLUGS.RULES,
+      limit,
+      page,
+      sort,
+      where,
+      overrideAccess: false,
+      user,
+    })
+
+    return {
+      docs: rules.docs as Rule[],
+      totalDocs: rules.totalDocs,
+      totalPages: rules.totalPages,
+      page: rules.page || 1,
+      hasNextPage: rules.hasNextPage,
+      hasPrevPage: rules.hasPrevPage,
+    }
+  } catch (error) {
+    console.error('获取规则失败:', error)
+    return {
+      docs: [],
+      totalDocs: 0,
+      totalPages: 0,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    }
+  }
+}
+
 // 获取用户规则列表
 export async function getUserRules(
   page: number = 1,
@@ -263,10 +332,11 @@ export async function batchUpdateRules(
 
     return {
       docs: result.docs as Rule[],
-      errors: result.errors?.map(error => ({
-        id: error.id as string,
-        message: error.message
-      })) || []
+      errors:
+        result.errors?.map((error) => ({
+          id: error.id as string,
+          message: error.message,
+        })) || [],
     }
   } catch (error) {
     console.error('批量更新规则失败:', error)
@@ -294,11 +364,11 @@ export async function batchDeleteRules(
       collection: COLLECTION_SLUGS.RULES,
       where: {
         id: {
-          in: ruleIds
-        }
+          in: ruleIds,
+        },
       },
       data: {
-        obsolete: restore ? false : true
+        obsolete: restore ? false : true,
       },
       overrideAccess: false,
       user,
@@ -306,10 +376,11 @@ export async function batchDeleteRules(
 
     return {
       docs: result.docs as Rule[],
-      errors: result.errors?.map(error => ({
-        id: error.id as string,
-        message: error.message
-      })) || []
+      errors:
+        result.errors?.map((error) => ({
+          id: error.id as string,
+          message: error.message,
+        })) || [],
     }
   } catch (error) {
     console.error('批量删除规则失败:', error)

@@ -12,6 +12,7 @@ import { AuthProvider } from '@/providers/auth-provider'
 import { Metadata } from 'next'
 import { getUser } from '@/actions/auth'
 import { Toaster } from '@/components/ui/sonner'
+import { FlickeringGrid } from '@/components/magicui/flickering-grid'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations()
@@ -63,6 +64,14 @@ export default async function RootLayout({
               <AuthProvider>
                 {children}
                 <Toaster />
+                <FlickeringGrid
+                  className="fixed inset-0 -z-1 size-full pointer-events-none opacity-10"
+                  squareSize={4}
+                  gridGap={6}
+                  color="#6B7280"
+                  maxOpacity={0.5}
+                  flickerChance={0.1}
+                />
               </AuthProvider>
             </NextIntlClientProvider>
           </UserProvider>

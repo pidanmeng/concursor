@@ -359,7 +359,14 @@
   },
   "switchLanguage": "Switch Language",
   "rules": {
-    "title": "Explore Cursor Rules"
+    "title": "Explore Cursor Rules",
+    "searchPlaceholder": "Search rules...",
+    "searchFailed": "Search Failed",
+    "searchFailedDescription": "Error while fetching search results",
+    "loadFailed": "Load Failed",
+    "loadMoreFailedDescription": "Error while fetching more rules",
+    "featureInDevelopment": "Feature in Development",
+    "addToProjectComingSoon": "Add to project feature coming soon"
   },
   "landing": {
     "hero": {
@@ -404,7 +411,7 @@
       "button": "Sign Up Free"
     }
   },
-  "Generate": {
+  "generate": {
     "title": "Generate Cursor Rule",
     "inputPlaceholder": "Describe the rule you want to generate...",
     "generate": "Generate",

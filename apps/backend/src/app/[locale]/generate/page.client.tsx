@@ -37,6 +37,7 @@ import { useCompletion } from '@ai-sdk/react'
 import { createRule } from '@/actions/rules'
 import { getProjects, addRulesToProject } from '@/actions/projects'
 import { Project } from '@/payload-types'
+import { RainbowButton } from '@/components/magicui/rainbow-button'
 
 interface GeneratedRule {
   title: string
@@ -45,7 +46,7 @@ interface GeneratedRule {
 }
 
 export function GenerateClient() {
-  const t = useTranslations('Generate')
+  const t = useTranslations('generate')
   const [prompt, setPrompt] = useState('')
   const [copied, setCopied] = useState(false)
   const [projects, setProjects] = useState<Project[]>([])
@@ -251,9 +252,7 @@ export function GenerateClient() {
 
         <CardHeader>
           <CardTitle>{t('title')}</CardTitle>
-          <CardDescription>
-            {t('inputPlaceholder')}
-          </CardDescription>
+          <CardDescription>{t('inputPlaceholder')}</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -279,8 +278,8 @@ export function GenerateClient() {
           </form>
         </CardContent>
 
-        <CardFooter className="flex justify-between">
-          <Button
+        <CardFooter className="flex justify-end">
+          <RainbowButton
             onClick={handleGenerate}
             disabled={!prompt.trim() || isLoading}
             className="relative overflow-hidden"
@@ -294,7 +293,7 @@ export function GenerateClient() {
             ) : (
               t('generate')
             )}
-          </Button>
+          </RainbowButton>
         </CardFooter>
       </Card>
 

@@ -358,7 +358,14 @@
     }
   },
   "rules": {
-    "title": "探索 Cursor Rules"
+    "title": "探索 Cursor Rules",
+    "searchPlaceholder": "搜索规则...",
+    "searchFailed": "搜索失败",
+    "searchFailedDescription": "获取搜索结果时出错",
+    "loadFailed": "加载失败",
+    "loadMoreFailedDescription": "获取更多规则时出错",
+    "featureInDevelopment": "功能开发中",
+    "addToProjectComingSoon": "添加到项目功能即将上线"
   },
   "switchLanguage": "切换语言",
   "landing": {
@@ -404,7 +411,7 @@
       "button": "免费注册"
     }
   },
-  "Generate": {
+  "generate": {
     "title": "生成Cursor规则",
     "inputPlaceholder": "描述你想要生成的规则...",
     "generate": "生成",

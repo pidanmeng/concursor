@@ -22,7 +22,7 @@ export function Header() {
             <ConcursorLogo />
 
             <nav className="flex items-center space-x-6 text-sm font-medium">
-              <HeaderLink href="/">{t('nav.home')}</HeaderLink>
+              {/* <HeaderLink href="/">{t('nav.home')}</HeaderLink> */}
               <HeaderLink href="/rules">{t('nav.rules')}</HeaderLink>
               <HeaderLink href="/generate">{t('nav.generate')}</HeaderLink>
               {/* <HeaderLink href="/extension">{t('nav.extension')}</HeaderLink>

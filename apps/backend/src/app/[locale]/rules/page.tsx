@@ -1,4 +1,4 @@
-import { getUserRules } from '@/actions/rules'
+import { getRules } from '@/actions/rules'
 import { RulesList } from './components/rules-list'
 import { Header } from '@/components/Header'
 import { getTranslations } from 'next-intl/server'
@@ -14,7 +14,7 @@ export default async function RulesPage({ searchParams }: RulesPageProps) {
   const { query = '', page = '1' } = await searchParams
   const limit = 24
 
-  const rules = await getUserRules(Number(page), limit, query)
+  const rules = await getRules(Number(page), limit, query)
   const t = await getTranslations('rules')
 
   return (

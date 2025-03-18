@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { RuleCard } from './rule-card'
@@ -9,13 +10,14 @@ import type { RulesData } from '@/actions/rules'
 import { Rule } from '@/payload-types'
 import { Search } from 'lucide-react'
 import { toast } from 'sonner'
-import { getUserRules } from '@/actions/rules'
+import { getRules } from '@/actions/rules'
 
 interface RulesListProps {
   initialData: RulesData
 }
 
 export function RulesList({ initialData }: RulesListProps) {
+  const t = useTranslations('rules')
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -46,7 +48,7 @@ export function RulesList({ initialData }: RulesListProps) {
   const handleSearch = useCallback(async () => {
     setIsLoading(true)
     try {
-      const data = await getUserRules(1, 24, searchValue || '')
+      const data = await getRules(1, 24, searchValue || '')
       setRules(data.docs)
       setPage(1)
       setHasMore(true)
@@ -59,13 +61,13 @@ export function RulesList({ initialData }: RulesListProps) {
         { scroll: false },
       )
     } catch (error) {
-      toast.error('搜索失败', {
-        description: '获取搜索结果时出错',
+      toast.error(t('searchFailed'), {
+        description: t('searchFailedDescription'),
       })
     } finally {
       setIsLoading(false)
     }
-  }, [router, createQueryString, searchValue])
+  }, [router, createQueryString, searchValue, t])
 
   const loadMore = useCallback(async () => {
     if (isLoading || !hasMore) return
@@ -73,7 +75,7 @@ export function RulesList({ initialData }: RulesListProps) {
     setIsLoading(true)
     try {
       const nextPage = page + 1
-      const data = await getUserRules(nextPage, 24, searchValue || '')
+      const data = await getRules(nextPage, 24, searchValue || '')
 
       if (data.docs.length === 0) {
         setHasMore(false)
@@ -82,13 +84,13 @@ export function RulesList({ initialData }: RulesListProps) {
         setPage(nextPage)
       }
     } catch (error) {
-      toast.error('加载失败', {
-        description: '获取更多规则时出错',
+      toast.error(t('loadFailed'), {
+        description: t('loadMoreFailedDescription'),
       })
     } finally {
       setIsLoading(false)
     }
-  }, [isLoading, hasMore, page, searchValue])
+  }, [isLoading, hasMore, page, searchValue, t])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -121,16 +123,16 @@ export function RulesList({ initialData }: RulesListProps) {
 
   const handleAddToProject = useCallback((rule: Rule) => {
     // TODO: 实现添加到项目的功能
-    toast('功能开发中', {
-      description: '添加到项目功能即将上线',
+    toast(t('featureInDevelopment'), {
+      description: t('addToProjectComingSoon'),
     })
-  }, [])
+  }, [t])
 
   return (
     <div>
       <div className="mb-6 flex gap-2">
         <Input
-          placeholder="搜索规则..."
+          placeholder={t('searchPlaceholder')}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
