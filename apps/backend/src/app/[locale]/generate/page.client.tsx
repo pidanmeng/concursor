@@ -38,6 +38,8 @@ import { createRule } from '@/actions/rules'
 import { getProjects, addRulesToProject } from '@/actions/projects'
 import { Project } from '@/payload-types'
 import { RainbowButton } from '@/components/magicui/rainbow-button'
+import { BackgroundBeams } from '@/components/ui/background-beams'
+import { TextHoverEffect } from '@/components/ui/text-hover-effect'
 
 interface GeneratedRule {
   title: string
@@ -247,7 +249,12 @@ export function GenerateClient() {
 
   return (
     <div className="container mx-auto py-10">
-      <Card className="w-full max-w-3xl mx-auto relative overflow-hidden">
+      <BackgroundBeams />
+      <TextHoverEffect
+        text="CONCURSOR"
+        className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none -z-1"
+      />
+      <Card className="w-full max-w-3xl mx-auto relative overflow-hidden -mt-20">
         <BorderBeam size={100} colorFrom="#ffffff" colorTo="#000000" />
 
         <CardHeader>

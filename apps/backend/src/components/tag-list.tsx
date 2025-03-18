@@ -1,15 +1,11 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
 import { Tag } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
 import { Logo } from '@/components/Logos'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { forwardRef } from 'react'
+import { cn } from '@/lib/utils'
 
 interface TagListProps {
   tags: (Tag | string)[] | null | undefined
@@ -17,8 +13,25 @@ interface TagListProps {
   className?: string
 }
 
-export function TagList({ tags, maxVisible = 3, className = '' }: TagListProps) {
+interface TagBadgeProps {
+  tag: string
+  className?: string
+}
 
+export const TagBadge = forwardRef<HTMLDivElement, TagBadgeProps>(
+  ({ tag, className = '' }, ref) => {
+    return (
+      <Badge ref={ref} variant="secondary" className={cn('h-6', className)}>
+        <Logo name={tag} />
+        {tag}
+      </Badge>
+    )
+  },
+)
+
+TagBadge.displayName = 'TagBadge'
+
+export function TagList({ tags, maxVisible = 3, className = '' }: TagListProps) {
   if (!tags || !Array.isArray(tags) || tags.length === 0) {
     return null
   }
@@ -31,16 +44,7 @@ export function TagList({ tags, maxVisible = 3, className = '' }: TagListProps) 
     <div className={`flex items-center gap-1.5 flex-wrap ${className}`}>
       {displayTags.map((tag) => {
         const tagName = typeof tag === 'string' ? tag : tag.name
-        return (
-          <Badge 
-            key={typeof tag === 'string' ? tag : tag.id} 
-            variant="outline" 
-            className="h-6"
-          >
-            <Logo name={tagName} />
-            {tagName}
-          </Badge>
-        )
+        return <TagBadge key={typeof tag === 'string' ? tag : tag.id} tag={tagName} />
       })}
 
       {hasMoreTags && (
@@ -54,14 +58,10 @@ export function TagList({ tags, maxVisible = 3, className = '' }: TagListProps) 
             <TooltipContent>
               <div className="flex flex-col gap-1 p-1">
                 {tags.slice(maxVisible).map((tag) => (
-                  <Badge
+                  <TagBadge
                     key={typeof tag === 'string' ? tag : tag.id}
-                    variant="outline"
-                    className="h-6"
-                  >
-                    <Logo name={typeof tag === 'string' ? tag : tag.name} />
-                    {typeof tag === 'string' ? tag : tag.name}
-                  </Badge>
+                    tag={typeof tag === 'string' ? tag : tag.name}
+                  />
                 ))}
               </div>
             </TooltipContent>
@@ -70,4 +70,4 @@ export function TagList({ tags, maxVisible = 3, className = '' }: TagListProps) 
       )}
     </div>
   )
-} 
+}

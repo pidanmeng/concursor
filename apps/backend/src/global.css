@@ -43,9 +43,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --color-1: oklch(0.66 0.22 25.88);
-  --color-2: oklch(0.60 0.26 301.75);
-  --color-3: oklch(0.70 0.16 251.24);
-  --color-4: oklch(0.80 0.13 224.83);
+  --color-2: oklch(0.6 0.26 301.75);
+  --color-3: oklch(0.7 0.16 251.24);
+  --color-4: oklch(0.8 0.13 224.83);
   --color-5: oklch(0.91 0.23 132.84);
 }
 
@@ -64,7 +64,7 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.66 0.21 26.80);
+  --destructive: oklch(0.66 0.21 26.8);
   --destructive-foreground: oklch(0.99 0 0);
   --success: oklch(88.1% 0.2248 140.21);
   --success-foreground: oklch(0.205 0 0);
@@ -87,9 +87,9 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
   --color-1: oklch(0.66 0.22 25.88);
-  --color-2: oklch(0.60 0.26 301.75);
-  --color-3: oklch(0.70 0.16 251.24);
-  --color-4: oklch(0.80 0.13 224.83);
+  --color-2: oklch(0.6 0.26 301.75);
+  --color-3: oklch(0.7 0.16 251.24);
+  --color-4: oklch(0.8 0.13 224.83);
   --color-5: oklch(0.91 0.23 132.84);
 }
 
@@ -134,14 +134,13 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
   --color-color-5: var(--color-5);
   --color-color-4: var(--color-4);
   --color-color-3: var(--color-3);
   --color-color-2: var(--color-2);
   --color-color-1: var(--color-1);
 
+  --animate-accordion-down: accordion-down 0.2s ease-out;
   @keyframes accordion-down {
     from {
       height: 0;
@@ -151,6 +150,7 @@
     }
   }
 
+  --animate-accordion-up: accordion-up 0.2s ease-out;
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
@@ -159,14 +159,46 @@
       height: 0;
     }
   }
-  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
 
+  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
   @keyframes rainbow {
     0% {
       background-position: 0%;
     }
     100% {
       background-position: 200%;
+    }
+  }
+
+  --animate-marquee: marquee var(--duration) linear infinite;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  --animate-orbit: orbit var(--duration) linear infinite;
+  @keyframes orbit {
+    from {
+      transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px))
+        rotate(calc(var(--angle) * -1deg));
+    }
+    to {
+      transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px))
+        rotate(calc((var(--angle) * -1deg) - 360deg));
     }
   }
 }

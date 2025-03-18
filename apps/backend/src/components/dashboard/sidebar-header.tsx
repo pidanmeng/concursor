@@ -4,7 +4,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar'
-import { ConcursorLogo } from '../concursorLogo'
+import { ConCursorLogo } from '../concursorLogo'
 
 export function DashboardSidebarHeader() {
   return (
@@ -12,7 +12,7 @@ export function DashboardSidebarHeader() {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton className="group-data-[collapsible=icon]:bg-amber-200 transition-all duration-300 group-data-[collapsible=icon]:hover:bg-amber-100">
-            <ConcursorLogo className="group-data-[collapsible=icon]:text-black transition-all duration-300" />
+            <ConCursorLogo className="group-data-[collapsible=icon]:text-black transition-all duration-300" />
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

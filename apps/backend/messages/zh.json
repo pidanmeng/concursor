@@ -370,45 +370,71 @@
   "switchLanguage": "切换语言",
   "landing": {
     "hero": {
-      "title": "更智能的 Cursor Rules 管理助手",
-      "subtitle": "ConCursor 帮助你轻松管理、分享和同步 Cursor Rules，让团队协作更高效，代码质量更出色。",
-      "getStarted": "立即开始",
-      "github": "在 GitHub 上查看"
+      "title": "ConCursor - 你的AI编码提示词助手",
+      "subtitle": "高质量的编码提示词社区，跨平台的提示词管理，自迭代的提示词系统，让你的AI编码更智能、更高效",
+      "getStarted": "开始使用",
+      "github": "GitHub"
     },
     "features": {
-      "title": "为什么选择 ConCursor?",
-      "manage": {
-        "title": "智能管理",
-        "description": "集中管理所有项目的 Cursor Rules，轻松创建、编辑和组织规则。"
+      "community": {
+        "title": "高质量提示词社区",
+        "description": "发现、分享和讨论高质量的编码提示词，让AI更好地理解你的需求",
+        "cta": "加入社区"
       },
-      "share": {
-        "title": "社区分享",
-        "description": "发现和分享高质量的 Cursor Rules，从社区中获取最佳实践。"
+      "mcp": {
+        "title": "跨平台MCP",
+        "description": "支持Cursor、Windsurf等多个AI IDE，统一管理你的提示词",
+        "cta": "开始使用"
       },
       "sync": {
-        "title": "自动同步",
-        "description": "跨项目自动同步规则更新，确保团队使用最新的编码标准。"
+        "title": "多项目同步",
+        "description": "轻松在不同项目间同步和管理提示词，告别重复配置",
+        "cta": "开始使用"
+      },
+      "ai": {
+        "title": "AI自迭代系统",
+        "description": "智能分析代码生成结果，自动优化和改进提示词",
+        "cta": "开始使用"
       }
     },
-    "howItWorks": {
-      "title": "如何使用 ConCursor",
+    "workflow": {
+      "title": "智能工作流",
       "step1": {
-        "title": "安装 VSCode 扩展",
-        "description": "从 VSCode 扩展市场安装 ConCursor 扩展，一键连接到你的账户。"
+        "title": "创建或发现提示词",
+        "description": "在社区中发现优质提示词，或使用AI助手生成专属提示词"
       },
       "step2": {
-        "title": "创建或导入规则",
-        "description": "创建新的 Cursor Rules，或从已有项目中导入规则。支持 Markdown 格式导入。"
+        "title": "跨平台使用",
+        "description": "在任何支持MCP的IDE中使用你的提示词"
       },
       "step3": {
-        "title": "应用到项目",
-        "description": "将规则应用到你的项目中，ConCursor 会自动同步更新，确保规则始终保持最新。"
+        "title": "智能分析",
+        "description": "AI助手分析代码生成结果，评估提示词效果"
+      },
+      "step4": {
+        "title": "持续优化",
+        "description": "基于分析结果自动改进提示词，形成良性循环"
       }
     },
     "cta": {
-      "title": "开始使用 ConCursor",
-      "description": "加入开发者社区，一起打造更好的代码规范。",
-      "button": "免费注册"
+      "title": "立即开始使用",
+      "mcp": {
+        "title": "配置MCP",
+        "description": "配置MCP服务，在IDE中直接使用"
+      },
+      "web": {
+        "title": "Web平台",
+        "description": "在线管理你的提示词和项目"
+      },
+      "generate": {
+        "title": "在线生成",
+        "description": "在线生成Cursor规则，并保存到你的账户"
+      }
+    },
+    "mcp": {
+      "title": "如何使用 MCP",
+      "copied": "配置已复制到剪贴板",
+      "loginRequired": "登录后可获取你的专属 API Key"
     }
   },
   "generate": {

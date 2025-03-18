@@ -16,11 +16,11 @@ export function HugeiconsPackageOpen(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-export function ConcursorLogo({ className }: { className?: string }) {
+export function ConCursorLogo({ className }: { className?: string }) {
   return (
     <Link href="/" className={cn('flex items-center gap-2 align-baseline h-full', className)}>
       <HugeiconsPackageOpen className="w-6 h-6 group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:h-full" />
-      <span className="grid text-sm font-bold group-data-[collapsible=icon]:hidden">Concursor</span>
+      <span className="grid text-sm font-bold group-data-[collapsible=icon]:hidden">ConCursor</span>
     </Link>
   )
 }

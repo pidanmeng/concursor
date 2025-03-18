@@ -370,45 +370,71 @@
   },
   "landing": {
     "hero": {
-      "title": "Smarter Cursor Rules Management",
-      "subtitle": "ConCursor helps you manage, share, and sync Cursor Rules effortlessly for better team collaboration and code quality.",
+      "title": "ConCursor - Your AI Coding Prompt Assistant",
+      "subtitle": "High-quality coding prompt community, cross-platform prompt management, and self-iterating prompt system to make your AI coding smarter and more efficient",
       "getStarted": "Get Started",
-      "github": "View on GitHub"
+      "github": "GitHub"
     },
     "features": {
-      "title": "Why Choose ConCursor?",
-      "manage": {
-        "title": "Smart Management",
-        "description": "Centrally manage Cursor Rules across all your projects. Create, edit, and organize rules with ease."
+      "community": {
+        "title": "High-Quality Prompt Community",
+        "description": "Discover, share, and discuss high-quality coding prompts to help AI better understand your needs",
+        "cta": "Join Community"
       },
-      "share": {
-        "title": "Community Sharing",
-        "description": "Discover and share high-quality Cursor Rules. Learn best practices from the community."
+      "mcp": {
+        "title": "Cross-Platform MCP",
+        "description": "Support multiple AI IDEs including Cursor and Windsurf, manage your prompts in one place",
+        "cta": "Get Started"
       },
       "sync": {
-        "title": "Auto Sync",
-        "description": "Automatically sync rule updates across projects to ensure your team follows the latest coding standards."
+        "title": "Multi-Project Sync",
+        "description": "Easily sync and manage prompts across different projects, say goodbye to duplicate configurations",
+        "cta": "Get Started"
+      },
+      "ai": {
+        "title": "AI Self-Iteration System",
+        "description": "Intelligently analyze code generation results, automatically optimize and improve prompts",
+        "cta": "Get Started"
       }
     },
-    "howItWorks": {
-      "title": "How ConCursor Works",
+    "workflow": {
+      "title": "Smart Workflow",
       "step1": {
-        "title": "Install VSCode Extension",
-        "description": "Install ConCursor extension from VSCode marketplace and connect to your account with one click."
+        "title": "Create or Discover Prompts",
+        "description": "Find quality prompts in the community or generate custom prompts with AI assistant"
       },
       "step2": {
-        "title": "Create or Import Rules",
-        "description": "Create new Cursor Rules or import existing ones from your projects. Markdown format supported."
+        "title": "Cross-Platform Usage",
+        "description": "Use your prompts in any IDE that supports MCP"
       },
       "step3": {
-        "title": "Apply to Projects",
-        "description": "Apply rules to your projects and let ConCursor automatically sync updates to keep rules up-to-date."
+        "title": "Smart Analysis",
+        "description": "AI assistant analyzes code generation results and evaluates prompt effectiveness"
+      },
+      "step4": {
+        "title": "Continuous Optimization",
+        "description": "Automatically improve prompts based on analysis results, forming a virtuous cycle"
       }
     },
     "cta": {
-      "title": "Get Started with ConCursor",
-      "description": "Join the developer community and help build better coding standards.",
-      "button": "Sign Up Free"
+      "title": "Get Started Now",
+      "mcp": {
+        "title": "Configure MCP",
+        "description": "Configure MCP service, use it directly in IDE"
+      },
+      "web": {
+        "title": "Web Platform",
+        "description": "Manage your prompts and projects online"
+      },
+      "generate": {
+        "title": "Online Generation",
+        "description": "Generate Cursor rule online, and save it to your account"
+      }
+    },
+    "mcp": {
+      "title": "How to Use MCP",
+      "copied": "Configuration copied to clipboard",
+      "loginRequired": "Login to get your API Key"
     }
   },
   "generate": {
