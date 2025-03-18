@@ -15,9 +15,6 @@ const getProjectDetailToolDescription = `Get Project Details and Rules Guideline
 
 This tool retrieves detailed information about a specified project from Concursor, including project descriptions and best practice rules to help you understand the project architecture and coding requirements.
 
-Parameters:
-- projectId: The project ID used to retrieve specific project details
-
 Returns:
 - Project Details: Background, objectives, and architectural description of the project
 - Rules Summary: Overview of all rules relevant to the project
@@ -111,7 +108,9 @@ export function registerGetProjectDetailTool() {
     name: getProjectDetailToolName,
     description: getProjectDetailToolDescription,
     parameters: {
-      projectId: z.string(),
+      projectId: z
+        .string()
+        .describe('The project ID used to retrieve specific project details'),
     },
     cb: async ({ projectId }) => {
       const project = await getProject(projectId)

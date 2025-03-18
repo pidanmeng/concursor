@@ -17,9 +17,6 @@ const GET_RULES_TOOL_DESCRIPTION = `Retrieve multiple rules by their IDs.
 
 This tool allows you to fetch details for multiple rules at once by providing their rule IDs.
 
-Parameters:
-- rule_ids: An array of rule IDs to retrieve (e.g., ["rule123", "rule456"])
-
 Returns:
 - Detailed information about each requested rule
 - Empty result if no matching rules are found
@@ -32,9 +29,6 @@ Returns:
 const GET_RULE_TOOL_DESCRIPTION = `Retrieve a specific rule by its ID to get detailed information.
 
 This tool allows you to fetch a single rule using its unique ID when you need to understand a specific standard or best practice in detail.
-
-Parameters:
-- rule_id: The unique identifier of the rule you want to retrieve
 
 Returns:
 - Detailed information about the requested rule, including its description, scope, and content
@@ -49,10 +43,6 @@ const UPDATE_RULES_TOOL_DESCRIPTION = `Update the content of an existing rule wi
 
 This tool helps improve the project's rule system by allowing you to update the content of an existing rule after completing a task and gaining new insights.
 
-Parameters:
-- rule_id: ID of the rule to update
-- content: New or updated content for the rule, !IMPORTANT: It will replace the existing content of the rule, so be sure to include all the content you want to keep.
-
 Returns:
 - Confirmation of your rule update submission
 - A unique identifier for tracking your update
@@ -63,9 +53,6 @@ Returns:
  * Tool description for get_owned_rules
  */
 const GET_OWNED_RULES_TOOL_DESCRIPTION = `Retrieve all rules created by the current user.
-
-Parameters:
-- None
 
 Returns:
 - All rules from the database
@@ -110,7 +97,9 @@ export function registerGetRulesTool() {
     name: GET_RULES_TOOL_NAME,
     description: GET_RULES_TOOL_DESCRIPTION,
     parameters: {
-      rule_ids: z.array(z.string()),
+      rule_ids: z
+        .array(z.string())
+        .describe('The rule IDs used to retrieve specific rules'),
     },
     cb: async ({ rule_ids }) => {
       try {
@@ -174,7 +163,9 @@ export function registerGetRuleTool() {
     name: GET_RULE_TOOL_NAME,
     description: GET_RULE_TOOL_DESCRIPTION,
     parameters: {
-      rule_id: z.string(),
+      rule_id: z
+        .string()
+        .describe('The rule ID used to retrieve specific rule'),
     },
     cb: async ({ rule_id }) => {
       try {
@@ -224,8 +215,12 @@ export function registerUpdateRulesTool() {
     name: UPDATE_RULES_TOOL_NAME,
     description: UPDATE_RULES_TOOL_DESCRIPTION,
     parameters: {
-      rule_id: z.string(),
-      content: z.string(),
+      rule_id: z.string().describe('The rule ID used to update specific rule'),
+      content: z
+        .string()
+        .describe(
+          'New or updated content for the rule, !IMPORTANT: It will replace the existing content of the rule, so be sure to include all the content you want to keep.',
+        ),
     },
     cb: async ({ rule_id, content }) => {
       try {
