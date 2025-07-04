@@ -1,9 +1,8 @@
 import { adminUser } from '@/access/adminUser'
+import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 import { isCreator } from '@/access/isCreator'
-import { and, or } from '@/access/mergeAccess'
-import { notObsolete } from '@/access/notObosolete'
-import { notPrivate } from '@/access/notPrivate'
+import { or } from '@/access/mergeAccess'
 import { COLLECTION_SLUGS } from '@/constants/collectionSlugs'
 import { creator } from '@/fields/creator'
 import { obsolete } from '@/fields/obsolete'
@@ -65,7 +64,7 @@ export const Rules: CollectionConfig = {
     ],
   },
   access: {
-    read: or([and([or([notPrivate, isCreator]), notObsolete]), adminUser]),
+    read: anyone,
     create: authenticated,
     update: or([isCreator, adminUser]),
     delete: adminUser,
